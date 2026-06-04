@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
   <!-- 
@@ -290,7 +290,7 @@
             <div id="shop-mismatch-warning" class="hidden p-3 bg-rose-50 border border-rose-200 text-rose-800 rounded-lg text-xs font-bold flex items-start gap-2 animate-pulse">
               <i data-lucide="alert-octagon" class="w-4 h-4 text-rose-600 shrink-0 mt-0.5"></i>
               <div>
-                <span class="text-sm">⚠️警告: 件名と本文の店舗指定に相違があります！誤送信の可能性があります！</span>
+                <span class="text-sm">??警告: 件名と本文の店舗指定に相違があります！誤送信の可能性があります！</span>
                 <p id="shop-mismatch-detail" class="text-xs font-normal text-rose-700 mt-1"></p>
               </div>
             </div>
@@ -619,7 +619,7 @@ Cc: satou-member@nttdocomo.com, "外部 連絡者" <random-external@unknown.com>
       } catch (err) {
         console.error('LocalStorage save error:', err);
         if (err.name === 'QuotaExceededError' || err.code === 22) {
-          localStorageWarn.innerText = "⚠️ データ量が大きすぎるため次回自動復元はオフになりました（判定自体は問題なく可能です）。";
+          localStorageWarn.innerText = "?? データ量が大きすぎるため次回自動復元はオフになりました（判定自体は問題なく可能です）。";
           localStorageWarn.classList.remove('hidden');
           optKeepLocal.checked = false;
           localStorage.setItem(STORAGE_KEYS.KEEP_LOCAL, 'false');
@@ -1386,7 +1386,7 @@ Cc: satou-member@nttdocomo.com, "外部 連絡者" <random-external@unknown.com>
           return; 
         }
 
-        // From의 判定
+        // From? 判定
         if (fromRegex.test(line)) {
           ignoredFromCount++;
           return; 
