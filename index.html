@@ -1,168 +1,1665 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <!-- サーバー設定に負けない、最も標準的な文字コード指定 -->
+  <!-- 
+    ブラウザによる文字コードの誤判定を完全に防ぐため、
+    文字コード宣言メタタグはheadタグ内の他のどのタグ（titleやscriptなど）よりも「最初」に記述する必要があります。
+  -->
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MailCheck Pro - 文字化けテスト＆シンプル判定版</title>
+  <title>MailCheck Pro - 店舗・代理店 厳格クロス突合ツール</title>
+  
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- SheetJS (Excel解析用) -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap');
+    body {
+      font-family: 'Inter', 'Noto Sans JP', sans-serif;
+    }
+  </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans">
 
   <!-- ヘッダー -->
   <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
-    <div class="max-w-[1200px] mx-auto px-4 h-16 flex items-center justify-between">
+    <div class="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center space-x-3">
         <div class="bg-indigo-600 p-2 rounded-lg text-white">
           <i data-lucide="shield-check" class="w-6 h-6"></i>
         </div>
         <div>
-          <h1 class="text-lg font-bold text-slate-900">MailCheck Pro</h1>
-          <span class="text-xs text-slate-500">文字化けテスト ＆ 動作検証ページ</span>
+          <h1 class="text-lg font-bold text-slate-900 leading-none">MailCheck Pro</h1>
+          <span class="text-xs text-slate-500">店舗・代理店・アドレス 厳格クロス突合版</span>
         </div>
       </div>
-      <div>
-        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
-          テスト用シンプル版
+      <div class="flex items-center space-x-2">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
+          <span class="w-1.5 h-1.5 mr-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+          ローカル処理 (安全・非送信)
         </span>
       </div>
     </div>
   </header>
 
   <!-- メインコンテンツ -->
-  <main class="flex-grow max-w-[1200px] w-full mx-auto px-4 py-8 space-y-6">
+  <main class="flex-grow max-w-[1500px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
     
-    <!-- 文字コード判定ボード -->
-    <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-4">
-      <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-        <i data-lucide="info" class="text-indigo-600"></i>
-        文字化け検証用ダミーボード
-      </h2>
-      <p class="text-sm text-slate-600 leading-relaxed">
-        この画面の日本語（ひらがな、カタカナ、漢字、および特殊記号など）がブラウザで正常に読み取れているかをご確認ください。
-      </p>
-
-      <!-- 文字テスト枠 -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-2">
-          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">ひらがな・カタカナ・漢字テスト</h3>
-          <p class="text-lg font-semibold text-slate-800">あいうえお かきくけこ さしすせそ</p>
-          <p class="text-lg font-semibold text-slate-800">アイウエオ カキクケコ サシスセソ</p>
-          <p class="text-lg font-semibold text-slate-800">ドコモショップ本庄店 ＆ 新宿店 突合検証</p>
-        </div>
-        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-2">
-          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">記号・絵文字テスト</h3>
-          <p class="text-lg font-semibold text-slate-800">⚠️ 警告：店舗の指定が異なります！【不適合】</p>
-          <p class="text-lg font-semibold text-slate-800">※（）［］：；￥ ＠ ＆ ％ ＄ ＃</p>
-          <p class="text-lg font-semibold text-slate-800">✅ 安全 (OK) ＆ ❌ エラー / 重複</p>
-        </div>
+    <!-- アプリ概要・セキュリティ説明 -->
+    <div class="bg-gradient-to-r from-indigo-50 to-sky-50 rounded-xl p-6 mb-8 border border-indigo-100 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div class="space-y-1">
+        <h2 class="text-md font-bold text-indigo-900 flex items-center gap-2">
+          <i data-lucide="info" class="w-5 h-5 text-indigo-600"></i>
+          店舗・代理店 1対1 厳格マスタ証跡クロスチェッカー
+        </h2>
+        <p class="text-sm text-indigo-950/70 leading-relaxed">
+          件名の店舗名（例：DS本庄店）を自動で読み取り、マスタ上の正式店舗（例：ドコモショップ本庄店）と曖昧マッチをかけ、宛先アドレスが<strong>「●●店の〇〇さん」として正しいか</strong>をマスタから抜いた登録情報を証跡にして1人ずつ検証します。<br>
+          件名と本文中の店舗指定が異なる場合の自動警告機能、および店舗に紐づく代理店名・対応メールドメインの自動提示機能を搭載しています。
+        </p>
       </div>
-    </div>
-
-    <!-- 簡易的な宛先チェックモック -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      
-      <!-- 入力エリア -->
-      <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-4">
-        <h3 class="font-bold text-slate-900 text-lg">宛先テキストの貼り付け</h3>
-        <p class="text-xs text-slate-500">メール件名や本文、宛先を以下にコピペします。</p>
-        <textarea id="test-textarea" rows="6" class="w-full border border-slate-300 rounded-lg p-3 text-sm font-mono focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="ここにメールヘッダーや本文を入力してください。"></textarea>
-        <button id="btn-run" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-lg text-sm transition-colors">
-          判定を開始する
+      <div class="flex gap-2 shrink-0">
+        <button id="btn-sample-load" class="inline-flex items-center px-4 py-2 border border-indigo-300 text-sm font-medium rounded-lg text-indigo-700 bg-white hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+          <i data-lucide="sparkles" class="w-4 h-4 mr-2"></i>
+          ドコモ・店舗突合デモで試す
         </button>
       </div>
-
-      <!-- 結果エリア -->
-      <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-4">
-        <h3 class="font-bold text-slate-900 text-lg">判定結果プレビュー</h3>
-        <p class="text-xs text-slate-500">ボタンを押すと、簡易的に入力行が1人ずつ分解されます。</p>
-        
-        <div id="result-status" class="hidden p-3 bg-rose-50 border border-rose-200 rounded-lg text-rose-800 text-xs font-bold">
-          ⚠️ 警告：メール内に店舗指定の不一致（本庄店 ⇔ 新宿店）が検知されました！
-        </div>
-
-        <div class="border border-slate-100 rounded-lg overflow-hidden text-sm">
-          <div class="bg-slate-50 p-2.5 border-b border-slate-200 font-bold text-slate-600 flex justify-between">
-            <span>抽出された宛先</span>
-            <span>突合ステータス</span>
-          </div>
-          <div id="result-list" class="divide-y divide-slate-100 p-3 min-h-[100px] text-slate-500 italic flex items-center justify-center">
-            テキストを入力して判定ボタンをクリックしてください。
-          </div>
-        </div>
-      </div>
-
     </div>
 
+    <!-- 2カラムレイアウト (左 4カラム / 右 8カラム) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      
+      <!-- 左ペイン: 設定とファイルアップロード (4カラム) -->
+      <section class="lg:col-span-4 space-y-6">
+        
+        <!-- STEP 1: Excelファイルの読み込み -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-slate-900 flex items-center gap-2">
+              <span class="bg-slate-200 text-slate-800 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">1</span>
+              マスタ（正解リスト）の読込
+            </h3>
+            <span id="file-status-badge" class="text-xs font-medium text-slate-400">未読み込み</span>
+          </div>
+
+          <!-- ドラッグ＆ドロップエリア -->
+          <div id="drop-zone" class="border-2 border-dashed border-slate-300 hover:border-indigo-500 hover:bg-slate-50 rounded-xl p-6 text-center cursor-pointer transition-all relative">
+            <input type="file" id="file-input" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept=".xlsx, .xls, .csv">
+            <div class="space-y-2 pointer-events-none">
+              <div class="mx-auto w-12 h-12 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center">
+                <i data-lucide="file-spreadsheet" class="w-6 h-6"></i>
+              </div>
+              <p class="text-sm font-medium text-slate-700">Excel / CSV をドラッグ＆ドロップ</p>
+              <p class="text-xs text-slate-400">またはファイルを選択 (.xlsx, .xls, .csv)</p>
+            </div>
+          </div>
+
+          <!-- 読み込み中ローディング -->
+          <div id="loading-spinner" class="hidden flex items-center justify-center py-4 text-indigo-600">
+            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-indigo-600" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <span class="text-sm font-medium text-slate-600">ファイルを解析中...</span>
+          </div>
+
+          <!-- ファイル詳細とマッピング設定 -->
+          <div id="file-details" class="hidden space-y-4 pt-2 border-t border-slate-100">
+            <div class="flex items-center justify-between text-xs text-slate-500">
+              <span id="loaded-file-name" class="font-medium text-slate-700 truncate max-w-[180px]">filename.xlsx</span>
+              <span id="loaded-file-rows" class="bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full font-bold">0 行</span>
+            </div>
+
+            <!-- シート選択 -->
+            <div id="sheet-select-container" class="space-y-1 hidden">
+              <label class="block text-xs font-medium text-slate-600">対象シート</label>
+              <select id="sheet-select" class="block w-full rounded-lg border-slate-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2 px-3 border bg-white">
+                <!-- 動的に追加 -->
+              </select>
+            </div>
+
+            <!-- カラム（列）選択 -->
+            <div class="grid grid-cols-2 gap-3">
+              <div class="space-y-1">
+                <label class="block text-xs font-medium text-slate-600 flex items-center gap-1">
+                  メールアドレス列
+                  <span class="text-red-500">*</span>
+                </label>
+                <select id="col-email" class="block w-full rounded-lg border-slate-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2 px-3 border bg-white">
+                </select>
+              </div>
+              <div class="space-y-1">
+                <label class="block text-xs font-medium text-slate-600 flex items-center gap-1">
+                  氏名列 (優先:姓)
+                </label>
+                <select id="col-name" class="block w-full rounded-lg border-slate-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2 px-3 border bg-white">
+                </select>
+              </div>
+            </div>
+
+            <!-- 店舗突合用のカラム選択 -->
+            <div class="grid grid-cols-2 gap-3">
+              <div class="space-y-1">
+                <label class="block text-xs font-medium text-indigo-700 font-bold flex items-center gap-1">
+                  所属店舗列 (優先:店舗名)
+                  <span class="text-red-500">*</span>
+                </label>
+                <select id="col-shop" class="block w-full rounded-lg border-indigo-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2 px-3 border bg-indigo-50/50 font-medium">
+                </select>
+              </div>
+              <div class="space-y-1">
+                <label class="block text-xs font-medium text-indigo-700 font-bold flex items-center gap-1">
+                  代理店名列 (優先:一次代理店)
+                </label>
+                <select id="col-agent" class="block w-full rounded-lg border-indigo-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2 px-3 border bg-indigo-50/50 font-medium">
+                </select>
+              </div>
+            </div>
+
+            <div class="space-y-1">
+              <label class="block text-xs font-medium text-slate-600">
+                追加表示列 (部署など)
+              </label>
+              <select id="col-extra" class="block w-full rounded-lg border-slate-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2 px-3 border bg-white">
+              </select>
+            </div>
+
+            <!-- ★ブラウザキープ(永続化)設定 -->
+            <div class="p-3 bg-indigo-50/50 rounded-xl border border-indigo-100 flex flex-col gap-2">
+              <div class="flex items-center justify-between">
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input type="checkbox" id="opt-keep-local" class="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
+                  <span class="text-xs font-bold text-indigo-900">このマスタをブラウザに保存する</span>
+                </label>
+                <button id="btn-clear-saved" class="hidden text-[10px] text-rose-600 hover:text-rose-800 font-bold flex items-center gap-0.5">
+                  <i data-lucide="trash-2" class="w-3 h-3"></i> 保存を消去
+                </button>
+              </div>
+              <p class="text-[10px] text-indigo-950/60 leading-normal">次回アプリを開いたときに自動的にこのファイルを読み込みます（ファイルはブラウザ外に送信されません）。</p>
+              <p id="local-storage-warn" class="text-[10px] text-rose-600 font-semibold leading-normal hidden"></p>
+            </div>
+            
+            <!-- プレビュー表示 -->
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-100">
+              <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">マスタプレビュー (先頭3件)</p>
+              <div id="preview-table-container" class="overflow-x-auto">
+                <table class="w-full text-left text-xs text-slate-500">
+                  <thead>
+                    <tr class="border-b border-slate-200 text-slate-400" id="preview-headers"></tr>
+                  </thead>
+                  <tbody id="preview-rows"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 判定詳細オプション -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 space-y-4">
+          <h3 class="font-bold text-slate-900 flex items-center gap-2">
+            <i data-lucide="sliders" class="w-5 h-5 text-slate-500"></i>
+            照合オプション
+          </h3>
+          <div class="space-y-3">
+            <label class="flex items-start gap-3 cursor-pointer">
+              <input type="checkbox" id="opt-case-insensitive" checked class="mt-1 h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
+              <div class="text-sm">
+                <span class="font-medium text-slate-700">アルファベットの大文字小文字を区別しない</span>
+                <p class="text-xs text-slate-400">Example@com と example@com を同一とみなします</p>
+              </div>
+            </label>
+            <label class="flex items-start gap-3 cursor-pointer">
+              <input type="checkbox" id="opt-allow-domain-match" class="mt-1 h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
+              <div class="text-sm">
+                <span class="font-medium text-slate-700">ドメイン単位での一致も許容する</span>
+                <p class="text-xs text-slate-400">マスタに `@company.com` があれば、そのドメインのアドレスはすべてOKと判定します</p>
+              </div>
+            </label>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- 右ペイン -->
+      <section class="lg:col-span-8 space-y-6">
+        
+        <!-- STEP 2: 宛先の入力 -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-slate-900 flex items-center gap-2">
+              <span class="bg-slate-200 text-slate-800 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">2</span>
+              メール本文・宛先の入力
+            </h3>
+            <span class="text-xs font-bold text-rose-600 bg-rose-50 px-2.5 py-1 rounded">From/本文内アドレスは安全に無視します</span>
+          </div>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            メーラーのヘッダー情報（Subject、To、Cc）とメール本文をそのままコピー＆ペーストしてください。<br>
+            <strong>「Subject:」の店舗（DS〇〇店のような略記も対応）</strong>から送信先店舗を判別し、<strong>メール本文の記載店舗とのズレがないか</strong>を検証します。
+          </p>
+          
+          <div class="relative">
+            <textarea id="emails-input" rows="8" class="block w-full rounded-xl border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-4 border text-sm font-mono placeholder-slate-400" placeholder="【メールソフトからそのままコピペして貼り付けてください】&#10;Subject: 【DS本庄店】確認依頼について&#10;From: manager-admin@nttdocomo.com&#10;To: &quot;山田 太郎&quot; &lt;yamada.taro@example.com&gt;&#10;Cc: suzuki.hanako@example.com&#10;&#10;お疲れ様です。ドコモショップ新宿店で本日の対応状況を確認してください。"></textarea>
+            <div class="absolute bottom-2 right-2 flex items-center gap-2">
+              <button id="btn-clear-input" class="p-1 text-slate-400 hover:text-slate-600 rounded bg-slate-50 hover:bg-slate-100 transition-colors" title="クリア">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="flex gap-3">
+            <button id="btn-check" class="flex-1 inline-flex items-center justify-center px-4 py-3 border border-transparent text-sm font-semibold rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+              <i data-lucide="play" class="w-4 h-4 mr-2"></i>
+              宛先と店舗所属の整合性を判定する
+            </button>
+          </div>
+        </div>
+
+        <!-- 判定エラーなどの通知 -->
+        <div id="alert-box" class="hidden p-4 rounded-xl text-sm border"></div>
+
+        <!-- STEP 3: 判定結果サマリー (大枠確認結果をこちらに完全内包) -->
+        <div id="results-card" class="hidden bg-white rounded-xl shadow-xl border border-slate-200 p-6 space-y-6">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+            <h3 class="font-bold text-slate-900 flex items-center gap-2">
+              <span class="bg-indigo-100 text-indigo-700 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">3</span>
+              判定結果サマリー
+            </h3>
+            <button id="btn-export-csv" class="inline-flex items-center px-3 py-1.5 border border-slate-200 text-xs font-medium rounded-lg text-slate-700 bg-slate-50 hover:bg-slate-100 transition-colors">
+              <i data-lucide="download" class="w-3.5 h-3.5 mr-1.5"></i>
+              CSVエクスポート
+            </button>
+          </div>
+
+          <!-- 解析結果ステータスパネル (大枠：店舗・代理店・ドメイン判定、警告など) -->
+          <div id="parse-status-panel" class="hidden bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-3">
+            <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-200 pb-2">
+              <i data-lucide="info" class="w-4 h-4 text-indigo-500"></i>
+              大枠解析結果・店舗判別ステータス
+            </h4>
+            
+            <!-- 店舗不一致の警告アラート -->
+            <div id="shop-mismatch-warning" class="hidden p-3 bg-rose-50 border border-rose-200 text-rose-800 rounded-lg text-xs font-bold flex items-start gap-2 animate-pulse">
+              <i data-lucide="alert-octagon" class="w-4 h-4 text-rose-600 shrink-0 mt-0.5"></i>
+              <div>
+                <span class="text-sm">⚠️警告: 件名と本文の店舗指定に相違があります！誤送信の可能性があります！</span>
+                <p id="shop-mismatch-detail" class="text-xs font-normal text-rose-700 mt-1"></p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+              <div class="space-y-1 bg-white p-2.5 rounded-lg border border-slate-100">
+                <span class="text-slate-400 font-medium block">件名 (Subject):</span>
+                <span id="detected-subject" class="font-bold text-slate-850 block leading-relaxed">-</span>
+              </div>
+              <div class="space-y-1 bg-white p-2.5 rounded-lg border border-slate-100">
+                <span class="text-slate-400 font-medium block">判定宛先店舗 (件名より自動特定):</span>
+                <span id="detected-shop" class="font-bold text-indigo-800 bg-indigo-50 px-2 py-0.5 rounded inline-block mt-0.5">-</span>
+              </div>
+              <div class="space-y-1 bg-white p-2.5 rounded-lg border border-slate-100">
+                <span class="text-slate-400 font-medium block">本文指定の店舗名:</span>
+                <span id="detected-body-shop" class="font-bold text-slate-800 block leading-relaxed">-</span>
+              </div>
+              <div class="space-y-1 bg-white p-2.5 rounded-lg border border-slate-100">
+                <span class="text-slate-400 font-medium block">店舗突合結果 (件名 vs 本文):</span>
+                <span id="shop-mismatch-status" class="font-bold block leading-relaxed">-</span>
+              </div>
+              
+              <div class="space-y-1 bg-white p-2.5 rounded-lg border border-slate-100">
+                <span class="text-slate-400 font-medium block">所属一次代理店名:</span>
+                <span id="detected-agent" class="font-bold text-slate-800 block">-</span>
+              </div>
+              <div class="space-y-1 bg-white p-2.5 rounded-lg border border-slate-100">
+                <span class="text-slate-400 font-medium block">対応メールドメイン (代理店):</span>
+                <span id="detected-domains" class="font-bold font-mono text-indigo-700 bg-indigo-50/50 px-1.5 py-0.5 rounded inline-block mt-0.5">-</span>
+              </div>
+            </div>
+            
+            <div class="text-[10px] text-slate-400 flex justify-between items-center pt-1">
+              <span>※From行及びSubject行以下のメール本文内メールアドレスは自動無視しています</span>
+              <span class="font-medium">From無視数: <span id="ignored-from-count" class="font-bold">0</span> 行</span>
+            </div>
+          </div>
+
+          <!-- カウンタカード -->
+          <div class="grid grid-cols-3 gap-4">
+            <div class="bg-emerald-50 rounded-xl p-4 border border-emerald-100 text-center shadow-xs">
+              <span class="text-xs font-medium text-emerald-800">安全（マスタ完全合致 / 社内）</span>
+              <div class="text-2xl font-bold text-emerald-700 mt-1" id="count-safe">0</div>
+            </div>
+            <div class="bg-rose-50 rounded-xl p-4 border border-rose-100 text-center shadow-xs">
+              <span class="text-xs font-medium text-rose-800">警告（不在・店舗不一致）</span>
+              <div class="text-2xl font-bold text-rose-700 mt-1" id="count-warning">0</div>
+            </div>
+            <div class="bg-amber-50 rounded-xl p-4 border border-amber-100 text-center shadow-xs">
+              <span class="text-xs font-medium text-amber-800">形式エラー / 重複</span>
+              <div class="text-2xl font-bold text-amber-700 mt-1" id="count-error">0</div>
+            </div>
+          </div>
+
+          <!-- 判定詳細テーブル -->
+          <div class="space-y-2">
+            <div class="flex justify-between items-center text-xs text-slate-500 px-1">
+              <span>宛先（一人ずつ分割）の照合結果</span>
+              <span id="results-count-text">全 0 件中 0 件を表示</span>
+            </div>
+            
+            <!-- min-w-[900px] を保証し、つぶれを完全にシャットアウト -->
+            <div class="overflow-x-auto border border-slate-100 rounded-xl font-sans bg-white shadow-xs">
+              <table class="w-full text-left text-sm text-slate-600 min-w-[900px] table-fixed">
+                <thead class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider border-b border-slate-200">
+                  <tr>
+                    <th class="px-4 py-3 font-semibold w-[12%]">判定結果</th>
+                    <th class="px-4 py-3 font-semibold w-[28%]">抽出宛先</th>
+                    <th class="px-4 py-3 font-semibold w-[35%]">マスタ登録証跡（エビデンス）</th>
+                    <th class="px-4 py-3 font-semibold w-[25%]">突合詳細</th>
+                  </tr>
+                </thead>
+                <tbody id="results-table-body" class="divide-y divide-slate-100">
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+        </div>
+
+      </section>
+
+    </div>
   </main>
 
   <!-- フッター -->
-  <footer class="bg-white border-t border-slate-200 py-6 mt-auto">
-    <div class="max-w-[1200px] mx-auto px-4 text-center text-xs text-slate-500 space-y-1">
-      <p>このファイルの日本語がすべて美しく読めていれば、UTF-8エンコードでの配信テストは成功です。</p>
-      <p>&copy; 2026 MailCheck Pro. All rights reserved.</p>
+  <footer class="bg-white border-t border-slate-200 py-6 mt-12">
+    <div class="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+      <div class="flex items-center gap-2">
+        <i data-lucide="shield" class="w-4 h-4 text-emerald-600"></i>
+        <span>個人情報保護方針：このアプリで処理されるデータは完全にローカルで実行され、外部サーバーへデータを送信することは絶対にありません。</span>
+      </div>
+      <div>
+        <span>&copy; 2026 MailCheck Pro. All rights reserved.</span>
+      </div>
     </div>
   </footer>
 
+  <!-- カスタムモーダル -->
+  <div id="modal-container" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-2xl shadow-xl border border-slate-200 p-6 max-w-md w-full mx-4 space-y-4">
+      <div class="flex items-center gap-3" id="modal-header">
+        <div class="p-2 rounded-full" id="modal-icon-bg">
+          <i id="modal-icon" class="w-6 h-6"></i>
+        </div>
+        <h4 class="text-lg font-bold text-slate-900" id="modal-title">MailCheck Pro</h4>
+      </div>
+      <p class="text-sm text-slate-600 leading-relaxed" id="modal-body"></p>
+      <div class="flex justify-end pt-2">
+        <button id="btn-modal-close" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          閉じる
+        </button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // アイコンの初期化
-    window.addEventListener('DOMContentLoaded', () => {
+    // --- グローバル状態管理 ---
+    let masterData = [];
+    let columns = [];
+    let sheetNames = [];
+    let workbookObj = null;
+    let currentSheetName = "";
+
+    const STORAGE_KEYS = {
+      MASTER_DATA: 'mailcheck_master_data_v4',
+      FILE_NAME: 'mailcheck_filename_v4',
+      COLUMNS: 'mailcheck_columns_v4',
+      SHEET_NAMES: 'mailcheck_sheet_names_v4',
+      SELECTED_SHEET: 'mailcheck_selected_sheet_v4',
+      MAPPINGS: 'mailcheck_mappings_v4',
+      KEEP_LOCAL: 'mailcheck_keep_local_v4'
+    };
+
+    let checkResults = [];
+
+    // サンプルデータ (姓、店舗名、一次代理店)
+    const sampleExcelData = [
+      { "社員番号": "E001", "姓": "山田 太郎", "メールアドレス": "yamada.taro@example.com", "店舗名": "ドコモショップ本庄店", "一次代理店": "本庄モバイルコミュニケーションズ", "部署": "営業部" },
+      { "社員番号": "E002", "姓": "鈴木 花子", "メールアドレス": "suzuki.hanako@example.com", "店舗名": "ドコモショップ渋谷店", "一次代理店": "渋谷テレコムリンク", "部署": "カウンター業務" },
+      { "社員番号": "E003", "姓": "佐藤 健太", "メールアドレス": "sato.kenta@example.com", "店舗名": "ドコモショップ池袋店", "一次代理店": "池袋ネットワークサービス", "部署": "法人営業" },
+      { "社員番号": "E004", "姓": "渡辺 直樹", "メールアドレス": "watanabe.naoki@partner.com", "店舗名": "ドコモショップ本庄店", "一次代理店": "本庄モバイルコミュニケーションズ", "部署": "外部委託" },
+      { "社員番号": "E005", "姓": "高橋 絵美", "メールアドレス": "takahashi.emi@example.com", "店舗名": "ドコモショップ渋谷店", "一次代理店": "渋谷テレコムリンク", "部署": "マネージャー" },
+      { "社員番号": "E006", "姓": "田中 一郎", "メールアドレス": "tanaka.ichiro@example.com", "店舗名": "ドコモショップ新宿店", "一次代理店": "新宿モバイルテクノロジー", "部署": "カウンター業務" }
+    ];
+
+    const sampleInputEmails = `Subject:\t【関】（お客様相談室案件） DS本庄店：ES_627516（中央） 4/15（水）12：00　締め切りお客様対応状況の確認依頼について
+From: manager-admin@nttdocomo.com
+To: "山田 太郎" <yamada.taro@example.com>, "鈴木 花子" <suzuki.hanako@example.com>
+Cc: satou-member@nttdocomo.com, "外部 連絡者" <random-external@unknown.com>
+
+ドコモショップ新宿店`;
+
+    // --- DOM 要素 ---
+    const dropZone = document.getElementById('drop-zone');
+    const fileInput = document.getElementById('file-input');
+    const loadingSpinner = document.getElementById('loading-spinner');
+    const fileDetails = document.getElementById('file-details');
+    const fileStatusBadge = document.getElementById('file-status-badge');
+    const loadedFileName = document.getElementById('loaded-file-name');
+    const loadedFileRows = document.getElementById('loaded-file-rows');
+    const sheetSelectContainer = document.getElementById('sheet-select-container');
+    const sheetSelect = document.getElementById('sheet-select');
+    const colEmail = document.getElementById('col-email');
+    const colName = document.getElementById('col-name');
+    const colShop = document.getElementById('col-shop'); 
+    const colAgent = document.getElementById('col-agent'); 
+    const colExtra = document.getElementById('col-extra');
+    const previewHeaders = document.getElementById('preview-headers');
+    const previewRows = document.getElementById('preview-rows');
+
+    const emailsInput = document.getElementById('emails-input');
+    const btnCheck = document.getElementById('btn-check');
+    const btnClearInput = document.getElementById('btn-clear-input');
+    const btnSampleLoad = document.getElementById('btn-sample-load');
+    
+    // 解析パネル (STEP3に配置)
+    const parseStatusPanel = document.getElementById('parse-status-panel');
+    const detectedSubject = document.getElementById('detected-subject');
+    const detectedShopObj = document.getElementById('detected-shop');
+    const detectedAgentObj = document.getElementById('detected-agent');
+    const detectedDomainsObj = document.getElementById('detected-domains');
+    const shopMismatchWarning = document.getElementById('shop-mismatch-warning');
+    const shopMismatchDetail = document.getElementById('shop-mismatch-detail');
+    const ignoredFromCount = document.getElementById('ignored-from-count');
+
+    // 本文店舗・突合用の追加DOM要素
+    const detectedBodyShopObj = document.getElementById('detected-body-shop');
+    const shopMismatchStatusObj = document.getElementById('shop-mismatch-status');
+
+    const alertBox = document.getElementById('alert-box');
+    const resultsCard = document.getElementById('results-card');
+    const resultsTableBody = document.getElementById('results-table-body');
+    const resultsCountText = document.getElementById('results-count-text');
+    const btnExportCsv = document.getElementById('btn-export-csv');
+
+    const countSafe = document.getElementById('count-safe');
+    const countWarning = document.getElementById('count-warning');
+    const countError = document.getElementById('count-error');
+
+    // オプション
+    const optCaseInsensitive = document.getElementById('opt-case-insensitive');
+    const optAllowDomainMatch = document.getElementById('opt-allow-domain-match');
+    const optKeepLocal = document.getElementById('opt-keep-local');
+    const btnClearSaved = document.getElementById('btn-clear-saved');
+    const localStorageWarn = document.getElementById('local-storage-warn');
+
+    // モーダル
+    const modalContainer = document.getElementById('modal-container');
+    const modalHeader = document.getElementById('modal-header');
+    const modalIconBg = document.getElementById('modal-icon-bg');
+    const modalIcon = document.getElementById('modal-icon');
+    const modalTitle = document.getElementById('modal-title');
+    const modalBody = document.getElementById('modal-body');
+    const btnModalClose = document.getElementById('btn-modal-close');
+
+    // --- 初期設定 ---
+    window.onload = () => {
       lucide.createIcons();
-    });
+      setupFileListeners();
+      setupActionListeners();
+      tryRestoreSavedData();
+    };
 
-    // 簡易パースボタンのアクション
-    const btnRun = document.getElementById('btn-run');
-    const testTextarea = document.getElementById('test-textarea');
-    const resultList = document.getElementById('result-list');
-    const resultStatus = document.getElementById('result-status');
+    function setupFileListeners() {
+      ['dragenter', 'dragover'].forEach(eventName => {
+        dropZone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          dropZone.classList.add('border-indigo-500', 'bg-indigo-50/50');
+        }, false);
+      });
 
-    btnRun.addEventListener('click', () => {
-      const text = testTextarea.value.trim();
-      if (!text) {
-        alert('テキストを入力してください。');
-        return;
-      }
+      ['dragleave', 'drop'].forEach(eventName => {
+        dropZone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          dropZone.classList.remove('border-indigo-500', 'bg-indigo-50/50');
+        }, false);
+      });
 
-      // 簡易的にメールアドレスを含む行を抽出
-      const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
-      const emailRegex = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/;
-
-      resultList.innerHTML = '';
-      resultList.className = 'divide-y divide-slate-100';
-
-      let hasEmails = false;
-
-      lines.forEach(line => {
-        const match = line.match(emailRegex);
-        if (match) {
-          hasEmails = true;
-          const email = match[1];
-
-          const row = document.createElement('div');
-          row.className = 'py-2 flex justify-between items-center';
-          row.innerHTML = `
-            <div class="font-mono text-xs text-slate-800">${email}</div>
-            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-100 text-emerald-800">
-              抽出成功
-            </span>
-          `;
-          resultList.appendChild(row);
+      dropZone.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        if (files.length > 0) {
+          handleFile(files[0]);
         }
       });
 
-      if (!hasEmails) {
-        resultList.innerHTML = '<div class="text-center text-rose-500 py-4">有効なメールアドレスが検出されませんでした。</div>';
-        resultStatus.classList.add('hidden');
-      } else {
-        // デモ警告の表示
-        resultStatus.classList.remove('hidden');
-      }
-    });
-  </script>
+      fileInput.addEventListener('change', (e) => {
+        const files = e.target.files;
+        if (files.length > 0) {
+          handleFile(files[0]);
+        }
+      });
 
+      sheetSelect.addEventListener('change', (e) => {
+        const selectedSheet = e.target.value;
+        loadSheetData(selectedSheet);
+        saveStateToLocalStorage();
+      });
+
+      colEmail.addEventListener('change', () => { updatePreview(); saveStateToLocalStorage(); });
+      colName.addEventListener('change', () => { updatePreview(); saveStateToLocalStorage(); });
+      colShop.addEventListener('change', () => { updatePreview(); saveStateToLocalStorage(); });
+      colAgent.addEventListener('change', () => { updatePreview(); saveStateToLocalStorage(); });
+      colExtra.addEventListener('change', () => { updatePreview(); saveStateToLocalStorage(); });
+    }
+
+    function setupActionListeners() {
+      btnCheck.addEventListener('click', runCheck);
+
+      btnClearInput.addEventListener('click', () => {
+        emailsInput.value = '';
+        parseStatusPanel.classList.add('hidden');
+        hideResults();
+      });
+
+      btnSampleLoad.addEventListener('click', loadSampleData);
+
+      btnModalClose.addEventListener('click', () => {
+        modalContainer.classList.add('hidden');
+      });
+
+      btnExportCsv.addEventListener('click', exportResultsToCSV);
+
+      optKeepLocal.addEventListener('change', (e) => {
+        if (e.target.checked) {
+          saveStateToLocalStorage(true);
+        } else {
+          clearSavedLocalStorage(false);
+        }
+      });
+
+      btnClearSaved.addEventListener('click', () => {
+        clearSavedLocalStorage(true);
+      });
+    }
+
+    // --- ローカルストレージ（保存）機能 ---
+    function saveStateToLocalStorage(force = false) {
+      const isKeepEnabled = optKeepLocal.checked;
+      localStorageWarn.classList.add('hidden');
+      if (!isKeepEnabled && !force) return;
+
+      try {
+        localStorage.setItem(STORAGE_KEYS.KEEP_LOCAL, isKeepEnabled ? 'true' : 'false');
+        if (!isKeepEnabled) return;
+
+        localStorage.setItem(STORAGE_KEYS.MASTER_DATA, JSON.stringify(masterData));
+        localStorage.setItem(STORAGE_KEYS.FILE_NAME, loadedFileName.innerText);
+        localStorage.setItem(STORAGE_KEYS.COLUMNS, JSON.stringify(columns));
+        localStorage.setItem(STORAGE_KEYS.SHEET_NAMES, JSON.stringify(sheetNames));
+        localStorage.setItem(STORAGE_KEYS.SELECTED_SHEET, currentSheetName);
+        
+        const mappings = {
+          email: colEmail.value,
+          name: colName.value,
+          shop: colShop.value,
+          agent: colAgent.value,
+          extra: colExtra.value
+        };
+        localStorage.setItem(STORAGE_KEYS.MAPPINGS, JSON.stringify(mappings));
+        
+        btnClearSaved.classList.remove('hidden');
+      } catch (err) {
+        console.error('LocalStorage save error:', err);
+        if (err.name === 'QuotaExceededError' || err.code === 22) {
+          localStorageWarn.innerText = "⚠️ データ量が大きすぎるため次回自動復元はオフになりました（判定自体は問題なく可能です）。";
+          localStorageWarn.classList.remove('hidden');
+          optKeepLocal.checked = false;
+          localStorage.setItem(STORAGE_KEYS.KEEP_LOCAL, 'false');
+        }
+      }
+    }
+
+    function tryRestoreSavedData() {
+      const isKeepEnabled = localStorage.getItem(STORAGE_KEYS.KEEP_LOCAL) === 'true';
+      if (!isKeepEnabled) return;
+
+      try {
+        const savedRawData = localStorage.getItem(STORAGE_KEYS.MASTER_DATA);
+        if (!savedRawData) return;
+
+        showLoading(true);
+
+        masterData = JSON.parse(savedRawData);
+        columns = JSON.parse(localStorage.getItem(STORAGE_KEYS.COLUMNS) || '[]');
+        sheetNames = JSON.parse(localStorage.getItem(STORAGE_KEYS.SHEET_NAMES) || '[]');
+        currentSheetName = localStorage.getItem(STORAGE_KEYS.SELECTED_SHEET) || '';
+        
+        loadedFileName.innerText = localStorage.getItem(STORAGE_KEYS.FILE_NAME) || '保存されたマスタ';
+        loadedFileRows.innerText = `${masterData.length} 行`;
+
+        optKeepLocal.checked = true;
+        btnClearSaved.classList.remove('hidden');
+
+        sheetSelect.innerHTML = '';
+        if (sheetNames.length > 1) {
+          sheetSelectContainer.classList.remove('hidden');
+          sheetNames.forEach(name => {
+            const option = document.createElement('option');
+            option.value = name;
+            option.innerText = name;
+            sheetSelect.appendChild(option);
+          });
+          sheetSelect.value = currentSheetName;
+        } else {
+          sheetSelectContainer.classList.add('hidden');
+        }
+
+        rebuildColumnSelectors();
+
+        const savedMappings = JSON.parse(localStorage.getItem(STORAGE_KEYS.MAPPINGS) || '{}');
+        if (savedMappings.email) colEmail.value = savedMappings.email;
+        if (savedMappings.name) colName.value = savedMappings.name;
+        if (savedMappings.shop) colShop.value = savedMappings.shop;
+        if (savedMappings.agent) colAgent.value = savedMappings.agent;
+        if (savedMappings.extra) colExtra.value = savedMappings.extra;
+
+        fileStatusBadge.innerText = 'ブラウザ保存から復元';
+        fileStatusBadge.className = 'text-xs font-medium text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded';
+        
+        showLoading(false);
+        fileDetails.classList.remove('hidden');
+        updatePreview();
+
+        showAlert("ブラウザに保存されたマスタをロードしました。", "info");
+      } catch (err) {
+        console.error('Data restoration failed', err);
+        clearSavedLocalStorage(true);
+        showLoading(false);
+      }
+    }
+
+    function clearSavedLocalStorage(fullReset = true) {
+      Object.values(STORAGE_KEYS).forEach(key => {
+        localStorage.removeItem(key);
+      });
+
+      optKeepLocal.checked = false;
+      btnClearSaved.classList.add('hidden');
+      localStorageWarn.classList.add('hidden');
+
+      if (fullReset) {
+        masterData = [];
+        columns = [];
+        sheetNames = [];
+        currentSheetName = "";
+        
+        fileStatusBadge.innerText = '未読み込み';
+        fileStatusBadge.className = 'text-xs font-medium text-slate-400';
+        fileDetails.classList.add('hidden');
+        
+        hideResults();
+        showAlert("ブラウザ内のキープデータを完全に消去しました。", "info");
+      }
+    }
+
+    function showModal(title, message, type = 'info') {
+      modalTitle.innerText = title;
+      modalBody.innerText = message;
+      
+      modalIconBg.className = 'p-2 rounded-full';
+      if (type === 'error') {
+        modalIconBg.classList.add('bg-rose-100', 'text-rose-600');
+        modalIcon.setAttribute('data-lucide', 'alert-triangle');
+      } else if (type === 'success') {
+        modalIconBg.classList.add('bg-emerald-100', 'text-emerald-600');
+        modalIcon.setAttribute('data-lucide', 'check-circle2');
+      } else {
+        modalIconBg.classList.add('bg-indigo-100', 'text-indigo-600');
+        modalIcon.setAttribute('data-lucide', 'info');
+      }
+      
+      lucide.createIcons();
+      modalContainer.classList.remove('hidden');
+    }
+
+    function showAlert(text, type = 'error') {
+      alertBox.className = "p-4 rounded-xl text-sm border";
+      if (type === 'error') {
+        alertBox.classList.add('bg-rose-50', 'text-rose-800', 'border-rose-200');
+      } else {
+        alertBox.classList.add('bg-indigo-50', 'text-indigo-800', 'border-indigo-200');
+      }
+      alertBox.innerText = text;
+      alertBox.classList.remove('hidden');
+    }
+
+    function hideAlert() {
+      alertBox.classList.add('hidden');
+    }
+
+    function hideResults() {
+      resultsCard.classList.add('hidden');
+    }
+
+    // --- ファイル処理 ---
+    function handleFile(file) {
+      if (!file) return;
+
+      const fileName = file.name;
+      const fileExt = fileName.split('.').pop().toLowerCase();
+      if (!['xlsx', 'xls', 'csv'].includes(fileExt)) {
+        showModal('エラー', '読み込めるファイルは .xlsx, .xls, .csv のみです。', 'error');
+        return;
+      }
+
+      showLoading(true);
+      hideAlert();
+      hideResults();
+
+      const reader = new FileReader();
+      
+      if (fileExt === 'csv') {
+        reader.onload = (e) => {
+          try {
+            const data = new Uint8Array(e.target.result);
+            const workbook = XLSX.read(data, { type: 'array', codepage: 932 });
+            processWorkbook(workbook, fileName);
+          } catch (err) {
+            showModal('エラー', 'CSVファイルの解析に失敗しました。エンコード設定などを確認してください。', 'error');
+            showLoading(false);
+          }
+        };
+      } else {
+        reader.onload = (e) => {
+          try {
+            const data = new Uint8Array(e.target.result);
+            const workbook = XLSX.read(data, { type: 'array' });
+            processWorkbook(workbook, fileName);
+          } catch (err) {
+            showModal('エラー', 'Excelファイルの解析に失敗しました。', 'error');
+            showLoading(false);
+          }
+        };
+      }
+      
+      reader.readAsArrayBuffer(file);
+    }
+
+    function showLoading(isLoading) {
+      if (isLoading) {
+        loadingSpinner.classList.remove('hidden');
+        fileDetails.classList.add('hidden');
+        fileStatusBadge.innerText = '読み込み中';
+        fileStatusBadge.className = 'text-xs font-medium text-amber-500';
+      } else {
+        loadingSpinner.classList.add('hidden');
+      }
+    }
+
+    function processWorkbook(workbook, filename) {
+      workbookObj = workbook;
+      sheetNames = workbook.SheetNames;
+      
+      if (sheetNames.length === 0) {
+        showModal('エラー', 'ファイル内にシートが見つかりません。', 'error');
+        showLoading(false);
+        return;
+      }
+
+      sheetSelect.innerHTML = '';
+      if (sheetNames.length > 1) {
+        sheetSelectContainer.classList.remove('hidden');
+        sheetNames.forEach(name => {
+          const option = document.createElement('option');
+          option.value = name;
+          option.innerText = name;
+          sheetSelect.appendChild(option);
+        });
+      } else {
+        sheetSelectContainer.classList.add('hidden');
+      }
+
+      loadedFileName.innerText = filename;
+      loadSheetData(sheetNames[0]);
+    }
+
+    function loadSheetData(sheetName) {
+      currentSheetName = sheetName;
+      const worksheet = workbookObj.Sheets[sheetName];
+
+      // --- 【スマート・ヘッダー自動検出処理】 ---
+      const rangeRows = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: "" });
+      
+      let bestHeaderIdx = 0;
+      let maxKeywordsCount = -1;
+      
+      const emailKeywords = ['メール', 'mail', 'email', 'e-mail', 'アドレス', '宛先'];
+      const nameKeywords = ['姓', '氏名', '氏', '名', '名前', 'name'];
+      const shopKeywords = ['店舗名', '所属店舗', '店舗', '店', 'shop'];
+      const allKeywords = [...emailKeywords, ...nameKeywords, ...shopKeywords];
+
+      const scanLimit = Math.min(rangeRows.length, 10);
+      for (let i = 0; i < scanLimit; i++) {
+        const row = rangeRows[i];
+        if (!row || !Array.isArray(row)) continue;
+        
+        let matchCount = 0;
+        row.forEach(cell => {
+          const cellStr = String(cell || '').toLowerCase();
+          if (allKeywords.some(kw => cellStr.includes(kw))) {
+            matchCount++;
+          }
+        });
+        
+        if (matchCount > maxKeywordsCount) {
+          maxKeywordsCount = matchCount;
+          bestHeaderIdx = i;
+        }
+      }
+
+      const rawData = XLSX.utils.sheet_to_json(worksheet, { range: bestHeaderIdx, defval: "" });
+      
+      if (rawData.length === 0) {
+        showModal('警告', `シート「${sheetName}」には有効なデータが存在しません。`, 'error');
+        showLoading(false);
+        return;
+      }
+
+      masterData = rawData;
+      loadedFileRows.innerText = `${masterData.length} 行`;
+
+      let allCols = new Set();
+      const checkRowsCount = Math.min(rawData.length, 5);
+      for(let i = 0; i < checkRowsCount; i++) {
+        Object.keys(rawData[i]).forEach(k => allCols.add(k));
+      }
+      columns = Array.from(allCols);
+
+      rebuildColumnSelectors();
+
+      fileStatusBadge.innerText = '読み込み完了';
+      fileStatusBadge.className = 'text-xs font-medium text-emerald-500';
+      
+      showLoading(false);
+      fileDetails.classList.remove('hidden');
+      updatePreview();
+
+      saveStateToLocalStorage();
+    }
+
+    function rebuildColumnSelectors() {
+      colEmail.innerHTML = '';
+      colName.innerHTML = '<option value="">-- 未指定 --</option>';
+      colShop.innerHTML = '<option value="">-- 未指定 --</option>';
+      colAgent.innerHTML = '<option value="">-- 未指定 --</option>';
+      colExtra.innerHTML = '<option value="">-- 未指定 --</option>';
+
+      columns.forEach(col => {
+        const colStr = String(col);
+        const optE = document.createElement('option');
+        optE.value = colStr;
+        optE.innerText = colStr;
+        colEmail.appendChild(optE);
+
+        const optN = document.createElement('option');
+        optN.value = colStr;
+        optN.innerText = colStr;
+        colName.appendChild(optN);
+
+        const optS = document.createElement('option');
+        optS.value = colStr;
+        optS.innerText = colStr;
+        colShop.appendChild(optS);
+
+        const optA = document.createElement('option');
+        optA.value = colStr;
+        optA.innerText = colStr;
+        colAgent.appendChild(optA);
+
+        const optEx = document.createElement('option');
+        optEx.value = colStr;
+        optEx.innerText = colStr;
+        colExtra.appendChild(optEx);
+      });
+
+      const emailKeywords = ['メール', 'mail', 'email', 'e-mail', 'アドレス', '宛先'];
+      const nameKeywords = ['姓', '氏名', '氏', '名', '名前', 'name', '顧客名', '担当者'];
+      const shopKeywords = ['店舗名', '所属店舗', '店舗', '店', 'shop', 'store', '拠点', '支店', '場所'];
+      const agentKeywords = ['一次代理店', '代理店', '代理店名', '一次', '法人', '会社名', '運営代理店', 'agent', 'company'];
+      const extraKeywords = ['部署', '課', '役職', '所属', 'department'];
+
+      let detectedEmail = columns.find(c => emailKeywords.some(key => String(c).toLowerCase().includes(key))) || columns[0];
+      let detectedName = columns.find(c => nameKeywords.some(key => String(c).toLowerCase() === key)) || columns.find(c => nameKeywords.some(key => String(c).toLowerCase().includes(key))) || "";
+      let detectedShop = columns.find(c => shopKeywords.some(key => String(c).toLowerCase() === key)) || columns.find(c => shopKeywords.some(key => String(c).toLowerCase().includes(key))) || "";
+      let detectedAgent = columns.find(c => agentKeywords.some(key => String(c).toLowerCase() === key)) || columns.find(c => agentKeywords.some(key => String(c).toLowerCase().includes(key))) || "";
+      let detectedExtra = columns.find(c => extraKeywords.some(key => String(c).toLowerCase().includes(key))) || "";
+
+      if (!detectedEmail && masterData.length > 0) {
+        for (let col of columns) {
+          const sampleVal = String(masterData[0][col] || "");
+          if (sampleVal.includes('@')) {
+            detectedEmail = col;
+            break;
+          }
+        }
+      }
+
+      if (detectedEmail) colEmail.value = String(detectedEmail);
+      if (detectedName) colName.value = String(detectedName);
+      if (detectedShop) colShop.value = String(detectedShop);
+      if (detectedAgent) colAgent.value = String(detectedAgent);
+      if (detectedExtra) colExtra.value = String(detectedExtra);
+    }
+
+    function updatePreview() {
+      const emailCol = colEmail.value;
+      const nameCol = colName.value;
+      const shopCol = colShop.value;
+      const agentCol = colAgent.value;
+
+      previewHeaders.innerHTML = '';
+      const headersToRender = [emailCol, nameCol, shopCol, agentCol].filter(Boolean);
+      
+      if (headersToRender.length === 0) {
+        previewHeaders.innerHTML = '<th>(設定未完了)</th>';
+        previewRows.innerHTML = '';
+        return;
+      }
+
+      headersToRender.forEach(h => {
+        const th = document.createElement('th');
+        th.className = "py-1.5 px-2 font-medium";
+        th.innerText = String(h);
+        previewHeaders.appendChild(th);
+      });
+
+      previewRows.innerHTML = '';
+      const previewLimit = Math.min(masterData.length, 3);
+      for (let i = 0; i < previewLimit; i++) {
+        const tr = document.createElement('tr');
+        tr.className = "border-b border-slate-100 last:border-0";
+        
+        headersToRender.forEach(h => {
+          const td = document.createElement('td');
+          td.className = "py-1.5 px-2 truncate max-w-[120px]";
+          td.innerText = masterData[i][h] || "-";
+          tr.appendChild(td);
+        });
+        
+        previewRows.appendChild(tr);
+      }
+    }
+
+    function loadSampleData() {
+      masterData = sampleExcelData;
+      columns = Object.keys(sampleExcelData[0]);
+      
+      loadedFileName.innerText = "代理店・所属店舗マスタ_デモ.xlsx";
+      loadedFileRows.innerText = `${masterData.length} 行`;
+      sheetSelectContainer.classList.add('hidden');
+
+      rebuildColumnSelectors();
+      
+      colEmail.value = "メールアドレス";
+      colName.value = "姓";
+      colShop.value = "店舗名";
+      colAgent.value = "一次代理店";
+      colExtra.value = "部署";
+
+      updatePreview();
+
+      fileStatusBadge.innerText = 'デモデータロード済';
+      fileStatusBadge.className = 'text-xs font-medium text-indigo-500 bg-indigo-50 px-2 py-0.5 rounded';
+      fileDetails.classList.remove('hidden');
+
+      emailsInput.value = sampleInputEmails;
+      
+      hideResults();
+      showAlert("店舗（DS本庄店・渋谷店）突合デモマスタと略記対応メールをロードしました。「判定する」ボタンをクリックしてください。", "info");
+
+      saveStateToLocalStorage();
+    }
+
+    // --- 店舗名の地名部分（コア名）を抽出する正規化ヘルパー ---
+    function getShopCoreName(name) {
+      if (!name) return "";
+      return String(name)
+        .replace(/ドコモショップ/gi, '')
+        .replace(/DS/gi, '')
+        .replace(/支店/g, '')
+        .replace(/店/g, '')
+        .replace(/\s+/g, '') // スペース除去
+        .trim();
+    }
+
+    // --- メールの抽出 ＆ 判定ロジック ---
+    function runCheck() {
+      if (masterData.length === 0) {
+        showModal('マスタ未登録', 'まずはSTEP 1からマスタExcelを読み込むか、「デモで試す」をクリックしてください。', 'error');
+        return;
+      }
+
+      hideAlert();
+
+      const inputText = emailsInput.value.trim();
+      if (!inputText) {
+        showAlert("チェック対象のメールテキストを貼り付けてください。");
+        return;
+      }
+
+      const emailCol = colEmail.value;
+      const nameCol = colName.value;
+      const shopCol = colShop.value;
+      const agentCol = colAgent.value;
+      const extraCol = colExtra.value;
+
+      const caseInsensitive = optCaseInsensitive.checked;
+      const allowDomainMatch = optAllowDomainMatch.checked;
+
+      if (!emailCol || !shopCol) {
+        showModal('設定エラー', 'マスタの「メールアドレス列」と「所属店舗列」の両方を正しく選択してください。', 'error');
+        return;
+      }
+
+      // 1. 本文を大枠・店舗名からインテリジェント解析 (略称 DS本庄店 等に対応)
+      const parseReport = parseAndExtractRecipients(inputText, shopCol);
+
+      // 件名・店舗の検出結果をUI表示
+      parseStatusPanel.classList.remove('hidden');
+      detectedSubject.innerText = parseReport.subject || '(Subjectヘッダーが検出できませんでした)';
+      
+      // 本文指定の店舗名の表示
+      const bodyShopsArray = Array.from(parseReport.bodyShops);
+      if (bodyShopsArray.length > 0) {
+        detectedBodyShopObj.innerText = bodyShopsArray.join('、');
+      } else {
+        detectedBodyShopObj.innerText = "本文中に店舗名の記載はありませんでした";
+      }
+
+      // 2. 件名と本文の店舗名不一致チェック
+      let hasShopMismatch = false;
+      let mismatchDetails = "";
+
+      if (parseReport.detectedShop) {
+        detectedShopObj.innerText = `【${parseReport.detectedShop}】 (略記からマスタ店舗特定)`;
+        detectedShopObj.className = "font-bold text-indigo-800 bg-indigo-50 px-2 py-0.5 rounded inline-block mt-0.5";
+
+        const detectedCore = getShopCoreName(parseReport.detectedShop);
+
+        if (bodyShopsArray.length === 0) {
+          // 件名店舗はあるが、本文中に店舗が1件もない場合は、本文側指定漏れとして「不適合」にする
+          hasShopMismatch = true;
+          mismatchDetails = `件名の宛先店舗は【${parseReport.detectedShop}】ですが、メール本文中に店舗名の指定が検出されませんでした！本文側の宛先指定漏れ、または誤送信の可能性があります！`;
+          shopMismatchStatusObj.innerHTML = `<span class="text-rose-600 font-bold flex items-center gap-1 animate-pulse"><i data-lucide="alert-triangle" class="w-4 h-4"></i>不適合（本文中に店舗指定なし）</span>`;
+        } else {
+          // 本文中に件名店舗のコア地名（例: 本庄）が含まれているか照合
+          const hasMatchingShopInBody = bodyShopsArray.some(shop => {
+            return getShopCoreName(shop) === detectedCore;
+          });
+
+          if (!hasMatchingShopInBody) {
+            // 本文中に店舗名はあるが、件名の店舗が1件も含まれていない場合
+            hasShopMismatch = true;
+            mismatchDetails = `件名の宛先店舗は【${parseReport.detectedShop}】（正式：${parseReport.detectedShop}）ですが、メール本文中に異なる店舗【${bodyShopsArray.join('、')}】の記載しか検出されませんでした！`;
+            shopMismatchStatusObj.innerHTML = `<span class="text-rose-600 font-bold flex items-center gap-1 animate-pulse"><i data-lucide="alert-triangle" class="w-4 h-4"></i>店舗不一致（件名：${parseReport.detectedShop} ⇔ 本文：${bodyShopsArray.join('、')}）</span>`;
+          } else {
+            // 本文中に件名店舗が含まれているが、それ以外の別店舗名も同時にノイズとして混在している場合
+            const otherShopsInBody = bodyShopsArray.filter(shop => getShopCoreName(shop) !== detectedCore);
+            if (otherShopsInBody.length > 0) {
+              hasShopMismatch = true;
+              mismatchDetails = `件名の対象店舗【${parseReport.detectedShop}】は本文中に含まれていますが、無関係な他店舗【${otherShopsInBody.join('、')}】の指定も混在しています。誤転記や誤送信の可能性があります！`;
+              shopMismatchStatusObj.innerHTML = `<span class="text-amber-600 font-bold flex items-center gap-1"><i data-lucide="alert-triangle" class="w-4 h-4"></i>一部不一致（件名：${parseReport.detectedShop} ⇔ 本文混在：${otherShopsInBody.join('、')}）</span>`;
+            } else {
+              // 完全合致
+              shopMismatchStatusObj.innerHTML = `<span class="text-emerald-600 font-bold flex items-center gap-1"><i data-lucide="check" class="w-4 h-4"></i>一致（${parseReport.detectedShop}）</span>`;
+            }
+          }
+        }
+      } else {
+        detectedShopObj.innerText = '件名から店舗名を特定できませんでした';
+        detectedShopObj.className = "font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded inline-block mt-0.5";
+        
+        if (bodyShopsArray.length > 0) {
+          hasShopMismatch = true;
+          mismatchDetails = `件名からは店舗が特定できませんでしたが、本文内に【${bodyShopsArray.join('、')}】の指定が含まれています。件名への書き漏れがないかご確認ください。`;
+          shopMismatchStatusObj.innerHTML = `<span class="text-amber-600 font-bold">件名未特定（本文に ${bodyShopsArray.join('、')} 記載あり）</span>`;
+        } else {
+          shopMismatchStatusObj.innerHTML = `<span class="text-slate-500">店舗指定なし</span>`;
+        }
+      }
+
+      // 不一致警告表示
+      if (hasShopMismatch) {
+        shopMismatchWarning.classList.remove('hidden');
+        shopMismatchDetail.innerText = mismatchDetails;
+      } else {
+        shopMismatchWarning.classList.add('hidden');
+      }
+
+      // 3. 判明した店舗に紐づく「代理店名」と「メールドメイン」を逆引き表示
+      let matchedAgentName = "(該当なし / 店舗未特定)";
+      let matchedDomains = "(該当なし / 店舗未特定)";
+
+      if (parseReport.detectedShop) {
+        const shopRows = masterData.filter(row => String(row[shopCol] || '').trim() === parseReport.detectedShop);
+        if (shopRows.length > 0) {
+          if (agentCol) {
+            matchedAgentName = shopRows[0][agentCol] || "(マスタに登録なし)";
+          } else {
+            matchedAgentName = "(マスタに代理店名の列指定がありません)";
+          }
+
+          const domains = new Set();
+          shopRows.forEach(row => {
+            const emailAddr = String(row[emailCol] || '').trim();
+            const atIdx = emailAddr.lastIndexOf('@');
+            if (atIdx !== -1) {
+              domains.add(emailAddr.substring(atIdx));
+            }
+          });
+          matchedDomains = domains.size > 0 ? Array.from(domains).join(', ') : "(マスタ内にアドレスなし)";
+        } else {
+          matchedAgentName = `【${parseReport.detectedShop}】に紐づくメンバーがマスタ上に存在しません`;
+        }
+      }
+      detectedAgentObj.innerText = matchedAgentName;
+      detectedDomainsObj.innerText = matchedDomains;
+      ignoredFromCount.innerText = parseReport.ignoredFromCount;
+
+      // 4. マスタ検索高速マップの生成
+      const lookupMap = new Map();
+      const domainSet = new Set();
+
+      masterData.forEach(row => {
+        let mVal = String(row[emailCol] || '').trim();
+        if (!mVal) return;
+
+        if (caseInsensitive) {
+          mVal = mVal.toLowerCase();
+        }
+        lookupMap.set(mVal, row);
+
+        if (allowDomainMatch) {
+          const atIdx = mVal.lastIndexOf('@');
+          if (atIdx !== -1) {
+            domainSet.add(mVal.substring(atIdx));
+          }
+        }
+      });
+
+      // 5. 宛先一人ずつの1対1照合と証跡の構築
+      checkResults = [];
+      let safeCount = 0;
+      let warningCount = 0;
+      let errorCount = 0;
+
+      const seenEmails = new Set();
+
+      parseReport.validEntries.forEach(entry => {
+        const rawValue = entry.raw;
+        const email = entry.email;
+        const parsedName = entry.name; 
+
+        const res = {
+          raw: rawValue,
+          email: email,
+          parsedName: parsedName,
+          status: 'warning',
+          matchedName: '-',
+          matchedShop: '-',
+          matchedExtra: '-',
+          evidence: 'マスタ(Excel)内に登録証跡がみつかりません。',
+          details: 'マスタに存在しない、または外部アドレスです。',
+          isDocomo: false
+        };
+
+        if (!email) {
+          res.status = 'error';
+          res.details = 'アドレス形式を抽出できません。';
+          res.evidence = 'マスタ未照合';
+          errorCount++;
+          checkResults.push(res);
+          return;
+        }
+
+        const lowerEmail = email.toLowerCase();
+        if (seenEmails.has(lowerEmail)) {
+          res.status = 'error';
+          res.details = '宛先内で重複設定されています。';
+          res.evidence = '重複検出のためスキップ';
+          errorCount++;
+          checkResults.push(res);
+          return;
+        }
+        seenEmails.add(lowerEmail);
+
+        // A. 社内ドメイン(nttdocomo.com)判定
+        if (lowerEmail.endsWith('@nttdocomo.com')) {
+          res.status = 'safe';
+          res.details = '社内ドメインアドレスのため自動的に判定不要(OK)とします。';
+          res.matchedName = parsedName || '社内メンバー';
+          res.matchedShop = '社内ドメイン';
+          res.evidence = `ドコモ社内共通枠 (nttdocomo.com)`;
+          res.isDocomo = true;
+          safeCount++;
+          checkResults.push(res);
+          return;
+        }
+
+        // B. マスタ照合
+        const searchKey = caseInsensitive ? email.toLowerCase() : email;
+
+        if (lookupMap.has(searchKey)) {
+          const matchedRow = lookupMap.get(searchKey);
+          res.matchedName = nameCol ? (matchedRow[nameCol] || '名前未定義') : 'マスタ一致';
+          res.matchedShop = matchedRow[shopCol] || '店舗情報なし';
+          res.matchedExtra = extraCol ? (matchedRow[extraCol] || '-') : '-';
+
+          const masterShop = String(res.matchedShop).trim();
+          res.evidence = `【${masterShop}】${res.matchedName} (${email})`;
+
+          // 【高度な店舗突合ロジック：件名店舗、本文店舗、およびマスタ所属店舗のクロス照合】
+          const masterShopCore = getShopCoreName(masterShop);
+          const subjectShopCore = parseReport.detectedShop ? getShopCoreName(parseReport.detectedShop) : "";
+          const bodyShopCores = bodyShopsArray.map(s => getShopCoreName(s));
+
+          let isShopMatched = false;
+          let matchDetailMsg = "";
+
+          if (subjectShopCore && bodyShopCores.length > 0) {
+            // 件名と本文の両方に店舗指定がある場合
+            const isSubjectMatched = (masterShopCore === subjectShopCore);
+            const isBodyMatched = bodyShopCores.includes(masterShopCore);
+
+            // 件名店舗と本文店舗の主要な地名コアが一致しているか
+            const isEmailDirectionConsistent = (subjectShopCore === bodyShopCores[0]);
+
+            if (isEmailDirectionConsistent) {
+              // 1. 件名と本文の店舗指定が一致している健全なケース
+              if (isSubjectMatched) {
+                isShopMatched = true;
+                matchDetailMsg = `合致。指定店舗【${parseReport.detectedShop}】の正規メンバーです。`;
+              } else {
+                matchDetailMsg = `警告：指定店舗は【${parseReport.detectedShop}】ですが、このアドレスの所属は【${masterShop}】です！`;
+              }
+            } else {
+              // 2. 件名と本文の店舗指定が食い違っている危険なケース (件名または本文の指定店舗と異なる場合も完全に不適合とする)
+              if (isSubjectMatched && isBodyMatched) {
+                matchDetailMsg = `警告：件名店舗【${parseReport.detectedShop}】と本文店舗【${bodyShopsArray.join('、')}】の両方に合致。ただしメール指定の不整合あり。`;
+              } else if (isSubjectMatched) {
+                matchDetailMsg = `警告：件名店舗【${parseReport.detectedShop}】とは一致しますが、本文指定【${bodyShopsArray.join('、')}】と異なります。`;
+              } else if (isBodyMatched) {
+                matchDetailMsg = `警告：本文店舗【${bodyShopsArray.join('、')}】とは一致しますが、件名指定【${parseReport.detectedShop}】と異なります。`;
+              } else {
+                matchDetailMsg = `警告：件名店舗【${parseReport.detectedShop}】とも、本文店舗【${bodyShopsArray.join('、')}】とも一致しません！このアドレスの所属は【${masterShop}】です！`;
+              }
+            }
+          } else if (subjectShopCore) {
+            // 3. 件名のみ指定があり、本文に店舗指定がない（本文指定漏れ警告がある状態）
+            const isSubjectMatched = (masterShopCore === subjectShopCore);
+            if (isSubjectMatched) {
+              isShopMatched = true;
+              matchDetailMsg = `合致。件名店舗【${parseReport.detectedShop}】と一致。※ただし本文に店舗指定がありません。`;
+            } else {
+              matchDetailMsg = `警告：件名店舗は【${parseReport.detectedShop}】ですが、このアドレスの所属は【${masterShop}】です！`;
+            }
+          } else if (bodyShopCores.length > 0) {
+            // 4. 本文のみ指定がある場合
+            const isBodyMatched = bodyShopCores.includes(masterShopCore);
+            if (isBodyMatched) {
+              isShopMatched = true;
+              matchDetailMsg = `合致。本文指定店舗【${bodyShopsArray.join('、')}】と一致。`;
+            } else {
+              matchDetailMsg = `警告：本文指定店舗は【${bodyShopsArray.join('、')}】ですが、このアドレスの所属は【${masterShop}】です！`;
+            }
+          } else {
+            // 5. メール全体で店舗の指定が全くない場合
+            isShopMatched = true;
+            matchDetailMsg = `マスタ登録あり（メール内に店舗指定がないため所属一致確認はスキップ）`;
+          }
+
+          if (isShopMatched) {
+            res.status = 'safe';
+            res.details = matchDetailMsg;
+            safeCount++;
+          } else {
+            res.status = 'warning';
+            res.details = matchDetailMsg;
+            warningCount++;
+          }
+        } else if (allowDomainMatch) {
+          const atIdx = searchKey.lastIndexOf('@');
+          const domain = atIdx !== -1 ? searchKey.substring(atIdx) : '';
+          if (domain && domainSet.has(domain)) {
+            res.status = 'safe';
+            res.details = `ドメイン [${domain}] 前方一致による許可枠。`;
+            res.matchedName = parsedName || 'ドメイン許可者';
+            res.matchedShop = 'ドメイン許可';
+            res.evidence = `マスタドメイン前方一致証跡: [${domain}]`;
+            safeCount++;
+          } else {
+            warningCount++;
+          }
+        } else {
+          warningCount++;
+        }
+
+        checkResults.push(res);
+      });
+
+      countSafe.innerText = safeCount;
+      countWarning.innerText = warningCount;
+      countError.innerText = errorCount;
+
+      renderResultsTable();
+
+      resultsCard.classList.remove('hidden');
+      resultsCard.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // --- 件名（Subject）の店舗と、本文に書かれた店舗を抽出 (メール本文の店舗名もスキャン) ---
+    function parseAndExtractRecipients(text, shopColName) {
+      const lines = text.split('\n');
+      
+      let subjectText = "";
+      let ignoredFromCount = 0;
+      const validEntries = [];
+      const bodyLinesForShopSearch = [];
+
+      // 全角コロン「：」やタブ文字、スペース等に広く対応するための正規表現
+      const subjectRegex = /^\s*(subject|件名)\s*[:：]\s*(.*)$/i;
+      const fromRegex = /^\s*(from|差出人|送信者)\s*[:：]/i;
+      const destRegex = /^\s*(to|cc|bcc|宛先|送信先|ｃｃ|ｂｃｃ)\s*[:：]\s*(.*)$/i;
+
+      let isUnderSubjectAndHeaders = false;
+
+      lines.forEach(rawLine => {
+        const line = rawLine.trim();
+        if (!line) {
+          if (isUnderSubjectAndHeaders) {
+            bodyLinesForShopSearch.push("");
+          }
+          return;
+        }
+
+        // Subjectの判定
+        const subjectMatch = line.match(subjectRegex);
+        if (subjectMatch) {
+          subjectText = subjectMatch[2].trim();
+          isUnderSubjectAndHeaders = true;
+          return; 
+        }
+
+        // Fromの判定
+        if (fromRegex.test(line)) {
+          ignoredFromCount++;
+          return; 
+        }
+
+        // To/Ccなどの判定
+        const destMatch = line.match(destRegex);
+        if (destMatch) {
+          const destContent = destMatch[2].trim();
+          const persons = splitAndParseRecipientList(destContent);
+          persons.forEach(p => {
+            validEntries.push(p);
+          });
+          return;
+        }
+
+        // ヘッダー部以外の普通の文章、またはSubject後の一般本文
+        if (isUnderSubjectAndHeaders) {
+          bodyLinesForShopSearch.push(line);
+        }
+      });
+
+      // マスタ情報から店舗リストを生成
+      let detectedShop = "";
+      const bodyShops = new Set();
+
+      if (shopColName && masterData.length > 0) {
+        const uniqueShops = Array.from(new Set(
+          masterData.map(row => String(row[shopColName] || '').trim()).filter(Boolean)
+        ));
+
+        // A. 件名（Subject）から店舗を判別
+        if (subjectText) {
+          let found = uniqueShops.find(shop => subjectText.includes(shop));
+          
+          if (!found) {
+            found = uniqueShops.find(shop => {
+              const shopCore = getShopCoreName(shop);
+              if (!shopCore || shopCore.length < 2) return false;
+              
+              const normalizedSubject = getShopCoreName(subjectText);
+              return subjectText.includes(shopCore) || normalizedSubject.includes(shopCore);
+            });
+          }
+
+          if (found) {
+            detectedShop = found;
+          }
+        }
+
+        // B. メール本文全体から他店舗記述を抽出
+        const fullBodyText = bodyLinesForShopSearch.join(' ');
+        uniqueShops.forEach(shop => {
+          const shopCore = getShopCoreName(shop);
+          if (!shopCore || shopCore.length < 2) return;
+
+          if (fullBodyText.includes(shopCore)) {
+            bodyShops.add(shop);
+          }
+        });
+      }
+
+      return {
+        subject: subjectText,
+        detectedShop: detectedShop,
+        bodyShops: bodyShops,
+        ignoredFromCount: ignoredFromCount,
+        validEntries: validEntries
+      };
+    }
+
+    /**
+     * 1行に連なる宛先(To, Cc)をクォーテーションを考慮し一人ずつに分解
+     */
+    function splitAndParseRecipientList(text) {
+      const results = [];
+      const parts = [];
+      let current = "";
+      let inQuotes = false;
+
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        if (char === '"') {
+          inQuotes = !inQuotes;
+          current += char;
+        } else if ((char === ',' || char === ';') && !inQuotes) {
+          parts.push(current);
+          current = "";
+        } else {
+          current += char;
+        }
+      }
+      if (current) {
+        parts.push(current);
+      }
+
+      const emailRegex = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/;
+
+      parts.forEach(part => {
+        const trimmed = part.trim();
+        if (!trimmed) return;
+
+        const emailMatch = trimmed.match(emailRegex);
+        if (emailMatch) {
+          const email = emailMatch[1];
+          let parsedName = "";
+
+          const angleBracketIdx = trimmed.indexOf('<');
+          if (angleBracketIdx !== -1) {
+            parsedName = trimmed.substring(0, angleBracketIdx).trim();
+            parsedName = parsedName.replace(/^["']|["']$/g, '').trim();
+          } else {
+            const spaceIdx = trimmed.lastIndexOf(email) - 1;
+            if (spaceIdx > 0) {
+              parsedName = trimmed.substring(0, spaceIdx).trim();
+              parsedName = parsedName.replace(/^["']|["']$/g, '').trim();
+            }
+          }
+
+          results.push({
+            raw: trimmed,
+            name: parsedName || "",
+            email: email
+          });
+        } else {
+          results.push({
+            raw: trimmed,
+            name: "",
+            email: null
+          });
+        }
+      });
+
+      return results;
+    }
+
+    function renderResultsTable() {
+      resultsTableBody.innerHTML = '';
+      resultsCountText.innerText = `全 ${checkResults.length} 件の宛先を検出・分割`;
+
+      checkResults.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50 transition-colors";
+
+        // A. 判定
+        const tdStatus = document.createElement('td');
+        tdStatus.className = "px-4 py-3.5 whitespace-nowrap align-middle w-[12%] text-center";
+        let badgeHtml = '';
+        if (item.status === 'safe') {
+          if (item.isDocomo) {
+            badgeHtml = `<span class="inline-flex items-center px-2 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 gap-1"><i data-lucide="check-square" class="w-3.5 h-3.5"></i>社内 (OK)</span>`;
+          } else {
+            badgeHtml = `<span class="inline-flex items-center px-2 py-1 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 gap-1"><i data-lucide="check" class="w-3.5 h-3.5"></i>合致 (OK)</span>`;
+          }
+        } else if (item.status === 'warning') {
+          if (item.details.includes('異なる') || item.details.includes('所属') || item.details.includes('警告：')) {
+            badgeHtml = `<span class="inline-flex items-center px-2 py-1 rounded-full text-[11px] font-bold bg-rose-50 text-rose-700 border border-rose-200 gap-1 animate-pulse"><i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i>店舗不一致</span>`;
+          } else {
+            badgeHtml = `<span class="inline-flex items-center px-2 py-1 rounded-full text-[11px] font-bold bg-rose-100 text-rose-800 border border-rose-200 gap-1"><i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>警告 (不在)</span>`;
+          }
+        } else {
+          badgeHtml = `<span class="inline-flex items-center px-2 py-1 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800 border border-amber-200 gap-1"><i data-lucide="help-circle" class="w-3.5 h-3.5"></i>形式エラー</span>`;
+        }
+        tdStatus.innerHTML = badgeHtml;
+        tr.appendChild(tdStatus);
+
+        // B. 抽出宛先
+        const tdInput = document.createElement('td');
+        tdInput.className = "px-4 py-3.5 align-middle w-[28%]";
+        let displayNameHtml = item.parsedName 
+          ? `<span class="text-xs bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded font-bold mr-1.5 block md:inline mb-1 md:mb-0">${escapeHtml(item.parsedName)}</span>`
+          : '';
+        tdInput.innerHTML = `
+          <div class="text-sm font-medium text-slate-900 flex flex-col xl:flex-row xl:items-center gap-1 mb-1">
+            ${displayNameHtml}
+            <span class="text-slate-500 font-mono text-xs select-all bg-slate-50 border border-slate-100 px-1.5 py-0.5 rounded inline-block">${escapeHtml(item.email || 'アドレスなし')}</span>
+          </div>
+          <div class="text-[10px] text-slate-400 truncate" title="入力: ${item.raw}">入力: ${escapeHtml(item.raw)}</div>
+        `;
+        tr.appendChild(tdInput);
+
+        // C. マスタ登録証跡（エビデンス表示）
+        const tdEvidence = document.createElement('td');
+        tdEvidence.className = "px-4 py-3.5 align-middle text-xs w-[35%]";
+        if (item.status === 'safe' || item.details.includes('異なる') || item.details.includes('所属') || item.details.includes('不整合') || item.details.includes('警告：')) {
+          if (item.isDocomo) {
+            tdEvidence.innerHTML = `<span class="text-emerald-700 bg-emerald-50 px-2 py-1.5 rounded border border-emerald-150 block font-semibold text-center">${escapeHtml(item.evidence)}</span>`;
+          } else {
+            tdEvidence.innerHTML = `
+              <div class="p-2 bg-slate-100/80 border border-slate-200 rounded text-slate-800 font-medium">
+                <span class="text-[10px] font-bold text-indigo-700 block uppercase mb-1 flex items-center gap-1">
+                  <i data-lucide="database" class="w-3 h-3"></i>マスタ(XLS)照合エビデンス
+                </span>
+                <span class="font-mono text-xs text-slate-900 block bg-white px-1.5 py-1 rounded border border-slate-150">${escapeHtml(item.evidence)}</span>
+              </div>
+            `;
+          }
+        } else {
+          tdEvidence.innerHTML = `<span class="text-slate-400 italic">証跡なし（マスタ未検出）</span>`;
+        }
+        tr.appendChild(tdEvidence);
+
+        // D. 突合詳細説明
+        const tdDetails = document.createElement('td');
+        tdDetails.className = "px-4 py-3.5 text-xs font-medium align-middle w-[25%] leading-normal";
+        if (item.details.includes('警告：') || item.details.includes('不整合')) {
+          tdDetails.className += " text-rose-600 font-bold";
+        } else if (item.status === 'safe') {
+          tdDetails.className += " text-emerald-600";
+        } else {
+          tdDetails.className += " text-slate-500";
+        }
+        tdDetails.innerText = item.details;
+        tr.appendChild(tdDetails);
+
+        tr.querySelectorAll('td').forEach(cell => cell.classList.add('break-words'));
+        resultsTableBody.appendChild(tr);
+      });
+
+      lucide.createIcons();
+    }
+
+    function exportResultsToCSV() {
+      if (checkResults.length === 0) return;
+
+      let csvContent = "\uFEFF";
+      csvContent += "判定,宛先名,メールアドレス,マスタ登録証跡,判定詳細\r\n";
+
+      checkResults.forEach(item => {
+        let statusText = 'エラー';
+        if (item.status === 'safe') {
+          statusText = item.isDocomo ? '社内(OK)' : '合致確認(OK)';
+        }
+        if (item.status === 'warning') {
+          statusText = item.details.includes('異なる') || item.details.includes('所属') ? '店舗不一致' : '警告(不在)';
+        }
+
+        const row = [
+          statusText,
+          item.parsedName || '',
+          item.email || '',
+          item.evidence,
+          item.details
+        ].map(val => `"${val.replace(/"/g, '""')}"`).join(",");
+        
+        csvContent += row + "\r\n";
+      });
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      
+      const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+      link.setAttribute("download", `店舗所属突合判定結果_${dateStr}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+    }
+  </script>
 </body>
 </html>
