@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <!-- サーバー設定に負けない、最も標準的な文字コード指定 -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MailCheck Pro - 文字化けテスト＆シンプル判定版</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans">
+
+  <!-- ヘッダー -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+    <div class="max-w-[1200px] mx-auto px-4 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="bg-indigo-600 p-2 rounded-lg text-white">
+          <i data-lucide="shield-check" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <h1 class="text-lg font-bold text-slate-900">MailCheck Pro</h1>
+          <span class="text-xs text-slate-500">文字化けテスト ＆ 動作検証ページ</span>
+        </div>
+      </div>
+      <div>
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+          テスト用シンプル版
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- メインコンテンツ -->
+  <main class="flex-grow max-w-[1200px] w-full mx-auto px-4 py-8 space-y-6">
+    
+    <!-- 文字コード判定ボード -->
+    <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-4">
+      <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+        <i data-lucide="info" class="text-indigo-600"></i>
+        文字化け検証用ダミーボード
+      </h2>
+      <p class="text-sm text-slate-600 leading-relaxed">
+        この画面の日本語（ひらがな、カタカナ、漢字、および特殊記号など）がブラウザで正常に読み取れているかをご確認ください。
+      </p>
+
+      <!-- 文字テスト枠 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-2">
+          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">ひらがな・カタカナ・漢字テスト</h3>
+          <p class="text-lg font-semibold text-slate-800">あいうえお かきくけこ さしすせそ</p>
+          <p class="text-lg font-semibold text-slate-800">アイウエオ カキクケコ サシスセソ</p>
+          <p class="text-lg font-semibold text-slate-800">ドコモショップ本庄店 ＆ 新宿店 突合検証</p>
+        </div>
+        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-2">
+          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">記号・絵文字テスト</h3>
+          <p class="text-lg font-semibold text-slate-800">⚠️ 警告：店舗の指定が異なります！【不適合】</p>
+          <p class="text-lg font-semibold text-slate-800">※（）［］：；￥ ＠ ＆ ％ ＄ ＃</p>
+          <p class="text-lg font-semibold text-slate-800">✅ 安全 (OK) ＆ ❌ エラー / 重複</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 簡易的な宛先チェックモック -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      
+      <!-- 入力エリア -->
+      <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-4">
+        <h3 class="font-bold text-slate-900 text-lg">宛先テキストの貼り付け</h3>
+        <p class="text-xs text-slate-500">メール件名や本文、宛先を以下にコピペします。</p>
+        <textarea id="test-textarea" rows="6" class="w-full border border-slate-300 rounded-lg p-3 text-sm font-mono focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" placeholder="ここにメールヘッダーや本文を入力してください。"></textarea>
+        <button id="btn-run" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-lg text-sm transition-colors">
+          判定を開始する
+        </button>
+      </div>
+
+      <!-- 結果エリア -->
+      <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-4">
+        <h3 class="font-bold text-slate-900 text-lg">判定結果プレビュー</h3>
+        <p class="text-xs text-slate-500">ボタンを押すと、簡易的に入力行が1人ずつ分解されます。</p>
+        
+        <div id="result-status" class="hidden p-3 bg-rose-50 border border-rose-200 rounded-lg text-rose-800 text-xs font-bold">
+          ⚠️ 警告：メール内に店舗指定の不一致（本庄店 ⇔ 新宿店）が検知されました！
+        </div>
+
+        <div class="border border-slate-100 rounded-lg overflow-hidden text-sm">
+          <div class="bg-slate-50 p-2.5 border-b border-slate-200 font-bold text-slate-600 flex justify-between">
+            <span>抽出された宛先</span>
+            <span>突合ステータス</span>
+          </div>
+          <div id="result-list" class="divide-y divide-slate-100 p-3 min-h-[100px] text-slate-500 italic flex items-center justify-center">
+            テキストを入力して判定ボタンをクリックしてください。
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- フッター -->
+  <footer class="bg-white border-t border-slate-200 py-6 mt-auto">
+    <div class="max-w-[1200px] mx-auto px-4 text-center text-xs text-slate-500 space-y-1">
+      <p>このファイルの日本語がすべて美しく読めていれば、UTF-8エンコードでの配信テストは成功です。</p>
+      <p>&copy; 2026 MailCheck Pro. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // アイコンの初期化
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+    });
+
+    // 簡易パースボタンのアクション
+    const btnRun = document.getElementById('btn-run');
+    const testTextarea = document.getElementById('test-textarea');
+    const resultList = document.getElementById('result-list');
+    const resultStatus = document.getElementById('result-status');
+
+    btnRun.addEventListener('click', () => {
+      const text = testTextarea.value.trim();
+      if (!text) {
+        alert('テキストを入力してください。');
+        return;
+      }
+
+      // 簡易的にメールアドレスを含む行を抽出
+      const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+      const emailRegex = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/;
+
+      resultList.innerHTML = '';
+      resultList.className = 'divide-y divide-slate-100';
+
+      let hasEmails = false;
+
+      lines.forEach(line => {
+        const match = line.match(emailRegex);
+        if (match) {
+          hasEmails = true;
+          const email = match[1];
+
+          const row = document.createElement('div');
+          row.className = 'py-2 flex justify-between items-center';
+          row.innerHTML = `
+            <div class="font-mono text-xs text-slate-800">${email}</div>
+            <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-100 text-emerald-800">
+              抽出成功
+            </span>
+          `;
+          resultList.appendChild(row);
+        }
+      });
+
+      if (!hasEmails) {
+        resultList.innerHTML = '<div class="text-center text-rose-500 py-4">有効なメールアドレスが検出されませんでした。</div>';
+        resultStatus.classList.add('hidden');
+      } else {
+        // デモ警告の表示
+        resultStatus.classList.remove('hidden');
+      }
+    });
+  </script>
+
+</body>
+</html>
