@@ -1,8 +1,0 @@
-HTMLファイルの文字コードを UTF-8、改行コードを LF で固定
-
-*.html text eol=lf working-tree-encoding=UTF-8
-
-CSVファイル、JSファイルの文字コードを UTF-8 で固定
-
-*.js text eol=lf working-tree-encoding=UTF-8
-*.csv text eol=lf
