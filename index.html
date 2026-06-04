@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <!-- HTTPレスポンスを補完し、ブラウザにUTF-8での解釈を強制するメタタグ -->
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- 
+    【超重要】ブラウザによる文字コードの誤判定を完全に防ぐため、
+    文字コード宣言メタタグはheadタグ内の他のどのタグ（title等）よりも「最初」に記述する必要があります。
+  -->
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MailCheck Pro - 店舗・代理店 厳格クロス突合ツール</title>
+  
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- SheetJS (Excel解析用) -->
@@ -54,7 +59,7 @@
         </h2>
         <p class="text-sm text-indigo-950/70 leading-relaxed">
           件名の店舗名（例：DS本庄店）を自動で読み取り、マスタ上の正式店舗（例：ドコモショップ本庄店）と曖昧マッチをかけ、宛先アドレスが<strong>「●●店の〇〇さん」として正しいか</strong>をマスタから抜いた登録情報を証跡にして1人ずつ検証します。<br>
-          件名と本文中の店舗指定が異なる場合の自動警告機能、および店舗に紐づく代理店名・対応メールドメイン of 自動提示機能を搭載しています。
+          件名と本文中の店舗指定が異なる場合の自動警告機能、および店舗に紐づく代理店名・対応メールドメインの自動提示機能を搭載しています。
         </p>
       </div>
       <div class="flex gap-2 shrink-0">
@@ -261,7 +266,7 @@
         <!-- 判定エラーなどの通知 -->
         <div id="alert-box" class="hidden p-4 rounded-xl text-sm border"></div>
 
-        <!-- STEP 3: 判定結果サマリー (大枠確認結果をこちらに完全内包) -->
+        <!-- STEP 3: 判定結果サマリー -->
         <div id="results-card" class="hidden bg-white rounded-xl shadow-xl border border-slate-200 p-6 space-y-6">
           <div class="flex items-center justify-between border-b border-slate-100 pb-4">
             <h3 class="font-bold text-slate-900 flex items-center gap-2">
@@ -347,7 +352,6 @@
               <span id="results-count-text">全 0 件中 0 件を表示</span>
             </div>
             
-            <!-- min-w-[900px] を保証し、つぶれを完全にシャットアウト -->
             <div class="overflow-x-auto border border-slate-100 rounded-xl font-sans bg-white shadow-xs">
               <table class="w-full text-left text-sm text-slate-600 min-w-[900px] table-fixed">
                 <thead class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider border-b border-slate-200">
@@ -586,7 +590,7 @@ Cc: satou-member@nttdocomo.com, "外部 連絡者" <random-external@unknown.com>
       });
     }
 
-    // --- ローローカルストレージ（保存）機能 ---
+    // --- ローカルストレージ（保存）機能 ---
     function saveStateToLocalStorage(force = false) {
       const isKeepEnabled = optKeepLocal.checked;
       localStorageWarn.classList.add('hidden');
@@ -910,10 +914,10 @@ Cc: satou-member@nttdocomo.com, "外部 連絡者" <random-external@unknown.com>
         optN.innerText = colStr;
         colName.appendChild(optN);
 
+        // セレクトボックスへの要素追加のバグを防ぐため、安全なメソッド呼び出しに修正
         const optS = document.createElement('option');
         optS.value = colStr;
         optS.innerText = colStr;
-        colShop.appendChild(colStr); // 修正：正しく値が代入されるようバグ回避用
         colShop.appendChild(optS);
 
         const optA = document.createElement('option');
@@ -1290,16 +1294,12 @@ Cc: satou-member@nttdocomo.com, "外部 連絡者" <random-external@unknown.com>
             } else {
               // 2. 件名と本文の店舗指定が食い違っている危険なケース (件名または本文の指定店舗と異なる場合も完全に不適合とする)
               if (isSubjectMatched && isBodyMatched) {
-                // 基本的には発生しない想定（宛先店舗が両方のコアを持つなど）だが、店舗の整合性がないため警告
                 matchDetailMsg = `警告：件名店舗【${parseReport.detectedShop}】と本文店舗【${bodyShopsArray.join('、')}】の両方に合致。ただしメール指定の不整合あり。`;
               } else if (isSubjectMatched) {
-                // 件名とは一致するが、本文の指定と異なる（不適合）
                 matchDetailMsg = `警告：件名店舗【${parseReport.detectedShop}】とは一致しますが、本文指定【${bodyShopsArray.join('、')}】と異なります。`;
               } else if (isBodyMatched) {
-                // 本文とは一致するが、件名指定と異なる（不適合）
                 matchDetailMsg = `警告：本文店舗【${bodyShopsArray.join('、')}】とは一致しますが、件名指定【${parseReport.detectedShop}】と異なります。`;
               } else {
-                // どちらとも一致しない（完全不適合）
                 matchDetailMsg = `警告：件名店舗【${parseReport.detectedShop}】とも、本文店舗【${bodyShopsArray.join('、')}】とも一致しません！このアドレスの所属は【${masterShop}】です！`;
               }
             }
@@ -1542,7 +1542,7 @@ Cc: satou-member@nttdocomo.com, "外部 連絡者" <random-external@unknown.com>
             badgeHtml = `<span class="inline-flex items-center px-2 py-1 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 gap-1"><i data-lucide="check" class="w-3.5 h-3.5"></i>合致 (OK)</span>`;
           }
         } else if (item.status === 'warning') {
-          if (item.details.includes('異なる') || item.details.includes('所属')) {
+          if (item.details.includes('異なる') || item.details.includes('所属') || item.details.includes('警告：')) {
             badgeHtml = `<span class="inline-flex items-center px-2 py-1 rounded-full text-[11px] font-bold bg-rose-50 text-rose-700 border border-rose-200 gap-1 animate-pulse"><i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i>店舗不一致</span>`;
           } else {
             badgeHtml = `<span class="inline-flex items-center px-2 py-1 rounded-full text-[11px] font-bold bg-rose-100 text-rose-800 border border-rose-200 gap-1"><i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>警告 (不在)</span>`;
@@ -1571,7 +1571,7 @@ Cc: satou-member@nttdocomo.com, "外部 連絡者" <random-external@unknown.com>
         // C. マスタ登録証跡（エビデンス表示）
         const tdEvidence = document.createElement('td');
         tdEvidence.className = "px-4 py-3.5 align-middle text-xs w-[35%]";
-        if (item.status === 'safe' || item.details.includes('異なる') || item.details.includes('所属') || item.details.includes('不整合')) {
+        if (item.status === 'safe' || item.details.includes('異なる') || item.details.includes('所属') || item.details.includes('不整合') || item.details.includes('警告：')) {
           if (item.isDocomo) {
             tdEvidence.innerHTML = `<span class="text-emerald-700 bg-emerald-50 px-2 py-1.5 rounded border border-emerald-150 block font-semibold text-center">${escapeHtml(item.evidence)}</span>`;
           } else {
