@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+  <!-- HTTPãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚’è£œå®Œã—ã€ãƒ–ãƒ©ã‚¦ã‚¶ã«UTF-8ã§ã®è§£é‡ˆã‚’å¼·åˆ¶ã™ã‚‹ãƒ¡ã‚¿ã‚¿ã‚° -->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MailCheck Pro - “X•ÜE‘ã—“X ŒµŠiƒNƒƒX“Ë‡ƒc[ƒ‹</title>
+  <title>MailCheck Pro - åº—èˆ—ãƒ»ä»£ç†åº— å³æ ¼ã‚¯ãƒ­ã‚¹çªåˆãƒ„ãƒ¼ãƒ«</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- SheetJS (Excel‰ğÍ—p) -->
+  <!-- SheetJS (Excelè§£æç”¨) -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -19,7 +21,7 @@
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
-  <!-- ƒwƒbƒ_[ -->
+  <!-- ãƒ˜ãƒƒãƒ€ãƒ¼ -->
   <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
     <div class="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center space-x-3">
@@ -28,162 +30,162 @@
         </div>
         <div>
           <h1 class="text-lg font-bold text-slate-900 leading-none">MailCheck Pro</h1>
-          <span class="text-xs text-slate-500">“X•ÜE‘ã—“XEƒAƒhƒŒƒX ŒµŠiƒNƒƒX“Ë‡”Å</span>
+          <span class="text-xs text-slate-500">åº—èˆ—ãƒ»ä»£ç†åº—ãƒ»ã‚¢ãƒ‰ãƒ¬ã‚¹ å³æ ¼ã‚¯ãƒ­ã‚¹çªåˆç‰ˆ</span>
         </div>
       </div>
       <div class="flex items-center space-x-2">
         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
           <span class="w-1.5 h-1.5 mr-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
-          ƒ[ƒJƒ‹ˆ— (ˆÀ‘SE”ñ‘—M)
+          ãƒ­ãƒ¼ã‚«ãƒ«å‡¦ç† (å®‰å…¨ãƒ»éé€ä¿¡)
         </span>
       </div>
     </div>
   </header>
 
-  <!-- ƒƒCƒ“ƒRƒ“ƒeƒ“ƒc -->
+  <!-- ãƒ¡ã‚¤ãƒ³ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ -->
   <main class="flex-grow max-w-[1500px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
     
-    <!-- ƒAƒvƒŠŠT—vEƒZƒLƒ…ƒŠƒeƒBà–¾ -->
+    <!-- ã‚¢ãƒ—ãƒªæ¦‚è¦ãƒ»ã‚»ã‚­ãƒ¥ãƒªãƒ†ã‚£èª¬æ˜ -->
     <div class="bg-gradient-to-r from-indigo-50 to-sky-50 rounded-xl p-6 mb-8 border border-indigo-100 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
       <div class="space-y-1">
         <h2 class="text-md font-bold text-indigo-900 flex items-center gap-2">
           <i data-lucide="info" class="w-5 h-5 text-indigo-600"></i>
-          “X•ÜE‘ã—“X 1‘Î1 ŒµŠiƒ}ƒXƒ^ØÕƒNƒƒXƒ`ƒFƒbƒJ[
+          åº—èˆ—ãƒ»ä»£ç†åº— 1å¯¾1 å³æ ¼ãƒã‚¹ã‚¿è¨¼è·¡ã‚¯ãƒ­ã‚¹ãƒã‚§ãƒƒã‚«ãƒ¼
         </h2>
         <p class="text-sm text-indigo-950/70 leading-relaxed">
-          Œ–¼‚Ì“X•Ü–¼i—áFDS–{¯“Xj‚ğ©“®‚Å“Ç‚İæ‚èAƒ}ƒXƒ^ã‚Ì³®“X•Üi—áFƒhƒRƒ‚ƒVƒ‡ƒbƒv–{¯“Xj‚ÆB–†ƒ}ƒbƒ`‚ğ‚©‚¯Aˆ¶æƒAƒhƒŒƒX‚ª<strong>uœœ“X‚ÌZZ‚³‚ñv‚Æ‚µ‚Ä³‚µ‚¢‚©</strong>‚ğƒ}ƒXƒ^‚©‚ç”²‚¢‚½“o˜^î•ñ‚ğØÕ‚É‚µ‚Ä1l‚¸‚ÂŒŸØ‚µ‚Ü‚·B<br>
-          Œ–¼‚Æ–{•¶’†‚Ì“X•Üw’è‚ªˆÙ‚È‚éê‡‚Ì©“®Œx‹@”\A‚¨‚æ‚Ñ“X•Ü‚É•R‚Ã‚­‘ã—“X–¼E‘Î‰ƒ[ƒ‹ƒhƒƒCƒ“ of ©“®’ñ¦‹@”\‚ğ“‹Ú‚µ‚Ä‚¢‚Ü‚·B
+          ä»¶åã®åº—èˆ—åï¼ˆä¾‹ï¼šDSæœ¬åº„åº—ï¼‰ã‚’è‡ªå‹•ã§èª­ã¿å–ã‚Šã€ãƒã‚¹ã‚¿ä¸Šã®æ­£å¼åº—èˆ—ï¼ˆä¾‹ï¼šãƒ‰ã‚³ãƒ¢ã‚·ãƒ§ãƒƒãƒ—æœ¬åº„åº—ï¼‰ã¨æ›–æ˜§ãƒãƒƒãƒã‚’ã‹ã‘ã€å®›å…ˆã‚¢ãƒ‰ãƒ¬ã‚¹ãŒ<strong>ã€Œâ—â—åº—ã®ã€‡ã€‡ã•ã‚“ã€ã¨ã—ã¦æ­£ã—ã„ã‹</strong>ã‚’ãƒã‚¹ã‚¿ã‹ã‚‰æŠœã„ãŸç™»éŒ²æƒ…å ±ã‚’è¨¼è·¡ã«ã—ã¦1äººãšã¤æ¤œè¨¼ã—ã¾ã™ã€‚<br>
+          ä»¶åã¨æœ¬æ–‡ä¸­ã®åº—èˆ—æŒ‡å®šãŒç•°ãªã‚‹å ´åˆã®è‡ªå‹•è­¦å‘Šæ©Ÿèƒ½ã€ãŠã‚ˆã³åº—èˆ—ã«ç´ã¥ãä»£ç†åº—åãƒ»å¯¾å¿œãƒ¡ãƒ¼ãƒ«ãƒ‰ãƒ¡ã‚¤ãƒ³ of è‡ªå‹•æç¤ºæ©Ÿèƒ½ã‚’æ­è¼‰ã—ã¦ã„ã¾ã™ã€‚
         </p>
       </div>
       <div class="flex gap-2 shrink-0">
         <button id="btn-sample-load" class="inline-flex items-center px-4 py-2 border border-indigo-300 text-sm font-medium rounded-lg text-indigo-700 bg-white hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
           <i data-lucide="sparkles" class="w-4 h-4 mr-2"></i>
-          ƒhƒRƒ‚E“X•Ü“Ë‡ƒfƒ‚‚Å‚·
+          ãƒ‰ã‚³ãƒ¢ãƒ»åº—èˆ—çªåˆãƒ‡ãƒ¢ã§è©¦ã™
         </button>
       </div>
     </div>
 
-    <!-- 2ƒJƒ‰ƒ€ƒŒƒCƒAƒEƒg (¶ 4ƒJƒ‰ƒ€ / ‰E 8ƒJƒ‰ƒ€) -->
+    <!-- 2ã‚«ãƒ©ãƒ ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆ (å·¦ 4ã‚«ãƒ©ãƒ  / å³ 8ã‚«ãƒ©ãƒ ) -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
       
-      <!-- ¶ƒyƒCƒ“: İ’è‚Æƒtƒ@ƒCƒ‹ƒAƒbƒvƒ[ƒh (4ƒJƒ‰ƒ€) -->
+      <!-- å·¦ãƒšã‚¤ãƒ³: è¨­å®šã¨ãƒ•ã‚¡ã‚¤ãƒ«ã‚¢ãƒƒãƒ—ãƒ­ãƒ¼ãƒ‰ (4ã‚«ãƒ©ãƒ ) -->
       <section class="lg:col-span-4 space-y-6">
         
-        <!-- STEP 1: Excelƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ -->
+        <!-- STEP 1: Excelãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿ -->
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 space-y-4">
           <div class="flex items-center justify-between">
             <h3 class="font-bold text-slate-900 flex items-center gap-2">
               <span class="bg-slate-200 text-slate-800 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">1</span>
-              ƒ}ƒXƒ^i³‰ğƒŠƒXƒgj‚Ì“Ç
+              ãƒã‚¹ã‚¿ï¼ˆæ­£è§£ãƒªã‚¹ãƒˆï¼‰ã®èª­è¾¼
             </h3>
-            <span id="file-status-badge" class="text-xs font-medium text-slate-400">–¢“Ç‚İ‚İ</span>
+            <span id="file-status-badge" class="text-xs font-medium text-slate-400">æœªèª­ã¿è¾¼ã¿</span>
           </div>
 
-          <!-- ƒhƒ‰ƒbƒO•ƒhƒƒbƒvƒGƒŠƒA -->
+          <!-- ãƒ‰ãƒ©ãƒƒã‚°ï¼†ãƒ‰ãƒ­ãƒƒãƒ—ã‚¨ãƒªã‚¢ -->
           <div id="drop-zone" class="border-2 border-dashed border-slate-300 hover:border-indigo-500 hover:bg-slate-50 rounded-xl p-6 text-center cursor-pointer transition-all relative">
             <input type="file" id="file-input" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept=".xlsx, .xls, .csv">
             <div class="space-y-2 pointer-events-none">
               <div class="mx-auto w-12 h-12 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center">
                 <i data-lucide="file-spreadsheet" class="w-6 h-6"></i>
               </div>
-              <p class="text-sm font-medium text-slate-700">Excel / CSV ‚ğƒhƒ‰ƒbƒO•ƒhƒƒbƒv</p>
-              <p class="text-xs text-slate-400">‚Ü‚½‚Íƒtƒ@ƒCƒ‹‚ğ‘I‘ğ (.xlsx, .xls, .csv)</p>
+              <p class="text-sm font-medium text-slate-700">Excel / CSV ã‚’ãƒ‰ãƒ©ãƒƒã‚°ï¼†ãƒ‰ãƒ­ãƒƒãƒ—</p>
+              <p class="text-xs text-slate-400">ã¾ãŸã¯ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é¸æŠ (.xlsx, .xls, .csv)</p>
             </div>
           </div>
 
-          <!-- “Ç‚İ‚İ’†ƒ[ƒfƒBƒ“ƒO -->
+          <!-- èª­ã¿è¾¼ã¿ä¸­ãƒ­ãƒ¼ãƒ‡ã‚£ãƒ³ã‚° -->
           <div id="loading-spinner" class="hidden flex items-center justify-center py-4 text-indigo-600">
             <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-indigo-600" fill="none" viewBox="0 0 24 24">
               <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
               <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
-            <span class="text-sm font-medium text-slate-600">ƒtƒ@ƒCƒ‹‚ğ‰ğÍ’†...</span>
+            <span class="text-sm font-medium text-slate-600">ãƒ•ã‚¡ã‚¤ãƒ«ã‚’è§£æä¸­...</span>
           </div>
 
-          <!-- ƒtƒ@ƒCƒ‹Ú×‚Æƒ}ƒbƒsƒ“ƒOİ’è -->
+          <!-- ãƒ•ã‚¡ã‚¤ãƒ«è©³ç´°ã¨ãƒãƒƒãƒ”ãƒ³ã‚°è¨­å®š -->
           <div id="file-details" class="hidden space-y-4 pt-2 border-t border-slate-100">
             <div class="flex items-center justify-between text-xs text-slate-500">
               <span id="loaded-file-name" class="font-medium text-slate-700 truncate max-w-[180px]">filename.xlsx</span>
-              <span id="loaded-file-rows" class="bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full font-bold">0 s</span>
+              <span id="loaded-file-rows" class="bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded-full font-bold">0 è¡Œ</span>
             </div>
 
-            <!-- ƒV[ƒg‘I‘ğ -->
+            <!-- ã‚·ãƒ¼ãƒˆé¸æŠ -->
             <div id="sheet-select-container" class="space-y-1 hidden">
-              <label class="block text-xs font-medium text-slate-600">‘ÎÛƒV[ƒg</label>
+              <label class="block text-xs font-medium text-slate-600">å¯¾è±¡ã‚·ãƒ¼ãƒˆ</label>
               <select id="sheet-select" class="block w-full rounded-lg border-slate-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2 px-3 border bg-white">
-                <!-- “®“I‚É’Ç‰Á -->
+                <!-- å‹•çš„ã«è¿½åŠ  -->
               </select>
             </div>
 
-            <!-- ƒJƒ‰ƒ€i—ñj‘I‘ğ -->
+            <!-- ã‚«ãƒ©ãƒ ï¼ˆåˆ—ï¼‰é¸æŠ -->
             <div class="grid grid-cols-2 gap-3">
               <div class="space-y-1">
                 <label class="block text-xs font-medium text-slate-600 flex items-center gap-1">
-                  ƒ[ƒ‹ƒAƒhƒŒƒX—ñ
+                  ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹åˆ—
                   <span class="text-red-500">*</span>
                 </label>
                 <select id="col-email" class="block w-full rounded-lg border-slate-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2 px-3 border bg-white">
-                  <!-- “®“I‚É’Ç‰Á -->
+                  <!-- å‹•çš„ã«è¿½åŠ  -->
                 </select>
               </div>
               <div class="space-y-1">
                 <label class="block text-xs font-medium text-slate-600 flex items-center gap-1">
-                  –¼—ñ (—Dæ:©)
+                  æ°ååˆ— (å„ªå…ˆ:å§“)
                 </label>
                 <select id="col-name" class="block w-full rounded-lg border-slate-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2 px-3 border bg-white">
-                  <!-- “®“I‚É’Ç‰Á -->
+                  <!-- å‹•çš„ã«è¿½åŠ  -->
                 </select>
               </div>
             </div>
 
-            <!-- “X•Ü“Ë‡—p‚ÌƒJƒ‰ƒ€‘I‘ğ -->
+            <!-- åº—èˆ—çªåˆç”¨ã®ã‚«ãƒ©ãƒ é¸æŠ -->
             <div class="grid grid-cols-2 gap-3">
               <div class="space-y-1">
                 <label class="block text-xs font-medium text-indigo-700 font-bold flex items-center gap-1">
-                  Š‘®“X•Ü—ñ (—Dæ:“X•Ü–¼)
+                  æ‰€å±åº—èˆ—åˆ— (å„ªå…ˆ:åº—èˆ—å)
                   <span class="text-red-500">*</span>
                 </label>
                 <select id="col-shop" class="block w-full rounded-lg border-indigo-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2 px-3 border bg-indigo-50/50 font-medium">
-                  <!-- “®“I‚É’Ç‰Á -->
+                  <!-- å‹•çš„ã«è¿½åŠ  -->
                 </select>
               </div>
               <div class="space-y-1">
                 <label class="block text-xs font-medium text-indigo-700 font-bold flex items-center gap-1">
-                  ‘ã—“X–¼—ñ (—Dæ:ˆêŸ‘ã—“X)
+                  ä»£ç†åº—ååˆ— (å„ªå…ˆ:ä¸€æ¬¡ä»£ç†åº—)
                 </label>
                 <select id="col-agent" class="block w-full rounded-lg border-indigo-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2 px-3 border bg-indigo-50/50 font-medium">
-                  <!-- “®“I‚É’Ç‰Á -->
+                  <!-- å‹•çš„ã«è¿½åŠ  -->
                 </select>
               </div>
             </div>
 
             <div class="space-y-1">
               <label class="block text-xs font-medium text-slate-600">
-                ’Ç‰Á•\¦—ñ (•”‚È‚Ç)
+                è¿½åŠ è¡¨ç¤ºåˆ— (éƒ¨ç½²ãªã©)
               </label>
               <select id="col-extra" class="block w-full rounded-lg border-slate-300 text-sm shadow-sm focus:border-indigo-500 focus:ring-indigo-500 py-2 px-3 border bg-white">
-                <!-- “®“I‚É’Ç‰Á -->
+                <!-- å‹•çš„ã«è¿½åŠ  -->
               </select>
             </div>
 
-            <!-- šƒuƒ‰ƒEƒUƒL[ƒv(‰i‘±‰»)İ’è -->
+            <!-- â˜…ãƒ–ãƒ©ã‚¦ã‚¶ã‚­ãƒ¼ãƒ—(æ°¸ç¶šåŒ–)è¨­å®š -->
             <div class="p-3 bg-indigo-50/50 rounded-xl border border-indigo-100 flex flex-col gap-2">
               <div class="flex items-center justify-between">
                 <label class="flex items-center gap-2 cursor-pointer">
                   <input type="checkbox" id="opt-keep-local" class="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
-                  <span class="text-xs font-bold text-indigo-900">‚±‚Ìƒ}ƒXƒ^‚ğƒuƒ‰ƒEƒU‚É•Û‘¶‚·‚é</span>
+                  <span class="text-xs font-bold text-indigo-900">ã“ã®ãƒã‚¹ã‚¿ã‚’ãƒ–ãƒ©ã‚¦ã‚¶ã«ä¿å­˜ã™ã‚‹</span>
                 </label>
                 <button id="btn-clear-saved" class="hidden text-[10px] text-rose-600 hover:text-rose-800 font-bold flex items-center gap-0.5">
-                  <i data-lucide="trash-2" class="w-3 h-3"></i> •Û‘¶‚ğÁ‹
+                  <i data-lucide="trash-2" class="w-3 h-3"></i> ä¿å­˜ã‚’æ¶ˆå»
                 </button>
               </div>
-              <p class="text-[10px] text-indigo-950/60 leading-normal">Ÿ‰ñƒAƒvƒŠ‚ğŠJ‚¢‚½‚Æ‚«‚É©“®“I‚É‚±‚Ìƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚İ‚Ü‚·iƒtƒ@ƒCƒ‹‚Íƒuƒ‰ƒEƒUŠO‚É‘—M‚³‚ê‚Ü‚¹‚ñjB</p>
+              <p class="text-[10px] text-indigo-950/60 leading-normal">æ¬¡å›ã‚¢ãƒ—ãƒªã‚’é–‹ã„ãŸã¨ãã«è‡ªå‹•çš„ã«ã“ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã¿ã¾ã™ï¼ˆãƒ•ã‚¡ã‚¤ãƒ«ã¯ãƒ–ãƒ©ã‚¦ã‚¶å¤–ã«é€ä¿¡ã•ã‚Œã¾ã›ã‚“ï¼‰ã€‚</p>
               <p id="local-storage-warn" class="text-[10px] text-rose-600 font-semibold leading-normal hidden"></p>
             </div>
             
-            <!-- ƒvƒŒƒrƒ…[•\¦ -->
+            <!-- ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼è¡¨ç¤º -->
             <div class="p-3 bg-slate-50 rounded-lg border border-slate-100">
-              <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">ƒ}ƒXƒ^ƒvƒŒƒrƒ…[ (æ“ª3Œ)</p>
+              <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">ãƒã‚¹ã‚¿ãƒ—ãƒ¬ãƒ“ãƒ¥ãƒ¼ (å…ˆé ­3ä»¶)</p>
               <div id="preview-table-container" class="overflow-x-auto">
                 <table class="w-full text-left text-xs text-slate-500">
                   <thead>
@@ -196,25 +198,25 @@
           </div>
         </div>
 
-        <!-- ”»’èÚ×ƒIƒvƒVƒ‡ƒ“ -->
+        <!-- åˆ¤å®šè©³ç´°ã‚ªãƒ—ã‚·ãƒ§ãƒ³ -->
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 space-y-4">
           <h3 class="font-bold text-slate-900 flex items-center gap-2">
             <i data-lucide="sliders" class="w-5 h-5 text-slate-500"></i>
-            Æ‡ƒIƒvƒVƒ‡ƒ“
+            ç…§åˆã‚ªãƒ—ã‚·ãƒ§ãƒ³
           </h3>
           <div class="space-y-3">
             <label class="flex items-start gap-3 cursor-pointer">
               <input type="checkbox" id="opt-case-insensitive" checked class="mt-1 h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
               <div class="text-sm">
-                <span class="font-medium text-slate-700">ƒAƒ‹ƒtƒ@ƒxƒbƒg‚Ì‘å•¶š¬•¶š‚ğ‹æ•Ê‚µ‚È‚¢</span>
-                <p class="text-xs text-slate-400">Example@com ‚Æ example@com ‚ğ“¯ˆê‚Æ‚İ‚È‚µ‚Ü‚·</p>
+                <span class="font-medium text-slate-700">ã‚¢ãƒ«ãƒ•ã‚¡ãƒ™ãƒƒãƒˆã®å¤§æ–‡å­—å°æ–‡å­—ã‚’åŒºåˆ¥ã—ãªã„</span>
+                <p class="text-xs text-slate-400">Example@com ã¨ example@com ã‚’åŒä¸€ã¨ã¿ãªã—ã¾ã™</p>
               </div>
             </label>
             <label class="flex items-start gap-3 cursor-pointer">
               <input type="checkbox" id="opt-allow-domain-match" class="mt-1 h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
               <div class="text-sm">
-                <span class="font-medium text-slate-700">ƒhƒƒCƒ“’PˆÊ‚Å‚Ìˆê’v‚à‹–—e‚·‚é</span>
-                <p class="text-xs text-slate-400">ƒ}ƒXƒ^‚É `@company.com` ‚ª‚ ‚ê‚ÎA‚»‚ÌƒhƒƒCƒ“‚ÌƒAƒhƒŒƒX‚Í‚·‚×‚ÄOK‚Æ”»’è‚µ‚Ü‚·</p>
+                <span class="font-medium text-slate-700">ãƒ‰ãƒ¡ã‚¤ãƒ³å˜ä½ã§ã®ä¸€è‡´ã‚‚è¨±å®¹ã™ã‚‹</span>
+                <p class="text-xs text-slate-400">ãƒã‚¹ã‚¿ã« `@company.com` ãŒã‚ã‚Œã°ã€ãã®ãƒ‰ãƒ¡ã‚¤ãƒ³ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã¯ã™ã¹ã¦OKã¨åˆ¤å®šã—ã¾ã™</p>
               </div>
             </label>
           </div>
@@ -222,27 +224,27 @@
 
       </section>
 
-      <!-- ‰EƒyƒCƒ“: ˆ¶æ“\‚è•t‚¯‚Æ”»’èŒ‹‰Ê (8ƒJƒ‰ƒ€ - •Ld—l) -->
+      <!-- å³ãƒšã‚¤ãƒ³: å®›å…ˆè²¼ã‚Šä»˜ã‘ã¨åˆ¤å®šçµæœ (8ã‚«ãƒ©ãƒ  - å¹…åºƒä»•æ§˜) -->
       <section class="lg:col-span-8 space-y-6">
         
-        <!-- STEP 2: ˆ¶æ‚Ì“ü—Í -->
+        <!-- STEP 2: å®›å…ˆã®å…¥åŠ› -->
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 space-y-4">
           <div class="flex items-center justify-between">
             <h3 class="font-bold text-slate-900 flex items-center gap-2">
               <span class="bg-slate-200 text-slate-800 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">2</span>
-              ƒ[ƒ‹–{•¶Eˆ¶æ‚Ì“ü—Í
+              ãƒ¡ãƒ¼ãƒ«æœ¬æ–‡ãƒ»å®›å…ˆã®å…¥åŠ›
             </h3>
-            <span class="text-xs font-bold text-rose-600 bg-rose-50 px-2.5 py-1 rounded">From/–{•¶“àƒAƒhƒŒƒX‚ÍˆÀ‘S‚É–³‹‚µ‚Ü‚·</span>
+            <span class="text-xs font-bold text-rose-600 bg-rose-50 px-2.5 py-1 rounded">From/æœ¬æ–‡å†…ã‚¢ãƒ‰ãƒ¬ã‚¹ã¯å®‰å…¨ã«ç„¡è¦–ã—ã¾ã™</span>
           </div>
           <p class="text-xs text-slate-500 leading-relaxed">
-            ƒ[ƒ‰[‚Ìƒwƒbƒ_[î•ñiSubjectAToACcj‚Æƒ[ƒ‹–{•¶‚ğ‚»‚Ì‚Ü‚ÜƒRƒs[•ƒy[ƒXƒg‚µ‚Ä‚­‚¾‚³‚¢B<br>
-            <strong>uSubject:v‚Ì“X•ÜiDSZZ“X‚Ì‚æ‚¤‚È—ª‹L‚à‘Î‰j</strong>‚©‚ç‘—Mæ“X•Ü‚ğ”»•Ê‚µA<strong>ƒ[ƒ‹–{•¶‚Ì‹LÚ“X•Ü‚Æ‚ÌƒYƒŒ‚ª‚È‚¢‚©</strong>‚ğŒŸØ‚µ‚Ü‚·B
+            ãƒ¡ãƒ¼ãƒ©ãƒ¼ã®ãƒ˜ãƒƒãƒ€ãƒ¼æƒ…å ±ï¼ˆSubjectã€Toã€Ccï¼‰ã¨ãƒ¡ãƒ¼ãƒ«æœ¬æ–‡ã‚’ãã®ã¾ã¾ã‚³ãƒ”ãƒ¼ï¼†ãƒšãƒ¼ã‚¹ãƒˆã—ã¦ãã ã•ã„ã€‚<br>
+            <strong>ã€ŒSubject:ã€ã®åº—èˆ—ï¼ˆDSã€‡ã€‡åº—ã®ã‚ˆã†ãªç•¥è¨˜ã‚‚å¯¾å¿œï¼‰</strong>ã‹ã‚‰é€ä¿¡å…ˆåº—èˆ—ã‚’åˆ¤åˆ¥ã—ã€<strong>ãƒ¡ãƒ¼ãƒ«æœ¬æ–‡ã®è¨˜è¼‰åº—èˆ—ã¨ã®ã‚ºãƒ¬ãŒãªã„ã‹</strong>ã‚’æ¤œè¨¼ã—ã¾ã™ã€‚
           </p>
           
           <div class="relative">
-            <textarea id="emails-input" rows="8" class="block w-full rounded-xl border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-4 border text-sm font-mono placeholder-slate-400" placeholder="yƒ[ƒ‹ƒ\ƒtƒg‚©‚ç‚»‚Ì‚Ü‚ÜƒRƒsƒy‚µ‚Ä“\‚è•t‚¯‚Ä‚­‚¾‚³‚¢z&#10;Subject: yDS–{¯“XzŠm”FˆË—Š‚É‚Â‚¢‚Ä&#10;From: manager-admin@nttdocomo.com&#10;To: &quot;R“c ‘¾˜Y&quot; &lt;yamada.taro@example.com&gt;&#10;Cc: suzuki.hanako@example.com&#10;&#10;‚¨”æ‚ê—l‚Å‚·BƒhƒRƒ‚ƒVƒ‡ƒbƒvVh“X‚Å–{“ú‚Ì‘Î‰ó‹µ‚ğŠm”F‚µ‚Ä‚­‚¾‚³‚¢B"></textarea>
+            <textarea id="emails-input" rows="8" class="block w-full rounded-xl border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 p-4 border text-sm font-mono placeholder-slate-400" placeholder="ã€ãƒ¡ãƒ¼ãƒ«ã‚½ãƒ•ãƒˆã‹ã‚‰ãã®ã¾ã¾ã‚³ãƒ”ãƒšã—ã¦è²¼ã‚Šä»˜ã‘ã¦ãã ã•ã„ã€‘&#10;Subject: ã€DSæœ¬åº„åº—ã€‘ç¢ºèªä¾é ¼ã«ã¤ã„ã¦&#10;From: manager-admin@nttdocomo.com&#10;To: &quot;å±±ç”° å¤ªéƒ&quot; &lt;yamada.taro@example.com&gt;&#10;Cc: suzuki.hanako@example.com&#10;&#10;ãŠç–²ã‚Œæ§˜ã§ã™ã€‚ãƒ‰ã‚³ãƒ¢ã‚·ãƒ§ãƒƒãƒ—æ–°å®¿åº—ã§æœ¬æ—¥ã®å¯¾å¿œçŠ¶æ³ã‚’ç¢ºèªã—ã¦ãã ã•ã„ã€‚"></textarea>
             <div class="absolute bottom-2 right-2 flex items-center gap-2">
-              <button id="btn-clear-input" class="p-1 text-slate-400 hover:text-slate-600 rounded bg-slate-50 hover:bg-slate-100 transition-colors" title="ƒNƒŠƒA">
+              <button id="btn-clear-input" class="p-1 text-slate-400 hover:text-slate-600 rounded bg-slate-50 hover:bg-slate-100 transition-colors" title="ã‚¯ãƒªã‚¢">
                 <i data-lucide="trash-2" class="w-4 h-4"></i>
               </button>
             </div>
@@ -251,113 +253,113 @@
           <div class="flex gap-3">
             <button id="btn-check" class="flex-1 inline-flex items-center justify-center px-4 py-3 border border-transparent text-sm font-semibold rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
               <i data-lucide="play" class="w-4 h-4 mr-2"></i>
-              ˆ¶æ‚Æ“X•ÜŠ‘®‚Ì®‡«‚ğ”»’è‚·‚é
+              å®›å…ˆã¨åº—èˆ—æ‰€å±ã®æ•´åˆæ€§ã‚’åˆ¤å®šã™ã‚‹
             </button>
           </div>
         </div>
 
-        <!-- ”»’èƒGƒ‰[‚È‚Ç‚Ì’Ê’m -->
+        <!-- åˆ¤å®šã‚¨ãƒ©ãƒ¼ãªã©ã®é€šçŸ¥ -->
         <div id="alert-box" class="hidden p-4 rounded-xl text-sm border"></div>
 
-        <!-- STEP 3: ”»’èŒ‹‰ÊƒTƒ}ƒŠ[ (‘å˜gŠm”FŒ‹‰Ê‚ğ‚±‚¿‚ç‚ÉŠ®‘S“à•ï) -->
+        <!-- STEP 3: åˆ¤å®šçµæœã‚µãƒãƒªãƒ¼ (å¤§æ ç¢ºèªçµæœã‚’ã“ã¡ã‚‰ã«å®Œå…¨å†…åŒ…) -->
         <div id="results-card" class="hidden bg-white rounded-xl shadow-xl border border-slate-200 p-6 space-y-6">
           <div class="flex items-center justify-between border-b border-slate-100 pb-4">
             <h3 class="font-bold text-slate-900 flex items-center gap-2">
               <span class="bg-indigo-100 text-indigo-700 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">3</span>
-              ”»’èŒ‹‰ÊƒTƒ}ƒŠ[
+              åˆ¤å®šçµæœã‚µãƒãƒªãƒ¼
             </h3>
             <button id="btn-export-csv" class="inline-flex items-center px-3 py-1.5 border border-slate-200 text-xs font-medium rounded-lg text-slate-700 bg-slate-50 hover:bg-slate-100 transition-colors">
               <i data-lucide="download" class="w-3.5 h-3.5 mr-1.5"></i>
-              CSVƒGƒNƒXƒ|[ƒg
+              CSVã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ
             </button>
           </div>
 
-          <!-- ‰ğÍŒ‹‰ÊƒXƒe[ƒ^ƒXƒpƒlƒ‹ (‘å˜gF“X•ÜE‘ã—“XEƒhƒƒCƒ“”»’èAŒx‚È‚Ç) -->
+          <!-- è§£æçµæœã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ãƒ‘ãƒãƒ« (å¤§æ ï¼šåº—èˆ—ãƒ»ä»£ç†åº—ãƒ»ãƒ‰ãƒ¡ã‚¤ãƒ³åˆ¤å®šã€è­¦å‘Šãªã©) -->
           <div id="parse-status-panel" class="hidden bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-3">
             <h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5 border-b border-slate-200 pb-2">
               <i data-lucide="info" class="w-4 h-4 text-indigo-500"></i>
-              ‘å˜g‰ğÍŒ‹‰ÊE“X•Ü”»•ÊƒXƒe[ƒ^ƒX
+              å¤§æ è§£æçµæœãƒ»åº—èˆ—åˆ¤åˆ¥ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹
             </h4>
             
-            <!-- “X•Ü•sˆê’v‚ÌŒxƒAƒ‰[ƒg -->
+            <!-- åº—èˆ—ä¸ä¸€è‡´ã®è­¦å‘Šã‚¢ãƒ©ãƒ¼ãƒˆ -->
             <div id="shop-mismatch-warning" class="hidden p-3 bg-rose-50 border border-rose-200 text-rose-800 rounded-lg text-xs font-bold flex items-start gap-2 animate-pulse">
               <i data-lucide="alert-octagon" class="w-4 h-4 text-rose-600 shrink-0 mt-0.5"></i>
               <div>
-                <span class="text-sm">??Œx: Œ–¼‚Æ–{•¶‚Ì“X•Üw’è‚É‘Šˆá‚ª‚ ‚è‚Ü‚·IŒë‘—M‚Ì‰Â”\«‚ª‚ ‚è‚Ü‚·I</span>
+                <span class="text-sm">âš ï¸è­¦å‘Š: ä»¶åã¨æœ¬æ–‡ã®åº—èˆ—æŒ‡å®šã«ç›¸é•ãŒã‚ã‚Šã¾ã™ï¼èª¤é€ä¿¡ã®å¯èƒ½æ€§ãŒã‚ã‚Šã¾ã™ï¼</span>
                 <p id="shop-mismatch-detail" class="text-xs font-normal text-rose-700 mt-1"></p>
               </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
               <div class="space-y-1 bg-white p-2.5 rounded-lg border border-slate-100">
-                <span class="text-slate-400 font-medium block">Œ–¼ (Subject):</span>
+                <span class="text-slate-400 font-medium block">ä»¶å (Subject):</span>
                 <span id="detected-subject" class="font-bold text-slate-850 block leading-relaxed">-</span>
               </div>
               <div class="space-y-1 bg-white p-2.5 rounded-lg border border-slate-100">
-                <span class="text-slate-400 font-medium block">”»’èˆ¶æ“X•Ü (Œ–¼‚æ‚è©“®“Á’è):</span>
+                <span class="text-slate-400 font-medium block">åˆ¤å®šå®›å…ˆåº—èˆ— (ä»¶åã‚ˆã‚Šè‡ªå‹•ç‰¹å®š):</span>
                 <span id="detected-shop" class="font-bold text-indigo-800 bg-indigo-50 px-2 py-0.5 rounded inline-block mt-0.5">-</span>
               </div>
               <div class="space-y-1 bg-white p-2.5 rounded-lg border border-slate-100">
-                <span class="text-slate-400 font-medium block">–{•¶w’è‚Ì“X•Ü–¼:</span>
+                <span class="text-slate-400 font-medium block">æœ¬æ–‡æŒ‡å®šã®åº—èˆ—å:</span>
                 <span id="detected-body-shop" class="font-bold text-slate-800 block leading-relaxed">-</span>
               </div>
               <div class="space-y-1 bg-white p-2.5 rounded-lg border border-slate-100">
-                <span class="text-slate-400 font-medium block">“X•Ü“Ë‡Œ‹‰Ê (Œ–¼ vs –{•¶):</span>
+                <span class="text-slate-400 font-medium block">åº—èˆ—çªåˆçµæœ (ä»¶å vs æœ¬æ–‡):</span>
                 <span id="shop-mismatch-status" class="font-bold block leading-relaxed">-</span>
               </div>
               
               <div class="space-y-1 bg-white p-2.5 rounded-lg border border-slate-100">
-                <span class="text-slate-400 font-medium block">Š‘®ˆêŸ‘ã—“X–¼:</span>
+                <span class="text-slate-400 font-medium block">æ‰€å±ä¸€æ¬¡ä»£ç†åº—å:</span>
                 <span id="detected-agent" class="font-bold text-slate-800 block">-</span>
               </div>
               <div class="space-y-1 bg-white p-2.5 rounded-lg border border-slate-100">
-                <span class="text-slate-400 font-medium block">‘Î‰ƒ[ƒ‹ƒhƒƒCƒ“ (‘ã—“X):</span>
+                <span class="text-slate-400 font-medium block">å¯¾å¿œãƒ¡ãƒ¼ãƒ«ãƒ‰ãƒ¡ã‚¤ãƒ³ (ä»£ç†åº—):</span>
                 <span id="detected-domains" class="font-bold font-mono text-indigo-700 bg-indigo-50/50 px-1.5 py-0.5 rounded inline-block mt-0.5">-</span>
               </div>
             </div>
             
             <div class="text-[10px] text-slate-400 flex justify-between items-center pt-1">
-              <span>¦Froms‹y‚ÑSubjectsˆÈ‰º‚Ìƒ[ƒ‹–{•¶“àƒ[ƒ‹ƒAƒhƒŒƒX‚Í©“®–³‹‚µ‚Ä‚¢‚Ü‚·</span>
-              <span class="font-medium">From–³‹”: <span id="ignored-from-count" class="font-bold">0</span> s</span>
+              <span>â€»Fromè¡ŒåŠã³Subjectè¡Œä»¥ä¸‹ã®ãƒ¡ãƒ¼ãƒ«æœ¬æ–‡å†…ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ã¯è‡ªå‹•ç„¡è¦–ã—ã¦ã„ã¾ã™</span>
+              <span class="font-medium">Fromç„¡è¦–æ•°: <span id="ignored-from-count" class="font-bold">0</span> è¡Œ</span>
             </div>
           </div>
 
-          <!-- ƒJƒEƒ“ƒ^ƒJ[ƒh -->
+          <!-- ã‚«ã‚¦ãƒ³ã‚¿ã‚«ãƒ¼ãƒ‰ -->
           <div class="grid grid-cols-3 gap-4">
             <div class="bg-emerald-50 rounded-xl p-4 border border-emerald-100 text-center shadow-xs">
-              <span class="text-xs font-medium text-emerald-800">ˆÀ‘Siƒ}ƒXƒ^Š®‘S‡’v / Ğ“àj</span>
+              <span class="text-xs font-medium text-emerald-800">å®‰å…¨ï¼ˆãƒã‚¹ã‚¿å®Œå…¨åˆè‡´ / ç¤¾å†…ï¼‰</span>
               <div class="text-2xl font-bold text-emerald-700 mt-1" id="count-safe">0</div>
             </div>
             <div class="bg-rose-50 rounded-xl p-4 border border-rose-100 text-center shadow-xs">
-              <span class="text-xs font-medium text-rose-800">Œxi•sİE“X•Ü•sˆê’vj</span>
+              <span class="text-xs font-medium text-rose-800">è­¦å‘Šï¼ˆä¸åœ¨ãƒ»åº—èˆ—ä¸ä¸€è‡´ï¼‰</span>
               <div class="text-2xl font-bold text-rose-700 mt-1" id="count-warning">0</div>
             </div>
             <div class="bg-amber-50 rounded-xl p-4 border border-amber-100 text-center shadow-xs">
-              <span class="text-xs font-medium text-amber-800">Œ`®ƒGƒ‰[ / d•¡</span>
+              <span class="text-xs font-medium text-amber-800">å½¢å¼ã‚¨ãƒ©ãƒ¼ / é‡è¤‡</span>
               <div class="text-2xl font-bold text-amber-700 mt-1" id="count-error">0</div>
             </div>
           </div>
 
-          <!-- ”»’èÚ×ƒe[ƒuƒ‹ -->
+          <!-- åˆ¤å®šè©³ç´°ãƒ†ãƒ¼ãƒ–ãƒ« -->
           <div class="space-y-2">
             <div class="flex justify-between items-center text-xs text-slate-500 px-1">
-              <span>ˆ¶æiˆêl‚¸‚Â•ªŠ„j‚ÌÆ‡Œ‹‰Ê</span>
-              <span id="results-count-text">‘S 0 Œ’† 0 Œ‚ğ•\¦</span>
+              <span>å®›å…ˆï¼ˆä¸€äººãšã¤åˆ†å‰²ï¼‰ã®ç…§åˆçµæœ</span>
+              <span id="results-count-text">å…¨ 0 ä»¶ä¸­ 0 ä»¶ã‚’è¡¨ç¤º</span>
             </div>
             
-            <!-- min-w-[900px] ‚ğ•ÛØ‚µA‚Â‚Ô‚ê‚ğŠ®‘S‚ÉƒVƒƒƒbƒgƒAƒEƒg -->
+            <!-- min-w-[900px] ã‚’ä¿è¨¼ã—ã€ã¤ã¶ã‚Œã‚’å®Œå…¨ã«ã‚·ãƒ£ãƒƒãƒˆã‚¢ã‚¦ãƒˆ -->
             <div class="overflow-x-auto border border-slate-100 rounded-xl font-sans bg-white shadow-xs">
               <table class="w-full text-left text-sm text-slate-600 min-w-[900px] table-fixed">
                 <thead class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider border-b border-slate-200">
                   <tr>
-                    <th class="px-4 py-3 font-semibold w-[12%]">”»’èŒ‹‰Ê</th>
-                    <th class="px-4 py-3 font-semibold w-[28%]">’Šoˆ¶æ</th>
-                    <th class="px-4 py-3 font-semibold w-[35%]">ƒ}ƒXƒ^“o˜^ØÕiƒGƒrƒfƒ“ƒXj</th>
-                    <th class="px-4 py-3 font-semibold w-[25%]">“Ë‡Ú×</th>
+                    <th class="px-4 py-3 font-semibold w-[12%]">åˆ¤å®šçµæœ</th>
+                    <th class="px-4 py-3 font-semibold w-[28%]">æŠ½å‡ºå®›å…ˆ</th>
+                    <th class="px-4 py-3 font-semibold w-[35%]">ãƒã‚¹ã‚¿ç™»éŒ²è¨¼è·¡ï¼ˆã‚¨ãƒ“ãƒ‡ãƒ³ã‚¹ï¼‰</th>
+                    <th class="px-4 py-3 font-semibold w-[25%]">çªåˆè©³ç´°</th>
                   </tr>
                 </thead>
                 <tbody id="results-table-body" class="divide-y divide-slate-100">
-                  <!-- JS‚Å“®“I‚É\’z -->
+                  <!-- JSã§å‹•çš„ã«æ§‹ç¯‰ -->
                 </tbody>
               </table>
             </div>
@@ -370,12 +372,12 @@
     </div>
   </main>
 
-  <!-- ƒtƒbƒ^[ -->
+  <!-- ãƒ•ãƒƒã‚¿ãƒ¼ -->
   <footer class="bg-white border-t border-slate-200 py-6 mt-12">
     <div class="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
       <div class="flex items-center gap-2">
         <i data-lucide="shield" class="w-4 h-4 text-emerald-600"></i>
-        <span>ŒÂlî•ñ•ÛŒì•ûjF‚±‚ÌƒAƒvƒŠ‚Åˆ—‚³‚ê‚éƒf[ƒ^‚ÍŠ®‘S‚Éƒ[ƒJƒ‹‚ÅÀs‚³‚êAŠO•”ƒT[ƒo[‚Öƒf[ƒ^‚ğ‘—M‚·‚é‚±‚Æ‚Íâ‘Î‚É‚ ‚è‚Ü‚¹‚ñB</span>
+        <span>å€‹äººæƒ…å ±ä¿è­·æ–¹é‡ï¼šã“ã®ã‚¢ãƒ—ãƒªã§å‡¦ç†ã•ã‚Œã‚‹ãƒ‡ãƒ¼ã‚¿ã¯å®Œå…¨ã«ãƒ­ãƒ¼ã‚«ãƒ«ã§å®Ÿè¡Œã•ã‚Œã€å¤–éƒ¨ã‚µãƒ¼ãƒãƒ¼ã¸ãƒ‡ãƒ¼ã‚¿ã‚’é€ä¿¡ã™ã‚‹ã“ã¨ã¯çµ¶å¯¾ã«ã‚ã‚Šã¾ã›ã‚“ã€‚</span>
       </div>
       <div>
         <span>&copy; 2026 MailCheck Pro. All rights reserved.</span>
@@ -383,33 +385,33 @@
     </div>
   </footer>
 
-  <!-- ƒJƒXƒ^ƒ€ƒ‚[ƒ_ƒ‹i’Ê’m—pj -->
+  <!-- ã‚«ã‚¹ã‚¿ãƒ ãƒ¢ãƒ¼ãƒ€ãƒ«ï¼ˆé€šçŸ¥ç”¨ï¼‰ -->
   <div id="modal-container" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center z-50 hidden">
     <div class="bg-white rounded-2xl shadow-xl border border-slate-200 p-6 max-w-md w-full mx-4 space-y-4">
       <div class="flex items-center gap-3" id="modal-header">
         <div class="p-2 rounded-full" id="modal-icon-bg">
           <i id="modal-icon" class="w-6 h-6"></i>
         </div>
-        <h4 class="text-lg font-bold text-slate-900" id="modal-title">ƒ^ƒCƒgƒ‹</h4>
+        <h4 class="text-lg font-bold text-slate-900" id="modal-title">ã‚¿ã‚¤ãƒˆãƒ«</h4>
       </div>
-      <p class="text-sm text-slate-600 leading-relaxed" id="modal-body">ƒƒbƒZ[ƒW“à—e</p>
+      <p class="text-sm text-slate-600 leading-relaxed" id="modal-body">ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å†…å®¹</p>
       <div class="flex justify-end pt-2">
         <button id="btn-modal-close" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-          •Â‚¶‚é
+          é–‰ã˜ã‚‹
         </button>
       </div>
     </div>
   </div>
 
   <script>
-    // --- ƒOƒ[ƒoƒ‹ó‘ÔŠÇ— ---
-    let masterData = []; // Excel‚©‚ç“Ç‚İ‚ñ‚¾¶‚Ìsƒf[ƒ^
-    let columns = [];    // —˜—p‰Â”\‚ÈƒJƒ‰ƒ€–¼ˆê——
-    let sheetNames = []; // ExcelƒV[ƒgˆê——
+    // --- ã‚°ãƒ­ãƒ¼ãƒãƒ«çŠ¶æ…‹ç®¡ç† ---
+    let masterData = []; // Excelã‹ã‚‰èª­ã¿è¾¼ã‚“ã ç”Ÿã®è¡Œãƒ‡ãƒ¼ã‚¿
+    let columns = [];    // åˆ©ç”¨å¯èƒ½ãªã‚«ãƒ©ãƒ åä¸€è¦§
+    let sheetNames = []; // Excelã‚·ãƒ¼ãƒˆä¸€è¦§
     let workbookObj = null; // Excel Workbook
     let currentSheetName = "";
 
-    // ƒXƒgƒŒ[ƒWƒL[
+    // ã‚¹ãƒˆãƒ¬ãƒ¼ã‚¸ã‚­ãƒ¼
     const STORAGE_KEYS = {
       MASTER_DATA: 'mailcheck_master_data_v4',
       FILE_NAME: 'mailcheck_filename_v4',
@@ -422,25 +424,25 @@
 
     let checkResults = [];
 
-    // ƒTƒ“ƒvƒ‹ƒf[ƒ^ (©A“X•Ü–¼AˆêŸ‘ã—“X)
+    // ã‚µãƒ³ãƒ—ãƒ«ãƒ‡ãƒ¼ã‚¿ (å§“ã€åº—èˆ—åã€ä¸€æ¬¡ä»£ç†åº—)
     const sampleExcelData = [
-      { "Ğˆõ”Ô†": "E001", "©": "R“c ‘¾˜Y", "ƒ[ƒ‹ƒAƒhƒŒƒX": "yamada.taro@example.com", "“X•Ü–¼": "ƒhƒRƒ‚ƒVƒ‡ƒbƒv–{¯“X", "ˆêŸ‘ã—“X": "–{¯ƒ‚ƒoƒCƒ‹ƒRƒ~ƒ…ƒjƒP[ƒVƒ‡ƒ“ƒY", "•”": "‰c‹Æ•”" },
-      { "Ğˆõ”Ô†": "E002", "©": "—é–Ø ‰Ôq", "ƒ[ƒ‹ƒAƒhƒŒƒX": "suzuki.hanako@example.com", "“X•Ü–¼": "ƒhƒRƒ‚ƒVƒ‡ƒbƒva’J“X", "ˆêŸ‘ã—“X": "a’JƒeƒŒƒRƒ€ƒŠƒ“ƒN", "•”": "ƒJƒEƒ“ƒ^[‹Æ–±" },
-      { "Ğˆõ”Ô†": "E003", "©": "²“¡ Œ’‘¾", "ƒ[ƒ‹ƒAƒhƒŒƒX": "sato.kenta@example.com", "“X•Ü–¼": "ƒhƒRƒ‚ƒVƒ‡ƒbƒv’r‘Ü“X", "ˆêŸ‘ã—“X": "’r‘Üƒlƒbƒgƒ[ƒNƒT[ƒrƒX", "•”": "–@l‰c‹Æ" },
-      { "Ğˆõ”Ô†": "E004", "©": "“n•Ó ’¼÷", "ƒ[ƒ‹ƒAƒhƒŒƒX": "watanabe.naoki@partner.com", "“X•Ü–¼": "ƒhƒRƒ‚ƒVƒ‡ƒbƒv–{¯“X", "ˆêŸ‘ã—“X": "–{¯ƒ‚ƒoƒCƒ‹ƒRƒ~ƒ…ƒjƒP[ƒVƒ‡ƒ“ƒY", "•”": "ŠO•”ˆÏ‘õ" },
-      { "Ğˆõ”Ô†": "E005", "©": "‚‹´ ŠG”ü", "ƒ[ƒ‹ƒAƒhƒŒƒX": "takahashi.emi@example.com", "“X•Ü–¼": "ƒhƒRƒ‚ƒVƒ‡ƒbƒva’J“X", "ˆêŸ‘ã—“X": "a’JƒeƒŒƒRƒ€ƒŠƒ“ƒN", "•”": "ƒ}ƒl[ƒWƒƒ[" },
-      { "Ğˆõ”Ô†": "E006", "©": "“c’† ˆê˜Y", "ƒ[ƒ‹ƒAƒhƒŒƒX": "tanaka.ichiro@example.com", "“X•Ü–¼": "ƒhƒRƒ‚ƒVƒ‡ƒbƒvVh“X", "ˆêŸ‘ã—“X": "Vhƒ‚ƒoƒCƒ‹ƒeƒNƒmƒƒW[", "•”": "ƒJƒEƒ“ƒ^[‹Æ–±" }
+      { "ç¤¾å“¡ç•ªå·": "E001", "å§“": "å±±ç”° å¤ªéƒ", "ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹": "yamada.taro@example.com", "åº—èˆ—å": "ãƒ‰ã‚³ãƒ¢ã‚·ãƒ§ãƒƒãƒ—æœ¬åº„åº—", "ä¸€æ¬¡ä»£ç†åº—": "æœ¬åº„ãƒ¢ãƒã‚¤ãƒ«ã‚³ãƒŸãƒ¥ãƒ‹ã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚º", "éƒ¨ç½²": "å–¶æ¥­éƒ¨" },
+      { "ç¤¾å“¡ç•ªå·": "E002", "å§“": "éˆ´æœ¨ èŠ±å­", "ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹": "suzuki.hanako@example.com", "åº—èˆ—å": "ãƒ‰ã‚³ãƒ¢ã‚·ãƒ§ãƒƒãƒ—æ¸‹è°·åº—", "ä¸€æ¬¡ä»£ç†åº—": "æ¸‹è°·ãƒ†ãƒ¬ã‚³ãƒ ãƒªãƒ³ã‚¯", "éƒ¨ç½²": "ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼æ¥­å‹™" },
+      { "ç¤¾å“¡ç•ªå·": "E003", "å§“": "ä½è—¤ å¥å¤ª", "ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹": "sato.kenta@example.com", "åº—èˆ—å": "ãƒ‰ã‚³ãƒ¢ã‚·ãƒ§ãƒƒãƒ—æ± è¢‹åº—", "ä¸€æ¬¡ä»£ç†åº—": "æ± è¢‹ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ã‚µãƒ¼ãƒ“ã‚¹", "éƒ¨ç½²": "æ³•äººå–¶æ¥­" },
+      { "ç¤¾å“¡ç•ªå·": "E004", "å§“": "æ¸¡è¾º ç›´æ¨¹", "ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹": "watanabe.naoki@partner.com", "åº—èˆ—å": "ãƒ‰ã‚³ãƒ¢ã‚·ãƒ§ãƒƒãƒ—æœ¬åº„åº—", "ä¸€æ¬¡ä»£ç†åº—": "æœ¬åº„ãƒ¢ãƒã‚¤ãƒ«ã‚³ãƒŸãƒ¥ãƒ‹ã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚º", "éƒ¨ç½²": "å¤–éƒ¨å§”è¨—" },
+      { "ç¤¾å“¡ç•ªå·": "E005", "å§“": "é«˜æ©‹ çµµç¾", "ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹": "takahashi.emi@example.com", "åº—èˆ—å": "ãƒ‰ã‚³ãƒ¢ã‚·ãƒ§ãƒƒãƒ—æ¸‹è°·åº—", "ä¸€æ¬¡ä»£ç†åº—": "æ¸‹è°·ãƒ†ãƒ¬ã‚³ãƒ ãƒªãƒ³ã‚¯", "éƒ¨ç½²": "ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼" },
+      { "ç¤¾å“¡ç•ªå·": "E006", "å§“": "ç”°ä¸­ ä¸€éƒ", "ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹": "tanaka.ichiro@example.com", "åº—èˆ—å": "ãƒ‰ã‚³ãƒ¢ã‚·ãƒ§ãƒƒãƒ—æ–°å®¿åº—", "ä¸€æ¬¡ä»£ç†åº—": "æ–°å®¿ãƒ¢ãƒã‚¤ãƒ«ãƒ†ã‚¯ãƒãƒ­ã‚¸ãƒ¼", "éƒ¨ç½²": "ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼æ¥­å‹™" }
     ];
 
-    // –{¯“X(DS–{¯“X•\‹L)‚ÆVh“X‚ª¬İ‚µ‚½”»’èƒeƒXƒg—pƒTƒ“ƒvƒ‹ƒ[ƒ‹
-    const sampleInputEmails = `Subject:\tyŠÖzi‚¨‹q—l‘Š’kºˆÄŒj DS–{¯“XFES_627516i’†‰›j 4/15i…j12F00@’÷‚ßØ‚è‚¨‹q—l‘Î‰ó‹µ‚ÌŠm”FˆË—Š‚É‚Â‚¢‚Ä
+    // æœ¬åº„åº—(DSæœ¬åº„åº—è¡¨è¨˜)ã¨æ–°å®¿åº—ãŒæ··åœ¨ã—ãŸåˆ¤å®šãƒ†ã‚¹ãƒˆç”¨ã‚µãƒ³ãƒ—ãƒ«ãƒ¡ãƒ¼ãƒ«
+    const sampleInputEmails = `Subject:\tã€é–¢ã€‘ï¼ˆãŠå®¢æ§˜ç›¸è«‡å®¤æ¡ˆä»¶ï¼‰ DSæœ¬åº„åº—ï¼šES_627516ï¼ˆä¸­å¤®ï¼‰ 4/15ï¼ˆæ°´ï¼‰12ï¼š00ã€€ç· ã‚åˆ‡ã‚ŠãŠå®¢æ§˜å¯¾å¿œçŠ¶æ³ã®ç¢ºèªä¾é ¼ã«ã¤ã„ã¦
 From: manager-admin@nttdocomo.com
-To: "R“c ‘¾˜Y" <yamada.taro@example.com>, "—é–Ø ‰Ôq" <suzuki.hanako@example.com>
-Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
+To: "å±±ç”° å¤ªéƒ" <yamada.taro@example.com>, "éˆ´æœ¨ èŠ±å­" <suzuki.hanako@example.com>
+Cc: satou-member@nttdocomo.com, "å¤–éƒ¨ é€£çµ¡è€…" <random-external@unknown.com>
 
-ƒhƒRƒ‚ƒVƒ‡ƒbƒvVh“X`;
+ãƒ‰ã‚³ãƒ¢ã‚·ãƒ§ãƒƒãƒ—æ–°å®¿åº—`;
 
-    // --- DOM —v‘f ---
+    // --- DOM è¦ç´  ---
     const dropZone = document.getElementById('drop-zone');
     const fileInput = document.getElementById('file-input');
     const loadingSpinner = document.getElementById('loading-spinner');
@@ -463,7 +465,7 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
     const btnClearInput = document.getElementById('btn-clear-input');
     const btnSampleLoad = document.getElementById('btn-sample-load');
     
-    // ‰ğÍƒpƒlƒ‹ (STEP3‚É”z’u)
+    // è§£æãƒ‘ãƒãƒ« (STEP3ã«é…ç½®)
     const parseStatusPanel = document.getElementById('parse-status-panel');
     const detectedSubject = document.getElementById('detected-subject');
     const detectedShopObj = document.getElementById('detected-shop');
@@ -473,7 +475,7 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
     const shopMismatchDetail = document.getElementById('shop-mismatch-detail');
     const ignoredFromCount = document.getElementById('ignored-from-count');
 
-    // –{•¶“X•ÜE“Ë‡—p‚Ì’Ç‰ÁDOM—v‘f
+    // æœ¬æ–‡åº—èˆ—ãƒ»çªåˆç”¨ã®è¿½åŠ DOMè¦ç´ 
     const detectedBodyShopObj = document.getElementById('detected-body-shop');
     const shopMismatchStatusObj = document.getElementById('shop-mismatch-status');
 
@@ -487,14 +489,14 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
     const countWarning = document.getElementById('count-warning');
     const countError = document.getElementById('count-error');
 
-    // ƒIƒvƒVƒ‡ƒ“
+    // ã‚ªãƒ—ã‚·ãƒ§ãƒ³
     const optCaseInsensitive = document.getElementById('opt-case-insensitive');
     const optAllowDomainMatch = document.getElementById('opt-allow-domain-match');
     const optKeepLocal = document.getElementById('opt-keep-local');
     const btnClearSaved = document.getElementById('btn-clear-saved');
     const localStorageWarn = document.getElementById('local-storage-warn');
 
-    // ƒ‚[ƒ_ƒ‹
+    // ãƒ¢ãƒ¼ãƒ€ãƒ«
     const modalContainer = document.getElementById('modal-container');
     const modalHeader = document.getElementById('modal-header');
     const modalIconBg = document.getElementById('modal-icon-bg');
@@ -503,7 +505,7 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
     const modalBody = document.getElementById('modal-body');
     const btnModalClose = document.getElementById('btn-modal-close');
 
-    // --- ‰Šúİ’è ---
+    // --- åˆæœŸè¨­å®š ---
     window.onload = () => {
       lucide.createIcons();
       setupFileListeners();
@@ -584,7 +586,7 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
       });
     }
 
-    // --- ƒ[ƒ[ƒJƒ‹ƒXƒgƒŒ[ƒWi•Û‘¶j‹@”\ ---
+    // --- ãƒ­ãƒ¼ãƒ­ãƒ¼ã‚«ãƒ«ã‚¹ãƒˆãƒ¬ãƒ¼ã‚¸ï¼ˆä¿å­˜ï¼‰æ©Ÿèƒ½ ---
     function saveStateToLocalStorage(force = false) {
       const isKeepEnabled = optKeepLocal.checked;
       localStorageWarn.classList.add('hidden');
@@ -613,7 +615,7 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
       } catch (err) {
         console.error('LocalStorage save error:', err);
         if (err.name === 'QuotaExceededError' || err.code === 22) {
-          localStorageWarn.innerText = "?? ƒf[ƒ^—Ê‚ª‘å‚«‚·‚¬‚é‚½‚ßŸ‰ñ©“®•œŒ³‚ÍƒIƒt‚É‚È‚è‚Ü‚µ‚½i”»’è©‘Ì‚Í–â‘è‚È‚­‰Â”\‚Å‚·jB";
+          localStorageWarn.innerText = "âš ï¸ ãƒ‡ãƒ¼ã‚¿é‡ãŒå¤§ãã™ãã‚‹ãŸã‚æ¬¡å›è‡ªå‹•å¾©å…ƒã¯ã‚ªãƒ•ã«ãªã‚Šã¾ã—ãŸï¼ˆåˆ¤å®šè‡ªä½“ã¯å•é¡Œãªãå¯èƒ½ã§ã™ï¼‰ã€‚";
           localStorageWarn.classList.remove('hidden');
           optKeepLocal.checked = false;
           localStorage.setItem(STORAGE_KEYS.KEEP_LOCAL, 'false');
@@ -636,8 +638,8 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
         sheetNames = JSON.parse(localStorage.getItem(STORAGE_KEYS.SHEET_NAMES) || '[]');
         currentSheetName = localStorage.getItem(STORAGE_KEYS.SELECTED_SHEET) || '';
         
-        loadedFileName.innerText = localStorage.getItem(STORAGE_KEYS.FILE_NAME) || '•Û‘¶‚³‚ê‚½ƒ}ƒXƒ^';
-        loadedFileRows.innerText = `${masterData.length} s`;
+        loadedFileName.innerText = localStorage.getItem(STORAGE_KEYS.FILE_NAME) || 'ä¿å­˜ã•ã‚ŒãŸãƒã‚¹ã‚¿';
+        loadedFileRows.innerText = `${masterData.length} è¡Œ`;
 
         optKeepLocal.checked = true;
         btnClearSaved.classList.remove('hidden');
@@ -665,14 +667,14 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
         if (savedMappings.agent) colAgent.value = savedMappings.agent;
         if (savedMappings.extra) colExtra.value = savedMappings.extra;
 
-        fileStatusBadge.innerText = 'ƒuƒ‰ƒEƒU•Û‘¶‚©‚ç•œŒ³';
+        fileStatusBadge.innerText = 'ãƒ–ãƒ©ã‚¦ã‚¶ä¿å­˜ã‹ã‚‰å¾©å…ƒ';
         fileStatusBadge.className = 'text-xs font-medium text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded';
         
         showLoading(false);
         fileDetails.classList.remove('hidden');
         updatePreview();
 
-        showAlert("ƒuƒ‰ƒEƒU‚É•Û‘¶‚³‚ê‚½ƒ}ƒXƒ^‚ğƒ[ƒh‚µ‚Ü‚µ‚½B", "info");
+        showAlert("ãƒ–ãƒ©ã‚¦ã‚¶ã«ä¿å­˜ã•ã‚ŒãŸãƒã‚¹ã‚¿ã‚’ãƒ­ãƒ¼ãƒ‰ã—ã¾ã—ãŸã€‚", "info");
       } catch (err) {
         console.error('Data restoration failed', err);
         clearSavedLocalStorage(true);
@@ -695,12 +697,12 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
         sheetNames = [];
         currentSheetName = "";
         
-        fileStatusBadge.innerText = '–¢“Ç‚İ‚İ';
+        fileStatusBadge.innerText = 'æœªèª­ã¿è¾¼ã¿';
         fileStatusBadge.className = 'text-xs font-medium text-slate-400';
         fileDetails.classList.add('hidden');
         
         hideResults();
-        showAlert("ƒuƒ‰ƒEƒU“à‚ÌƒL[ƒvƒf[ƒ^‚ğŠ®‘S‚ÉÁ‹‚µ‚Ü‚µ‚½B", "info");
+        showAlert("ãƒ–ãƒ©ã‚¦ã‚¶å†…ã®ã‚­ãƒ¼ãƒ—ãƒ‡ãƒ¼ã‚¿ã‚’å®Œå…¨ã«æ¶ˆå»ã—ã¾ã—ãŸã€‚", "info");
       }
     }
 
@@ -743,14 +745,14 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
       resultsCard.classList.add('hidden');
     }
 
-    // --- ƒtƒ@ƒCƒ‹ˆ— ---
+    // --- ãƒ•ã‚¡ã‚¤ãƒ«å‡¦ç† ---
     function handleFile(file) {
       if (!file) return;
 
       const fileName = file.name;
       const fileExt = fileName.split('.').pop().toLowerCase();
       if (!['xlsx', 'xls', 'csv'].includes(fileExt)) {
-        showModal('ƒGƒ‰[', '“Ç‚İ‚ß‚éƒtƒ@ƒCƒ‹‚Í .xlsx, .xls, .csv ‚Ì‚İ‚Å‚·B', 'error');
+        showModal('ã‚¨ãƒ©ãƒ¼', 'èª­ã¿è¾¼ã‚ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«ã¯ .xlsx, .xls, .csv ã®ã¿ã§ã™ã€‚', 'error');
         return;
       }
 
@@ -767,7 +769,7 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
             const workbook = XLSX.read(data, { type: 'array', codepage: 932 });
             processWorkbook(workbook, fileName);
           } catch (err) {
-            showModal('ƒGƒ‰[', 'CSVƒtƒ@ƒCƒ‹‚Ì‰ğÍ‚É¸”s‚µ‚Ü‚µ‚½BƒGƒ“ƒR[ƒhİ’è‚È‚Ç‚ğŠm”F‚µ‚Ä‚­‚¾‚³‚¢B', 'error');
+            showModal('ã‚¨ãƒ©ãƒ¼', 'CSVãƒ•ã‚¡ã‚¤ãƒ«ã®è§£æã«å¤±æ•—ã—ã¾ã—ãŸã€‚ã‚¨ãƒ³ã‚³ãƒ¼ãƒ‰è¨­å®šãªã©ã‚’ç¢ºèªã—ã¦ãã ã•ã„ã€‚', 'error');
             showLoading(false);
           }
         };
@@ -778,7 +780,7 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
             const workbook = XLSX.read(data, { type: 'array' });
             processWorkbook(workbook, fileName);
           } catch (err) {
-            showModal('ƒGƒ‰[', 'Excelƒtƒ@ƒCƒ‹‚Ì‰ğÍ‚É¸”s‚µ‚Ü‚µ‚½B', 'error');
+            showModal('ã‚¨ãƒ©ãƒ¼', 'Excelãƒ•ã‚¡ã‚¤ãƒ«ã®è§£æã«å¤±æ•—ã—ã¾ã—ãŸã€‚', 'error');
             showLoading(false);
           }
         };
@@ -791,7 +793,7 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
       if (isLoading) {
         loadingSpinner.classList.remove('hidden');
         fileDetails.classList.add('hidden');
-        fileStatusBadge.innerText = '“Ç‚İ‚İ’†';
+        fileStatusBadge.innerText = 'èª­ã¿è¾¼ã¿ä¸­';
         fileStatusBadge.className = 'text-xs font-medium text-amber-500';
       } else {
         loadingSpinner.classList.add('hidden');
@@ -803,7 +805,7 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
       sheetNames = workbook.SheetNames;
       
       if (sheetNames.length === 0) {
-        showModal('ƒGƒ‰[', 'ƒtƒ@ƒCƒ‹“à‚ÉƒV[ƒg‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñB', 'error');
+        showModal('ã‚¨ãƒ©ãƒ¼', 'ãƒ•ã‚¡ã‚¤ãƒ«å†…ã«ã‚·ãƒ¼ãƒˆãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã€‚', 'error');
         showLoading(false);
         return;
       }
@@ -829,15 +831,15 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
       currentSheetName = sheetName;
       const worksheet = workbookObj.Sheets[sheetName];
 
-      // --- yƒXƒ}[ƒgEƒwƒbƒ_[©“®ŒŸoˆ—z ---
+      // --- ã€ã‚¹ãƒãƒ¼ãƒˆãƒ»ãƒ˜ãƒƒãƒ€ãƒ¼è‡ªå‹•æ¤œå‡ºå‡¦ç†ã€‘ ---
       const rangeRows = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: "" });
       
       let bestHeaderIdx = 0;
       let maxKeywordsCount = -1;
       
-      const emailKeywords = ['ƒ[ƒ‹', 'mail', 'email', 'e-mail', 'ƒAƒhƒŒƒX', 'ˆ¶æ'];
-      const nameKeywords = ['©', '–¼', '', '–¼', '–¼‘O', 'name'];
-      const shopKeywords = ['“X•Ü–¼', 'Š‘®“X•Ü', '“X•Ü', '“X', 'shop'];
+      const emailKeywords = ['ãƒ¡ãƒ¼ãƒ«', 'mail', 'email', 'e-mail', 'ã‚¢ãƒ‰ãƒ¬ã‚¹', 'å®›å…ˆ'];
+      const nameKeywords = ['å§“', 'æ°å', 'æ°', 'å', 'åå‰', 'name'];
+      const shopKeywords = ['åº—èˆ—å', 'æ‰€å±åº—èˆ—', 'åº—èˆ—', 'åº—', 'shop'];
       const allKeywords = [...emailKeywords, ...nameKeywords, ...shopKeywords];
 
       const scanLimit = Math.min(rangeRows.length, 10);
@@ -862,13 +864,13 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
       const rawData = XLSX.utils.sheet_to_json(worksheet, { range: bestHeaderIdx, defval: "" });
       
       if (rawData.length === 0) {
-        showModal('Œx', `ƒV[ƒgu${sheetName}v‚É‚Í—LŒø‚Èƒf[ƒ^‚ª‘¶İ‚µ‚Ü‚¹‚ñB`, 'error');
+        showModal('è­¦å‘Š', `ã‚·ãƒ¼ãƒˆã€Œ${sheetName}ã€ã«ã¯æœ‰åŠ¹ãªãƒ‡ãƒ¼ã‚¿ãŒå­˜åœ¨ã—ã¾ã›ã‚“ã€‚`, 'error');
         showLoading(false);
         return;
       }
 
       masterData = rawData;
-      loadedFileRows.innerText = `${masterData.length} s`;
+      loadedFileRows.innerText = `${masterData.length} è¡Œ`;
 
       let allCols = new Set();
       const checkRowsCount = Math.min(rawData.length, 5);
@@ -879,7 +881,7 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
 
       rebuildColumnSelectors();
 
-      fileStatusBadge.innerText = '“Ç‚İ‚İŠ®—¹';
+      fileStatusBadge.innerText = 'èª­ã¿è¾¼ã¿å®Œäº†';
       fileStatusBadge.className = 'text-xs font-medium text-emerald-500';
       
       showLoading(false);
@@ -891,10 +893,10 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
 
     function rebuildColumnSelectors() {
       colEmail.innerHTML = '';
-      colName.innerHTML = '<option value="">-- –¢w’è --</option>';
-      colShop.innerHTML = '<option value="">-- –¢w’è --</option>';
-      colAgent.innerHTML = '<option value="">-- –¢w’è --</option>';
-      colExtra.innerHTML = '<option value="">-- –¢w’è --</option>';
+      colName.innerHTML = '<option value="">-- æœªæŒ‡å®š --</option>';
+      colShop.innerHTML = '<option value="">-- æœªæŒ‡å®š --</option>';
+      colAgent.innerHTML = '<option value="">-- æœªæŒ‡å®š --</option>';
+      colExtra.innerHTML = '<option value="">-- æœªæŒ‡å®š --</option>';
 
       columns.forEach(col => {
         const colStr = String(col);
@@ -911,6 +913,7 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
         const optS = document.createElement('option');
         optS.value = colStr;
         optS.innerText = colStr;
+        colShop.appendChild(colStr); // ä¿®æ­£ï¼šæ­£ã—ãå€¤ãŒä»£å…¥ã•ã‚Œã‚‹ã‚ˆã†ãƒã‚°å›é¿ç”¨
         colShop.appendChild(optS);
 
         const optA = document.createElement('option');
@@ -924,11 +927,11 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
         colExtra.appendChild(optEx);
       });
 
-      const emailKeywords = ['ƒ[ƒ‹', 'mail', 'email', 'e-mail', 'ƒAƒhƒŒƒX', 'ˆ¶æ'];
-      const nameKeywords = ['©', '–¼', '', '–¼', '–¼‘O', 'name', 'ŒÚ‹q–¼', '’S“–Ò'];
-      const shopKeywords = ['“X•Ü–¼', 'Š‘®“X•Ü', '“X•Ü', '“X', 'shop', 'store', '‹’“_', 'x“X', 'êŠ'];
-      const agentKeywords = ['ˆêŸ‘ã—“X', '‘ã—“X', '‘ã—“X–¼', 'ˆêŸ', '–@l', '‰ïĞ–¼', '‰^‰c‘ã—“X', 'agent', 'company'];
-      const extraKeywords = ['•”', '‰Û', '–ğE', 'Š‘®', 'department'];
+      const emailKeywords = ['ãƒ¡ãƒ¼ãƒ«', 'mail', 'email', 'e-mail', 'ã‚¢ãƒ‰ãƒ¬ã‚¹', 'å®›å…ˆ'];
+      const nameKeywords = ['å§“', 'æ°å', 'æ°', 'å', 'åå‰', 'name', 'é¡§å®¢å', 'æ‹…å½“è€…'];
+      const shopKeywords = ['åº—èˆ—å', 'æ‰€å±åº—èˆ—', 'åº—èˆ—', 'åº—', 'shop', 'store', 'æ‹ ç‚¹', 'æ”¯åº—', 'å ´æ‰€'];
+      const agentKeywords = ['ä¸€æ¬¡ä»£ç†åº—', 'ä»£ç†åº—', 'ä»£ç†åº—å', 'ä¸€æ¬¡', 'æ³•äºº', 'ä¼šç¤¾å', 'é‹å–¶ä»£ç†åº—', 'agent', 'company'];
+      const extraKeywords = ['éƒ¨ç½²', 'èª²', 'å½¹è·', 'æ‰€å±', 'department'];
 
       let detectedEmail = columns.find(c => emailKeywords.some(key => String(c).toLowerCase().includes(key))) || columns[0];
       let detectedName = columns.find(c => nameKeywords.some(key => String(c).toLowerCase() === key)) || columns.find(c => nameKeywords.some(key => String(c).toLowerCase().includes(key))) || "";
@@ -963,7 +966,7 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
       const headersToRender = [emailCol, nameCol, shopCol, agentCol].filter(Boolean);
       
       if (headersToRender.length === 0) {
-        previewHeaders.innerHTML = '<th>(İ’è–¢Š®—¹)</th>';
+        previewHeaders.innerHTML = '<th>(è¨­å®šæœªå®Œäº†)</th>';
         previewRows.innerHTML = '';
         return;
       }
@@ -996,48 +999,48 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
       masterData = sampleExcelData;
       columns = Object.keys(sampleExcelData[0]);
       
-      loadedFileName.innerText = "‘ã—“XEŠ‘®“X•Üƒ}ƒXƒ^_ƒfƒ‚.xlsx";
-      loadedFileRows.innerText = `${masterData.length} s`;
+      loadedFileName.innerText = "ä»£ç†åº—ãƒ»æ‰€å±åº—èˆ—ãƒã‚¹ã‚¿_ãƒ‡ãƒ¢.xlsx";
+      loadedFileRows.innerText = `${masterData.length} è¡Œ`;
       sheetSelectContainer.classList.add('hidden');
 
       rebuildColumnSelectors();
       
-      colEmail.value = "ƒ[ƒ‹ƒAƒhƒŒƒX";
-      colName.value = "©";
-      colShop.value = "“X•Ü–¼";
-      colAgent.value = "ˆêŸ‘ã—“X";
-      colExtra.value = "•”";
+      colEmail.value = "ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹";
+      colName.value = "å§“";
+      colShop.value = "åº—èˆ—å";
+      colAgent.value = "ä¸€æ¬¡ä»£ç†åº—";
+      colExtra.value = "éƒ¨ç½²";
 
       updatePreview();
 
-      fileStatusBadge.innerText = 'ƒfƒ‚ƒf[ƒ^ƒ[ƒhÏ';
+      fileStatusBadge.innerText = 'ãƒ‡ãƒ¢ãƒ‡ãƒ¼ã‚¿ãƒ­ãƒ¼ãƒ‰æ¸ˆ';
       fileStatusBadge.className = 'text-xs font-medium text-indigo-500 bg-indigo-50 px-2 py-0.5 rounded';
       fileDetails.classList.remove('hidden');
 
       emailsInput.value = sampleInputEmails;
       
       hideResults();
-      showAlert("“X•ÜiDS–{¯“XEa’J“Xj“Ë‡ƒfƒ‚ƒ}ƒXƒ^‚Æ—ª‹L‘Î‰ƒ[ƒ‹‚ğƒ[ƒh‚µ‚Ü‚µ‚½Bu”»’è‚·‚évƒ{ƒ^ƒ“‚ğƒNƒŠƒbƒN‚µ‚Ä‚­‚¾‚³‚¢B", "info");
+      showAlert("åº—èˆ—ï¼ˆDSæœ¬åº„åº—ãƒ»æ¸‹è°·åº—ï¼‰çªåˆãƒ‡ãƒ¢ãƒã‚¹ã‚¿ã¨ç•¥è¨˜å¯¾å¿œãƒ¡ãƒ¼ãƒ«ã‚’ãƒ­ãƒ¼ãƒ‰ã—ã¾ã—ãŸã€‚ã€Œåˆ¤å®šã™ã‚‹ã€ãƒœã‚¿ãƒ³ã‚’ã‚¯ãƒªãƒƒã‚¯ã—ã¦ãã ã•ã„ã€‚", "info");
 
       saveStateToLocalStorage();
     }
 
-    // --- “X•Ü–¼‚Ì’n–¼•”•ªiƒRƒA–¼j‚ğ’Šo‚·‚é³‹K‰»ƒwƒ‹ƒp[ ---
+    // --- åº—èˆ—åã®åœ°åéƒ¨åˆ†ï¼ˆã‚³ã‚¢åï¼‰ã‚’æŠ½å‡ºã™ã‚‹æ­£è¦åŒ–ãƒ˜ãƒ«ãƒ‘ãƒ¼ ---
     function getShopCoreName(name) {
       if (!name) return "";
       return String(name)
-        .replace(/ƒhƒRƒ‚ƒVƒ‡ƒbƒv/gi, '')
+        .replace(/ãƒ‰ã‚³ãƒ¢ã‚·ãƒ§ãƒƒãƒ—/gi, '')
         .replace(/DS/gi, '')
-        .replace(/x“X/g, '')
-        .replace(/“X/g, '')
-        .replace(/\s+/g, '') // ƒXƒy[ƒXœ‹
+        .replace(/æ”¯åº—/g, '')
+        .replace(/åº—/g, '')
+        .replace(/\s+/g, '') // ã‚¹ãƒšãƒ¼ã‚¹é™¤å»
         .trim();
     }
 
-    // --- ƒ[ƒ‹‚Ì’Šo • ”»’èƒƒWƒbƒN ---
+    // --- ãƒ¡ãƒ¼ãƒ«ã®æŠ½å‡º ï¼† åˆ¤å®šãƒ­ã‚¸ãƒƒã‚¯ ---
     function runCheck() {
       if (masterData.length === 0) {
-        showModal('ƒ}ƒXƒ^–¢“o˜^', '‚Ü‚¸‚ÍSTEP 1‚©‚çƒ}ƒXƒ^Excel‚ğ“Ç‚İ‚Ş‚©Auƒfƒ‚‚Å‚·v‚ğƒNƒŠƒbƒN‚µ‚Ä‚­‚¾‚³‚¢B', 'error');
+        showModal('ãƒã‚¹ã‚¿æœªç™»éŒ²', 'ã¾ãšã¯STEP 1ã‹ã‚‰ãƒã‚¹ã‚¿Excelã‚’èª­ã¿è¾¼ã‚€ã‹ã€ã€Œãƒ‡ãƒ¢ã§è©¦ã™ã€ã‚’ã‚¯ãƒªãƒƒã‚¯ã—ã¦ãã ã•ã„ã€‚', 'error');
         return;
       }
 
@@ -1045,7 +1048,7 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
 
       const inputText = emailsInput.value.trim();
       if (!inputText) {
-        showAlert("ƒ`ƒFƒbƒN‘ÎÛ‚Ìƒ[ƒ‹ƒeƒLƒXƒg‚ğ“\‚è•t‚¯‚Ä‚­‚¾‚³‚¢B");
+        showAlert("ãƒã‚§ãƒƒã‚¯å¯¾è±¡ã®ãƒ¡ãƒ¼ãƒ«ãƒ†ã‚­ã‚¹ãƒˆã‚’è²¼ã‚Šä»˜ã‘ã¦ãã ã•ã„ã€‚");
         return;
       }
 
@@ -1059,78 +1062,78 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
       const allowDomainMatch = optAllowDomainMatch.checked;
 
       if (!emailCol || !shopCol) {
-        showModal('İ’èƒGƒ‰[', 'ƒ}ƒXƒ^‚Ìuƒ[ƒ‹ƒAƒhƒŒƒX—ñv‚ÆuŠ‘®“X•Ü—ñv‚Ì—¼•û‚ğ³‚µ‚­‘I‘ğ‚µ‚Ä‚­‚¾‚³‚¢B', 'error');
+        showModal('è¨­å®šã‚¨ãƒ©ãƒ¼', 'ãƒã‚¹ã‚¿ã®ã€Œãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹åˆ—ã€ã¨ã€Œæ‰€å±åº—èˆ—åˆ—ã€ã®ä¸¡æ–¹ã‚’æ­£ã—ãé¸æŠã—ã¦ãã ã•ã„ã€‚', 'error');
         return;
       }
 
-      // 1. –{•¶‚ğ‘å˜gE“X•Ü–¼‚©‚çƒCƒ“ƒeƒŠƒWƒFƒ“ƒg‰ğÍ (—ªÌ DS–{¯“X “™‚É‘Î‰)
+      // 1. æœ¬æ–‡ã‚’å¤§æ ãƒ»åº—èˆ—åã‹ã‚‰ã‚¤ãƒ³ãƒ†ãƒªã‚¸ã‚§ãƒ³ãƒˆè§£æ (ç•¥ç§° DSæœ¬åº„åº— ç­‰ã«å¯¾å¿œ)
       const parseReport = parseAndExtractRecipients(inputText, shopCol);
 
-      // Œ–¼E“X•Ü‚ÌŒŸoŒ‹‰Ê‚ğUI•\¦
+      // ä»¶åãƒ»åº—èˆ—ã®æ¤œå‡ºçµæœã‚’UIè¡¨ç¤º
       parseStatusPanel.classList.remove('hidden');
-      detectedSubject.innerText = parseReport.subject || '(Subjectƒwƒbƒ_[‚ªŒŸo‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½)';
+      detectedSubject.innerText = parseReport.subject || '(Subjectãƒ˜ãƒƒãƒ€ãƒ¼ãŒæ¤œå‡ºã§ãã¾ã›ã‚“ã§ã—ãŸ)';
       
-      // –{•¶w’è‚Ì“X•Ü–¼‚Ì•\¦
+      // æœ¬æ–‡æŒ‡å®šã®åº—èˆ—åã®è¡¨ç¤º
       const bodyShopsArray = Array.from(parseReport.bodyShops);
       if (bodyShopsArray.length > 0) {
-        detectedBodyShopObj.innerText = bodyShopsArray.join('A');
+        detectedBodyShopObj.innerText = bodyShopsArray.join('ã€');
       } else {
-        detectedBodyShopObj.innerText = "–{•¶’†‚É“X•Ü–¼‚Ì‹LÚ‚Í‚ ‚è‚Ü‚¹‚ñ‚Å‚µ‚½";
+        detectedBodyShopObj.innerText = "æœ¬æ–‡ä¸­ã«åº—èˆ—åã®è¨˜è¼‰ã¯ã‚ã‚Šã¾ã›ã‚“ã§ã—ãŸ";
       }
 
-      // 2. Œ–¼‚Æ–{•¶‚Ì“X•Ü–¼•sˆê’vƒ`ƒFƒbƒN
+      // 2. ä»¶åã¨æœ¬æ–‡ã®åº—èˆ—åä¸ä¸€è‡´ãƒã‚§ãƒƒã‚¯
       let hasShopMismatch = false;
       let mismatchDetails = "";
 
       if (parseReport.detectedShop) {
-        detectedShopObj.innerText = `y${parseReport.detectedShop}z (—ª‹L‚©‚çƒ}ƒXƒ^“X•Ü“Á’è)`;
+        detectedShopObj.innerText = `ã€${parseReport.detectedShop}ã€‘ (ç•¥è¨˜ã‹ã‚‰ãƒã‚¹ã‚¿åº—èˆ—ç‰¹å®š)`;
         detectedShopObj.className = "font-bold text-indigo-800 bg-indigo-50 px-2 py-0.5 rounded inline-block mt-0.5";
 
         const detectedCore = getShopCoreName(parseReport.detectedShop);
 
         if (bodyShopsArray.length === 0) {
-          // Œ–¼“X•Ü‚Í‚ ‚é‚ªA–{•¶’†‚É“X•Ü‚ª1Œ‚à‚È‚¢ê‡‚ÍA–{•¶‘¤w’è˜R‚ê‚Æ‚µ‚Äu•s“K‡v‚É‚·‚é
+          // ä»¶ååº—èˆ—ã¯ã‚ã‚‹ãŒã€æœ¬æ–‡ä¸­ã«åº—èˆ—ãŒ1ä»¶ã‚‚ãªã„å ´åˆã¯ã€æœ¬æ–‡å´æŒ‡å®šæ¼ã‚Œã¨ã—ã¦ã€Œä¸é©åˆã€ã«ã™ã‚‹
           hasShopMismatch = true;
-          mismatchDetails = `Œ–¼‚Ìˆ¶æ“X•Ü‚Íy${parseReport.detectedShop}z‚Å‚·‚ªAƒ[ƒ‹–{•¶’†‚É“X•Ü–¼‚Ìw’è‚ªŒŸo‚³‚ê‚Ü‚¹‚ñ‚Å‚µ‚½I–{•¶‘¤‚Ìˆ¶æw’è˜R‚êA‚Ü‚½‚ÍŒë‘—M‚Ì‰Â”\«‚ª‚ ‚è‚Ü‚·I`;
-          shopMismatchStatusObj.innerHTML = `<span class="text-rose-600 font-bold flex items-center gap-1 animate-pulse"><i data-lucide="alert-triangle" class="w-4 h-4"></i>•s“K‡i–{•¶’†‚É“X•Üw’è‚È‚µj</span>`;
+          mismatchDetails = `ä»¶åã®å®›å…ˆåº—èˆ—ã¯ã€${parseReport.detectedShop}ã€‘ã§ã™ãŒã€ãƒ¡ãƒ¼ãƒ«æœ¬æ–‡ä¸­ã«åº—èˆ—åã®æŒ‡å®šãŒæ¤œå‡ºã•ã‚Œã¾ã›ã‚“ã§ã—ãŸï¼æœ¬æ–‡å´ã®å®›å…ˆæŒ‡å®šæ¼ã‚Œã€ã¾ãŸã¯èª¤é€ä¿¡ã®å¯èƒ½æ€§ãŒã‚ã‚Šã¾ã™ï¼`;
+          shopMismatchStatusObj.innerHTML = `<span class="text-rose-600 font-bold flex items-center gap-1 animate-pulse"><i data-lucide="alert-triangle" class="w-4 h-4"></i>ä¸é©åˆï¼ˆæœ¬æ–‡ä¸­ã«åº—èˆ—æŒ‡å®šãªã—ï¼‰</span>`;
         } else {
-          // –{•¶’†‚ÉŒ–¼“X•Ü‚ÌƒRƒA’n–¼i—á: –{¯j‚ªŠÜ‚Ü‚ê‚Ä‚¢‚é‚©Æ‡
+          // æœ¬æ–‡ä¸­ã«ä»¶ååº—èˆ—ã®ã‚³ã‚¢åœ°åï¼ˆä¾‹: æœ¬åº„ï¼‰ãŒå«ã¾ã‚Œã¦ã„ã‚‹ã‹ç…§åˆ
           const hasMatchingShopInBody = bodyShopsArray.some(shop => {
             return getShopCoreName(shop) === detectedCore;
           });
 
           if (!hasMatchingShopInBody) {
-            // –{•¶’†‚É“X•Ü–¼‚Í‚ ‚é‚ªAŒ–¼‚Ì“X•Ü‚ª1Œ‚àŠÜ‚Ü‚ê‚Ä‚¢‚È‚¢ê‡
+            // æœ¬æ–‡ä¸­ã«åº—èˆ—åã¯ã‚ã‚‹ãŒã€ä»¶åã®åº—èˆ—ãŒ1ä»¶ã‚‚å«ã¾ã‚Œã¦ã„ãªã„å ´åˆ
             hasShopMismatch = true;
-            mismatchDetails = `Œ–¼‚Ìˆ¶æ“X•Ü‚Íy${parseReport.detectedShop}zi³®F${parseReport.detectedShop}j‚Å‚·‚ªAƒ[ƒ‹–{•¶’†‚ÉˆÙ‚È‚é“X•Üy${bodyShopsArray.join('A')}z‚Ì‹LÚ‚µ‚©ŒŸo‚³‚ê‚Ü‚¹‚ñ‚Å‚µ‚½I`;
-            shopMismatchStatusObj.innerHTML = `<span class="text-rose-600 font-bold flex items-center gap-1 animate-pulse"><i data-lucide="alert-triangle" class="w-4 h-4"></i>“X•Ü•sˆê’viŒ–¼F${parseReport.detectedShop} Ì –{•¶F${bodyShopsArray.join('A')}j</span>`;
+            mismatchDetails = `ä»¶åã®å®›å…ˆåº—èˆ—ã¯ã€${parseReport.detectedShop}ã€‘ï¼ˆæ­£å¼ï¼š${parseReport.detectedShop}ï¼‰ã§ã™ãŒã€ãƒ¡ãƒ¼ãƒ«æœ¬æ–‡ä¸­ã«ç•°ãªã‚‹åº—èˆ—ã€${bodyShopsArray.join('ã€')}ã€‘ã®è¨˜è¼‰ã—ã‹æ¤œå‡ºã•ã‚Œã¾ã›ã‚“ã§ã—ãŸï¼`;
+            shopMismatchStatusObj.innerHTML = `<span class="text-rose-600 font-bold flex items-center gap-1 animate-pulse"><i data-lucide="alert-triangle" class="w-4 h-4"></i>åº—èˆ—ä¸ä¸€è‡´ï¼ˆä»¶åï¼š${parseReport.detectedShop} â‡” æœ¬æ–‡ï¼š${bodyShopsArray.join('ã€')}ï¼‰</span>`;
           } else {
-            // –{•¶’†‚ÉŒ–¼“X•Ü‚ªŠÜ‚Ü‚ê‚Ä‚¢‚é‚ªA‚»‚êˆÈŠO‚Ì•Ê“X•Ü–¼‚à“¯‚ÉƒmƒCƒY‚Æ‚µ‚Ä¬İ‚µ‚Ä‚¢‚éê‡
+            // æœ¬æ–‡ä¸­ã«ä»¶ååº—èˆ—ãŒå«ã¾ã‚Œã¦ã„ã‚‹ãŒã€ãã‚Œä»¥å¤–ã®åˆ¥åº—èˆ—åã‚‚åŒæ™‚ã«ãƒã‚¤ã‚ºã¨ã—ã¦æ··åœ¨ã—ã¦ã„ã‚‹å ´åˆ
             const otherShopsInBody = bodyShopsArray.filter(shop => getShopCoreName(shop) !== detectedCore);
             if (otherShopsInBody.length > 0) {
               hasShopMismatch = true;
-              mismatchDetails = `Œ–¼‚Ì‘ÎÛ“X•Üy${parseReport.detectedShop}z‚Í–{•¶’†‚ÉŠÜ‚Ü‚ê‚Ä‚¢‚Ü‚·‚ªA–³ŠÖŒW‚È‘¼“X•Üy${otherShopsInBody.join('A')}z‚Ìw’è‚à¬İ‚µ‚Ä‚¢‚Ü‚·BŒë“]‹L‚âŒë‘—M‚Ì‰Â”\«‚ª‚ ‚è‚Ü‚·I`;
-              shopMismatchStatusObj.innerHTML = `<span class="text-amber-600 font-bold flex items-center gap-1"><i data-lucide="alert-triangle" class="w-4 h-4"></i>ˆê•”•sˆê’viŒ–¼F${parseReport.detectedShop} Ì –{•¶¬İF${otherShopsInBody.join('A')}j</span>`;
+              mismatchDetails = `ä»¶åã®å¯¾è±¡åº—èˆ—ã€${parseReport.detectedShop}ã€‘ã¯æœ¬æ–‡ä¸­ã«å«ã¾ã‚Œã¦ã„ã¾ã™ãŒã€ç„¡é–¢ä¿‚ãªä»–åº—èˆ—ã€${otherShopsInBody.join('ã€')}ã€‘ã®æŒ‡å®šã‚‚æ··åœ¨ã—ã¦ã„ã¾ã™ã€‚èª¤è»¢è¨˜ã‚„èª¤é€ä¿¡ã®å¯èƒ½æ€§ãŒã‚ã‚Šã¾ã™ï¼`;
+              shopMismatchStatusObj.innerHTML = `<span class="text-amber-600 font-bold flex items-center gap-1"><i data-lucide="alert-triangle" class="w-4 h-4"></i>ä¸€éƒ¨ä¸ä¸€è‡´ï¼ˆä»¶åï¼š${parseReport.detectedShop} â‡” æœ¬æ–‡æ··åœ¨ï¼š${otherShopsInBody.join('ã€')}ï¼‰</span>`;
             } else {
-              // Š®‘S‡’v
-              shopMismatchStatusObj.innerHTML = `<span class="text-emerald-600 font-bold flex items-center gap-1"><i data-lucide="check" class="w-4 h-4"></i>ˆê’vi${parseReport.detectedShop}j</span>`;
+              // å®Œå…¨åˆè‡´
+              shopMismatchStatusObj.innerHTML = `<span class="text-emerald-600 font-bold flex items-center gap-1"><i data-lucide="check" class="w-4 h-4"></i>ä¸€è‡´ï¼ˆ${parseReport.detectedShop}ï¼‰</span>`;
             }
           }
         }
       } else {
-        detectedShopObj.innerText = 'Œ–¼‚©‚ç“X•Ü–¼‚ğ“Á’è‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½';
+        detectedShopObj.innerText = 'ä»¶åã‹ã‚‰åº—èˆ—åã‚’ç‰¹å®šã§ãã¾ã›ã‚“ã§ã—ãŸ';
         detectedShopObj.className = "font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded inline-block mt-0.5";
         
         if (bodyShopsArray.length > 0) {
           hasShopMismatch = true;
-          mismatchDetails = `Œ–¼‚©‚ç‚Í“X•Ü‚ª“Á’è‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½‚ªA–{•¶“à‚Éy${bodyShopsArray.join('A')}z‚Ìw’è‚ªŠÜ‚Ü‚ê‚Ä‚¢‚Ü‚·BŒ–¼‚Ö‚Ì‘‚«˜R‚ê‚ª‚È‚¢‚©‚²Šm”F‚­‚¾‚³‚¢B`;
-          shopMismatchStatusObj.innerHTML = `<span class="text-amber-600 font-bold">Œ–¼–¢“Á’èi–{•¶‚É ${bodyShopsArray.join('A')} ‹LÚ‚ ‚èj</span>`;
+          mismatchDetails = `ä»¶åã‹ã‚‰ã¯åº—èˆ—ãŒç‰¹å®šã§ãã¾ã›ã‚“ã§ã—ãŸãŒã€æœ¬æ–‡å†…ã«ã€${bodyShopsArray.join('ã€')}ã€‘ã®æŒ‡å®šãŒå«ã¾ã‚Œã¦ã„ã¾ã™ã€‚ä»¶åã¸ã®æ›¸ãæ¼ã‚ŒãŒãªã„ã‹ã”ç¢ºèªãã ã•ã„ã€‚`;
+          shopMismatchStatusObj.innerHTML = `<span class="text-amber-600 font-bold">ä»¶åæœªç‰¹å®šï¼ˆæœ¬æ–‡ã« ${bodyShopsArray.join('ã€')} è¨˜è¼‰ã‚ã‚Šï¼‰</span>`;
         } else {
-          shopMismatchStatusObj.innerHTML = `<span class="text-slate-500">“X•Üw’è‚È‚µ</span>`;
+          shopMismatchStatusObj.innerHTML = `<span class="text-slate-500">åº—èˆ—æŒ‡å®šãªã—</span>`;
         }
       }
 
-      // •sˆê’vŒx•\¦
+      // ä¸ä¸€è‡´è­¦å‘Šè¡¨ç¤º
       if (hasShopMismatch) {
         shopMismatchWarning.classList.remove('hidden');
         shopMismatchDetail.innerText = mismatchDetails;
@@ -1138,17 +1141,17 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
         shopMismatchWarning.classList.add('hidden');
       }
 
-      // 3. ”»–¾‚µ‚½“X•Ü‚É•R‚Ã‚­u‘ã—“X–¼v‚Æuƒ[ƒ‹ƒhƒƒCƒ“v‚ğ‹tˆø‚«•\¦
-      let matchedAgentName = "(ŠY“–‚È‚µ / “X•Ü–¢“Á’è)";
-      let matchedDomains = "(ŠY“–‚È‚µ / “X•Ü–¢“Á’è)";
+      // 3. åˆ¤æ˜ã—ãŸåº—èˆ—ã«ç´ã¥ãã€Œä»£ç†åº—åã€ã¨ã€Œãƒ¡ãƒ¼ãƒ«ãƒ‰ãƒ¡ã‚¤ãƒ³ã€ã‚’é€†å¼•ãè¡¨ç¤º
+      let matchedAgentName = "(è©²å½“ãªã— / åº—èˆ—æœªç‰¹å®š)";
+      let matchedDomains = "(è©²å½“ãªã— / åº—èˆ—æœªç‰¹å®š)";
 
       if (parseReport.detectedShop) {
         const shopRows = masterData.filter(row => String(row[shopCol] || '').trim() === parseReport.detectedShop);
         if (shopRows.length > 0) {
           if (agentCol) {
-            matchedAgentName = shopRows[0][agentCol] || "(ƒ}ƒXƒ^‚É“o˜^‚È‚µ)";
+            matchedAgentName = shopRows[0][agentCol] || "(ãƒã‚¹ã‚¿ã«ç™»éŒ²ãªã—)";
           } else {
-            matchedAgentName = "(ƒ}ƒXƒ^‚É‘ã—“X–¼‚Ì—ñw’è‚ª‚ ‚è‚Ü‚¹‚ñ)";
+            matchedAgentName = "(ãƒã‚¹ã‚¿ã«ä»£ç†åº—åã®åˆ—æŒ‡å®šãŒã‚ã‚Šã¾ã›ã‚“)";
           }
 
           const domains = new Set();
@@ -1159,16 +1162,16 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
               domains.add(emailAddr.substring(atIdx));
             }
           });
-          matchedDomains = domains.size > 0 ? Array.from(domains).join(', ') : "(ƒ}ƒXƒ^“à‚ÉƒAƒhƒŒƒX‚È‚µ)";
+          matchedDomains = domains.size > 0 ? Array.from(domains).join(', ') : "(ãƒã‚¹ã‚¿å†…ã«ã‚¢ãƒ‰ãƒ¬ã‚¹ãªã—)";
         } else {
-          matchedAgentName = `y${parseReport.detectedShop}z‚É•R‚Ã‚­ƒƒ“ƒo[‚ªƒ}ƒXƒ^ã‚É‘¶İ‚µ‚Ü‚¹‚ñ`;
+          matchedAgentName = `ã€${parseReport.detectedShop}ã€‘ã«ç´ã¥ããƒ¡ãƒ³ãƒãƒ¼ãŒãƒã‚¹ã‚¿ä¸Šã«å­˜åœ¨ã—ã¾ã›ã‚“`;
         }
       }
       detectedAgentObj.innerText = matchedAgentName;
       detectedDomainsObj.innerText = matchedDomains;
       ignoredFromCount.innerText = parseReport.ignoredFromCount;
 
-      // 4. ƒ}ƒXƒ^ŒŸõ‚‘¬ƒ}ƒbƒv‚Ì¶¬
+      // 4. ãƒã‚¹ã‚¿æ¤œç´¢é«˜é€Ÿãƒãƒƒãƒ—ã®ç”Ÿæˆ
       const lookupMap = new Map();
       const domainSet = new Set();
 
@@ -1189,7 +1192,7 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
         }
       });
 
-      // 5. ˆ¶æˆêl‚¸‚Â‚Ì1‘Î1Æ‡‚ÆØÕ‚Ì\’z
+      // 5. å®›å…ˆä¸€äººãšã¤ã®1å¯¾1ç…§åˆã¨è¨¼è·¡ã®æ§‹ç¯‰
       checkResults = [];
       let safeCount = 0;
       let warningCount = 0;
@@ -1210,15 +1213,15 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
           matchedName: '-',
           matchedShop: '-',
           matchedExtra: '-',
-          evidence: 'ƒ}ƒXƒ^(Excel)“à‚É“o˜^ØÕ‚ª‚İ‚Â‚©‚è‚Ü‚¹‚ñB',
-          details: 'ƒ}ƒXƒ^‚É‘¶İ‚µ‚È‚¢A‚Ü‚½‚ÍŠO•”ƒAƒhƒŒƒX‚Å‚·B',
+          evidence: 'ãƒã‚¹ã‚¿(Excel)å†…ã«ç™»éŒ²è¨¼è·¡ãŒã¿ã¤ã‹ã‚Šã¾ã›ã‚“ã€‚',
+          details: 'ãƒã‚¹ã‚¿ã«å­˜åœ¨ã—ãªã„ã€ã¾ãŸã¯å¤–éƒ¨ã‚¢ãƒ‰ãƒ¬ã‚¹ã§ã™ã€‚',
           isDocomo: false
         };
 
         if (!email) {
           res.status = 'error';
-          res.details = 'ƒAƒhƒŒƒXŒ`®‚ğ’Šo‚Å‚«‚Ü‚¹‚ñB';
-          res.evidence = 'ƒ}ƒXƒ^–¢Æ‡';
+          res.details = 'ã‚¢ãƒ‰ãƒ¬ã‚¹å½¢å¼ã‚’æŠ½å‡ºã§ãã¾ã›ã‚“ã€‚';
+          res.evidence = 'ãƒã‚¹ã‚¿æœªç…§åˆ';
           errorCount++;
           checkResults.push(res);
           return;
@@ -1227,40 +1230,40 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
         const lowerEmail = email.toLowerCase();
         if (seenEmails.has(lowerEmail)) {
           res.status = 'error';
-          res.details = 'ˆ¶æ“à‚Åd•¡İ’è‚³‚ê‚Ä‚¢‚Ü‚·B';
-          res.evidence = 'd•¡ŒŸo‚Ì‚½‚ßƒXƒLƒbƒv';
+          res.details = 'å®›å…ˆå†…ã§é‡è¤‡è¨­å®šã•ã‚Œã¦ã„ã¾ã™ã€‚';
+          res.evidence = 'é‡è¤‡æ¤œå‡ºã®ãŸã‚ã‚¹ã‚­ãƒƒãƒ—';
           errorCount++;
           checkResults.push(res);
           return;
         }
         seenEmails.add(lowerEmail);
 
-        // A. Ğ“àƒhƒƒCƒ“(nttdocomo.com)”»’è
+        // A. ç¤¾å†…ãƒ‰ãƒ¡ã‚¤ãƒ³(nttdocomo.com)åˆ¤å®š
         if (lowerEmail.endsWith('@nttdocomo.com')) {
           res.status = 'safe';
-          res.details = 'Ğ“àƒhƒƒCƒ“ƒAƒhƒŒƒX‚Ì‚½‚ß©“®“I‚É”»’è•s—v(OK)‚Æ‚µ‚Ü‚·B';
-          res.matchedName = parsedName || 'Ğ“àƒƒ“ƒo[';
-          res.matchedShop = 'Ğ“àƒhƒƒCƒ“';
-          res.evidence = `ƒhƒRƒ‚Ğ“à‹¤’Ê˜g (nttdocomo.com)`;
+          res.details = 'ç¤¾å†…ãƒ‰ãƒ¡ã‚¤ãƒ³ã‚¢ãƒ‰ãƒ¬ã‚¹ã®ãŸã‚è‡ªå‹•çš„ã«åˆ¤å®šä¸è¦(OK)ã¨ã—ã¾ã™ã€‚';
+          res.matchedName = parsedName || 'ç¤¾å†…ãƒ¡ãƒ³ãƒãƒ¼';
+          res.matchedShop = 'ç¤¾å†…ãƒ‰ãƒ¡ã‚¤ãƒ³';
+          res.evidence = `ãƒ‰ã‚³ãƒ¢ç¤¾å†…å…±é€šæ  (nttdocomo.com)`;
           res.isDocomo = true;
           safeCount++;
           checkResults.push(res);
           return;
         }
 
-        // B. ƒ}ƒXƒ^Æ‡
+        // B. ãƒã‚¹ã‚¿ç…§åˆ
         const searchKey = caseInsensitive ? email.toLowerCase() : email;
 
         if (lookupMap.has(searchKey)) {
           const matchedRow = lookupMap.get(searchKey);
-          res.matchedName = nameCol ? (matchedRow[nameCol] || '–¼‘O–¢’è‹`') : 'ƒ}ƒXƒ^ˆê’v';
-          res.matchedShop = matchedRow[shopCol] || '“X•Üî•ñ‚È‚µ';
+          res.matchedName = nameCol ? (matchedRow[nameCol] || 'åå‰æœªå®šç¾©') : 'ãƒã‚¹ã‚¿ä¸€è‡´';
+          res.matchedShop = matchedRow[shopCol] || 'åº—èˆ—æƒ…å ±ãªã—';
           res.matchedExtra = extraCol ? (matchedRow[extraCol] || '-') : '-';
 
           const masterShop = String(res.matchedShop).trim();
-          res.evidence = `y${masterShop}z${res.matchedName} (${email})`;
+          res.evidence = `ã€${masterShop}ã€‘${res.matchedName} (${email})`;
 
-          // y‚“x‚È“X•Ü“Ë‡ƒƒWƒbƒNFŒ–¼“X•ÜA–{•¶“X•ÜA‚¨‚æ‚Ñƒ}ƒXƒ^Š‘®“X•Ü‚ÌƒNƒƒXÆ‡z
+          // ã€é«˜åº¦ãªåº—èˆ—çªåˆãƒ­ã‚¸ãƒƒã‚¯ï¼šä»¶ååº—èˆ—ã€æœ¬æ–‡åº—èˆ—ã€ãŠã‚ˆã³ãƒã‚¹ã‚¿æ‰€å±åº—èˆ—ã®ã‚¯ãƒ­ã‚¹ç…§åˆã€‘
           const masterShopCore = getShopCoreName(masterShop);
           const subjectShopCore = parseReport.detectedShop ? getShopCoreName(parseReport.detectedShop) : "";
           const bodyShopCores = bodyShopsArray.map(s => getShopCoreName(s));
@@ -1269,59 +1272,59 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
           let matchDetailMsg = "";
 
           if (subjectShopCore && bodyShopCores.length > 0) {
-            // Œ–¼‚Æ–{•¶‚Ì—¼•û‚É“X•Üw’è‚ª‚ ‚éê‡
+            // ä»¶åã¨æœ¬æ–‡ã®ä¸¡æ–¹ã«åº—èˆ—æŒ‡å®šãŒã‚ã‚‹å ´åˆ
             const isSubjectMatched = (masterShopCore === subjectShopCore);
             const isBodyMatched = bodyShopCores.includes(masterShopCore);
 
-            // Œ–¼“X•Ü‚Æ–{•¶“X•Ü‚Ìå—v‚È’n–¼ƒRƒA‚ªˆê’v‚µ‚Ä‚¢‚é‚©
+            // ä»¶ååº—èˆ—ã¨æœ¬æ–‡åº—èˆ—ã®ä¸»è¦ãªåœ°åã‚³ã‚¢ãŒä¸€è‡´ã—ã¦ã„ã‚‹ã‹
             const isEmailDirectionConsistent = (subjectShopCore === bodyShopCores[0]);
 
             if (isEmailDirectionConsistent) {
-              // 1. Œ–¼‚Æ–{•¶‚Ì“X•Üw’è‚ªˆê’v‚µ‚Ä‚¢‚éŒ’‘S‚ÈƒP[ƒX
+              // 1. ä»¶åã¨æœ¬æ–‡ã®åº—èˆ—æŒ‡å®šãŒä¸€è‡´ã—ã¦ã„ã‚‹å¥å…¨ãªã‚±ãƒ¼ã‚¹
               if (isSubjectMatched) {
                 isShopMatched = true;
-                matchDetailMsg = `‡’vBw’è“X•Üy${parseReport.detectedShop}z‚Ì³‹Kƒƒ“ƒo[‚Å‚·B`;
+                matchDetailMsg = `åˆè‡´ã€‚æŒ‡å®šåº—èˆ—ã€${parseReport.detectedShop}ã€‘ã®æ­£è¦ãƒ¡ãƒ³ãƒãƒ¼ã§ã™ã€‚`;
               } else {
-                matchDetailMsg = `ŒxFw’è“X•Ü‚Íy${parseReport.detectedShop}z‚Å‚·‚ªA‚±‚ÌƒAƒhƒŒƒX‚ÌŠ‘®‚Íy${masterShop}z‚Å‚·I`;
+                matchDetailMsg = `è­¦å‘Šï¼šæŒ‡å®šåº—èˆ—ã¯ã€${parseReport.detectedShop}ã€‘ã§ã™ãŒã€ã“ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã®æ‰€å±ã¯ã€${masterShop}ã€‘ã§ã™ï¼`;
               }
             } else {
-              // 2. Œ–¼‚Æ–{•¶‚Ì“X•Üw’è‚ªH‚¢ˆá‚Á‚Ä‚¢‚éŠëŒ¯‚ÈƒP[ƒX (Œ–¼‚Ü‚½‚Í–{•¶‚Ìw’è“X•Ü‚ÆˆÙ‚È‚éê‡‚àŠ®‘S‚É•s“K‡‚Æ‚·‚é)
+              // 2. ä»¶åã¨æœ¬æ–‡ã®åº—èˆ—æŒ‡å®šãŒé£Ÿã„é•ã£ã¦ã„ã‚‹å±é™ºãªã‚±ãƒ¼ã‚¹ (ä»¶åã¾ãŸã¯æœ¬æ–‡ã®æŒ‡å®šåº—èˆ—ã¨ç•°ãªã‚‹å ´åˆã‚‚å®Œå…¨ã«ä¸é©åˆã¨ã™ã‚‹)
               if (isSubjectMatched && isBodyMatched) {
-                // Šî–{“I‚É‚Í”­¶‚µ‚È‚¢‘z’èiˆ¶æ“X•Ü‚ª—¼•û‚ÌƒRƒA‚ğ‚Â‚È‚Çj‚¾‚ªA“X•Ü‚Ì®‡«‚ª‚È‚¢‚½‚ßŒx
-                matchDetailMsg = `ŒxFŒ–¼“X•Üy${parseReport.detectedShop}z‚Æ–{•¶“X•Üy${bodyShopsArray.join('A')}z‚Ì—¼•û‚É‡’vB‚½‚¾‚µƒ[ƒ‹w’è‚Ì•s®‡‚ ‚èB`;
+                // åŸºæœ¬çš„ã«ã¯ç™ºç”Ÿã—ãªã„æƒ³å®šï¼ˆå®›å…ˆåº—èˆ—ãŒä¸¡æ–¹ã®ã‚³ã‚¢ã‚’æŒã¤ãªã©ï¼‰ã ãŒã€åº—èˆ—ã®æ•´åˆæ€§ãŒãªã„ãŸã‚è­¦å‘Š
+                matchDetailMsg = `è­¦å‘Šï¼šä»¶ååº—èˆ—ã€${parseReport.detectedShop}ã€‘ã¨æœ¬æ–‡åº—èˆ—ã€${bodyShopsArray.join('ã€')}ã€‘ã®ä¸¡æ–¹ã«åˆè‡´ã€‚ãŸã ã—ãƒ¡ãƒ¼ãƒ«æŒ‡å®šã®ä¸æ•´åˆã‚ã‚Šã€‚`;
               } else if (isSubjectMatched) {
-                // Œ–¼‚Æ‚Íˆê’v‚·‚é‚ªA–{•¶‚Ìw’è‚ÆˆÙ‚È‚éi•s“K‡j
-                matchDetailMsg = `ŒxFŒ–¼“X•Üy${parseReport.detectedShop}z‚Æ‚Íˆê’v‚µ‚Ü‚·‚ªA–{•¶w’èy${bodyShopsArray.join('A')}z‚ÆˆÙ‚È‚è‚Ü‚·B`;
+                // ä»¶åã¨ã¯ä¸€è‡´ã™ã‚‹ãŒã€æœ¬æ–‡ã®æŒ‡å®šã¨ç•°ãªã‚‹ï¼ˆä¸é©åˆï¼‰
+                matchDetailMsg = `è­¦å‘Šï¼šä»¶ååº—èˆ—ã€${parseReport.detectedShop}ã€‘ã¨ã¯ä¸€è‡´ã—ã¾ã™ãŒã€æœ¬æ–‡æŒ‡å®šã€${bodyShopsArray.join('ã€')}ã€‘ã¨ç•°ãªã‚Šã¾ã™ã€‚`;
               } else if (isBodyMatched) {
-                // –{•¶‚Æ‚Íˆê’v‚·‚é‚ªAŒ–¼w’è‚ÆˆÙ‚È‚éi•s“K‡j
-                matchDetailMsg = `ŒxF–{•¶“X•Üy${bodyShopsArray.join('A')}z‚Æ‚Íˆê’v‚µ‚Ü‚·‚ªAŒ–¼w’èy${parseReport.detectedShop}z‚ÆˆÙ‚È‚è‚Ü‚·B`;
+                // æœ¬æ–‡ã¨ã¯ä¸€è‡´ã™ã‚‹ãŒã€ä»¶åæŒ‡å®šã¨ç•°ãªã‚‹ï¼ˆä¸é©åˆï¼‰
+                matchDetailMsg = `è­¦å‘Šï¼šæœ¬æ–‡åº—èˆ—ã€${bodyShopsArray.join('ã€')}ã€‘ã¨ã¯ä¸€è‡´ã—ã¾ã™ãŒã€ä»¶åæŒ‡å®šã€${parseReport.detectedShop}ã€‘ã¨ç•°ãªã‚Šã¾ã™ã€‚`;
               } else {
-                // ‚Ç‚¿‚ç‚Æ‚àˆê’v‚µ‚È‚¢iŠ®‘S•s“K‡j
-                matchDetailMsg = `ŒxFŒ–¼“X•Üy${parseReport.detectedShop}z‚Æ‚àA–{•¶“X•Üy${bodyShopsArray.join('A')}z‚Æ‚àˆê’v‚µ‚Ü‚¹‚ñI‚±‚ÌƒAƒhƒŒƒX‚ÌŠ‘®‚Íy${masterShop}z‚Å‚·I`;
+                // ã©ã¡ã‚‰ã¨ã‚‚ä¸€è‡´ã—ãªã„ï¼ˆå®Œå…¨ä¸é©åˆï¼‰
+                matchDetailMsg = `è­¦å‘Šï¼šä»¶ååº—èˆ—ã€${parseReport.detectedShop}ã€‘ã¨ã‚‚ã€æœ¬æ–‡åº—èˆ—ã€${bodyShopsArray.join('ã€')}ã€‘ã¨ã‚‚ä¸€è‡´ã—ã¾ã›ã‚“ï¼ã“ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã®æ‰€å±ã¯ã€${masterShop}ã€‘ã§ã™ï¼`;
               }
             }
           } else if (subjectShopCore) {
-            // 3. Œ–¼‚Ì‚İw’è‚ª‚ ‚èA–{•¶‚É“X•Üw’è‚ª‚È‚¢i–{•¶w’è˜R‚êŒx‚ª‚ ‚éó‘Ôj
+            // 3. ä»¶åã®ã¿æŒ‡å®šãŒã‚ã‚Šã€æœ¬æ–‡ã«åº—èˆ—æŒ‡å®šãŒãªã„ï¼ˆæœ¬æ–‡æŒ‡å®šæ¼ã‚Œè­¦å‘ŠãŒã‚ã‚‹çŠ¶æ…‹ï¼‰
             const isSubjectMatched = (masterShopCore === subjectShopCore);
             if (isSubjectMatched) {
               isShopMatched = true;
-              matchDetailMsg = `‡’vBŒ–¼“X•Üy${parseReport.detectedShop}z‚Æˆê’vB¦‚½‚¾‚µ–{•¶‚É“X•Üw’è‚ª‚ ‚è‚Ü‚¹‚ñB`;
+              matchDetailMsg = `åˆè‡´ã€‚ä»¶ååº—èˆ—ã€${parseReport.detectedShop}ã€‘ã¨ä¸€è‡´ã€‚â€»ãŸã ã—æœ¬æ–‡ã«åº—èˆ—æŒ‡å®šãŒã‚ã‚Šã¾ã›ã‚“ã€‚`;
             } else {
-              matchDetailMsg = `ŒxFŒ–¼“X•Ü‚Íy${parseReport.detectedShop}z‚Å‚·‚ªA‚±‚ÌƒAƒhƒŒƒX‚ÌŠ‘®‚Íy${masterShop}z‚Å‚·I`;
+              matchDetailMsg = `è­¦å‘Šï¼šä»¶ååº—èˆ—ã¯ã€${parseReport.detectedShop}ã€‘ã§ã™ãŒã€ã“ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã®æ‰€å±ã¯ã€${masterShop}ã€‘ã§ã™ï¼`;
             }
           } else if (bodyShopCores.length > 0) {
-            // 4. –{•¶‚Ì‚İw’è‚ª‚ ‚éê‡
+            // 4. æœ¬æ–‡ã®ã¿æŒ‡å®šãŒã‚ã‚‹å ´åˆ
             const isBodyMatched = bodyShopCores.includes(masterShopCore);
             if (isBodyMatched) {
               isShopMatched = true;
-              matchDetailMsg = `‡’vB–{•¶w’è“X•Üy${bodyShopsArray.join('A')}z‚Æˆê’vB`;
+              matchDetailMsg = `åˆè‡´ã€‚æœ¬æ–‡æŒ‡å®šåº—èˆ—ã€${bodyShopsArray.join('ã€')}ã€‘ã¨ä¸€è‡´ã€‚`;
             } else {
-              matchDetailMsg = `ŒxF–{•¶w’è“X•Ü‚Íy${bodyShopsArray.join('A')}z‚Å‚·‚ªA‚±‚ÌƒAƒhƒŒƒX‚ÌŠ‘®‚Íy${masterShop}z‚Å‚·I`;
+              matchDetailMsg = `è­¦å‘Šï¼šæœ¬æ–‡æŒ‡å®šåº—èˆ—ã¯ã€${bodyShopsArray.join('ã€')}ã€‘ã§ã™ãŒã€ã“ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã®æ‰€å±ã¯ã€${masterShop}ã€‘ã§ã™ï¼`;
             }
           } else {
-            // 5. ƒ[ƒ‹‘S‘Ì‚Å“X•Ü‚Ìw’è‚ª‘S‚­‚È‚¢ê‡
+            // 5. ãƒ¡ãƒ¼ãƒ«å…¨ä½“ã§åº—èˆ—ã®æŒ‡å®šãŒå…¨ããªã„å ´åˆ
             isShopMatched = true;
-            matchDetailMsg = `ƒ}ƒXƒ^“o˜^‚ ‚èiƒ[ƒ‹“à‚É“X•Üw’è‚ª‚È‚¢‚½‚ßŠ‘®ˆê’vŠm”F‚ÍƒXƒLƒbƒvj`;
+            matchDetailMsg = `ãƒã‚¹ã‚¿ç™»éŒ²ã‚ã‚Šï¼ˆãƒ¡ãƒ¼ãƒ«å†…ã«åº—èˆ—æŒ‡å®šãŒãªã„ãŸã‚æ‰€å±ä¸€è‡´ç¢ºèªã¯ã‚¹ã‚­ãƒƒãƒ—ï¼‰`;
           }
 
           if (isShopMatched) {
@@ -1350,7 +1353,7 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
       resultsCard.scrollIntoView({ behavior: 'smooth' });
     }
 
-    // --- Œ–¼iSubjectj‚Ì“X•Ü‚ÆA–{•¶‚É‘‚©‚ê‚½“X•Ü‚ğ’Šo (ƒ[ƒ‹–{•¶‚Ì“X•Ü–¼‚àƒXƒLƒƒƒ“) ---
+    // --- ä»¶åï¼ˆSubjectï¼‰ã®åº—èˆ—ã¨ã€æœ¬æ–‡ã«æ›¸ã‹ã‚ŒãŸåº—èˆ—ã‚’æŠ½å‡º (ãƒ¡ãƒ¼ãƒ«æœ¬æ–‡ã®åº—èˆ—åã‚‚ã‚¹ã‚­ãƒ£ãƒ³) ---
     function parseAndExtractRecipients(text, shopColName) {
       const lines = text.split('\n');
       
@@ -1359,10 +1362,10 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
       const validEntries = [];
       const bodyLinesForShopSearch = [];
 
-      // ‘SŠpƒRƒƒ“uFv‚âƒ^ƒu•¶šAƒXƒy[ƒX“™‚ÉL‚­‘Î‰‚·‚é‚½‚ß‚Ì³‹K•\Œ»
-      const subjectRegex = /^\s*(subject|Œ–¼)\s*[:F]\s*(.*)$/i;
-      const fromRegex = /^\s*(from|·ol|‘—MÒ)\s*[:F]/i;
-      const destRegex = /^\s*(to|cc|bcc|ˆ¶æ|‘—Mæ|‚ƒ‚ƒ|‚‚‚ƒ‚ƒ)\s*[:F]\s*(.*)$/i;
+      // å…¨è§’ã‚³ãƒ­ãƒ³ã€Œï¼šã€ã‚„ã‚¿ãƒ–æ–‡å­—ã€ã‚¹ãƒšãƒ¼ã‚¹ç­‰ã«åºƒãå¯¾å¿œã™ã‚‹ãŸã‚ã®æ­£è¦è¡¨ç¾
+      const subjectRegex = /^\s*(subject|ä»¶å)\s*[:ï¼š]\s*(.*)$/i;
+      const fromRegex = /^\s*(from|å·®å‡ºäºº|é€ä¿¡è€…)\s*[:ï¼š]/i;
+      const destRegex = /^\s*(to|cc|bcc|å®›å…ˆ|é€ä¿¡å…ˆ|ï½ƒï½ƒ|ï½‚ï½ƒï½ƒ)\s*[:ï¼š]\s*(.*)$/i;
 
       let isUnderSubjectAndHeaders = false;
 
@@ -1375,7 +1378,7 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
           return;
         }
 
-        // Subject‚Ì”»’è
+        // Subjectã®åˆ¤å®š
         const subjectMatch = line.match(subjectRegex);
         if (subjectMatch) {
           subjectText = subjectMatch[2].trim();
@@ -1383,13 +1386,13 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
           return; 
         }
 
-        // From‚Ì”»’è
+        // Fromã®åˆ¤å®š
         if (fromRegex.test(line)) {
           ignoredFromCount++;
           return; 
         }
 
-        // To/Cc‚È‚Ç‚Ì”»’è
+        // To/Ccãªã©ã®åˆ¤å®š
         const destMatch = line.match(destRegex);
         if (destMatch) {
           const destContent = destMatch[2].trim();
@@ -1400,13 +1403,13 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
           return;
         }
 
-        // ƒwƒbƒ_[•”ˆÈŠO‚Ì•’Ê‚Ì•¶ÍA‚Ü‚½‚ÍSubjectŒã‚Ìˆê”Ê–{•¶
+        // ãƒ˜ãƒƒãƒ€ãƒ¼éƒ¨ä»¥å¤–ã®æ™®é€šã®æ–‡ç« ã€ã¾ãŸã¯Subjectå¾Œã®ä¸€èˆ¬æœ¬æ–‡
         if (isUnderSubjectAndHeaders) {
           bodyLinesForShopSearch.push(line);
         }
       });
 
-      // ƒ}ƒXƒ^î•ñ‚©‚ç“X•ÜƒŠƒXƒg‚ğ¶¬
+      // ãƒã‚¹ã‚¿æƒ…å ±ã‹ã‚‰åº—èˆ—ãƒªã‚¹ãƒˆã‚’ç”Ÿæˆ
       let detectedShop = "";
       const bodyShops = new Set();
 
@@ -1415,7 +1418,7 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
           masterData.map(row => String(row[shopColName] || '').trim()).filter(Boolean)
         ));
 
-        // A. Œ–¼iSubjectj‚©‚ç“X•Ü‚ğ”»•Ê
+        // A. ä»¶åï¼ˆSubjectï¼‰ã‹ã‚‰åº—èˆ—ã‚’åˆ¤åˆ¥
         if (subjectText) {
           let found = uniqueShops.find(shop => subjectText.includes(shop));
           
@@ -1434,7 +1437,7 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
           }
         }
 
-        // B. ƒ[ƒ‹–{•¶‘S‘Ì‚©‚ç‘¼“X•Ü‹Lq‚ğ’Šo
+        // B. ãƒ¡ãƒ¼ãƒ«æœ¬æ–‡å…¨ä½“ã‹ã‚‰ä»–åº—èˆ—è¨˜è¿°ã‚’æŠ½å‡º
         const fullBodyText = bodyLinesForShopSearch.join(' ');
         uniqueShops.forEach(shop => {
           const shopCore = getShopCoreName(shop);
@@ -1456,7 +1459,7 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
     }
 
     /**
-     * 1s‚É˜A‚È‚éˆ¶æ(To, Cc)‚ğƒNƒH[ƒe[ƒVƒ‡ƒ“‚ğl—¶‚µˆêl‚¸‚Â‚É•ª‰ğ
+     * 1è¡Œã«é€£ãªã‚‹å®›å…ˆ(To, Cc)ã‚’ã‚¯ã‚©ãƒ¼ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³ã‚’è€ƒæ…®ã—ä¸€äººãšã¤ã«åˆ†è§£
      */
     function splitAndParseRecipientList(text) {
       const results = [];
@@ -1522,35 +1525,35 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
 
     function renderResultsTable() {
       resultsTableBody.innerHTML = '';
-      resultsCountText.innerText = `‘S ${checkResults.length} Œ‚Ìˆ¶æ‚ğŒŸoE•ªŠ„`;
+      resultsCountText.innerText = `å…¨ ${checkResults.length} ä»¶ã®å®›å…ˆã‚’æ¤œå‡ºãƒ»åˆ†å‰²`;
 
       checkResults.forEach(item => {
         const tr = document.createElement('tr');
         tr.className = "hover:bg-slate-50 transition-colors";
 
-        // A. ”»’è
+        // A. åˆ¤å®š
         const tdStatus = document.createElement('td');
         tdStatus.className = "px-4 py-3.5 whitespace-nowrap align-middle w-[12%] text-center";
         let badgeHtml = '';
         if (item.status === 'safe') {
           if (item.isDocomo) {
-            badgeHtml = `<span class="inline-flex items-center px-2 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 gap-1"><i data-lucide="check-square" class="w-3.5 h-3.5"></i>Ğ“à (OK)</span>`;
+            badgeHtml = `<span class="inline-flex items-center px-2 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 gap-1"><i data-lucide="check-square" class="w-3.5 h-3.5"></i>ç¤¾å†… (OK)</span>`;
           } else {
-            badgeHtml = `<span class="inline-flex items-center px-2 py-1 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 gap-1"><i data-lucide="check" class="w-3.5 h-3.5"></i>‡’v (OK)</span>`;
+            badgeHtml = `<span class="inline-flex items-center px-2 py-1 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 gap-1"><i data-lucide="check" class="w-3.5 h-3.5"></i>åˆè‡´ (OK)</span>`;
           }
         } else if (item.status === 'warning') {
-          if (item.details.includes('ˆÙ‚È‚é') || item.details.includes('Š‘®')) {
-            badgeHtml = `<span class="inline-flex items-center px-2 py-1 rounded-full text-[11px] font-bold bg-rose-50 text-rose-700 border border-rose-200 gap-1 animate-pulse"><i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i>“X•Ü•sˆê’v</span>`;
+          if (item.details.includes('ç•°ãªã‚‹') || item.details.includes('æ‰€å±')) {
+            badgeHtml = `<span class="inline-flex items-center px-2 py-1 rounded-full text-[11px] font-bold bg-rose-50 text-rose-700 border border-rose-200 gap-1 animate-pulse"><i data-lucide="alert-triangle" class="w-3.5 h-3.5"></i>åº—èˆ—ä¸ä¸€è‡´</span>`;
           } else {
-            badgeHtml = `<span class="inline-flex items-center px-2 py-1 rounded-full text-[11px] font-bold bg-rose-100 text-rose-800 border border-rose-200 gap-1"><i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>Œx (•sİ)</span>`;
+            badgeHtml = `<span class="inline-flex items-center px-2 py-1 rounded-full text-[11px] font-bold bg-rose-100 text-rose-800 border border-rose-200 gap-1"><i data-lucide="alert-circle" class="w-3.5 h-3.5"></i>è­¦å‘Š (ä¸åœ¨)</span>`;
           }
         } else {
-          badgeHtml = `<span class="inline-flex items-center px-2 py-1 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800 border border-amber-200 gap-1"><i data-lucide="help-circle" class="w-3.5 h-3.5"></i>Œ`®ƒGƒ‰[</span>`;
+          badgeHtml = `<span class="inline-flex items-center px-2 py-1 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800 border border-amber-200 gap-1"><i data-lucide="help-circle" class="w-3.5 h-3.5"></i>å½¢å¼ã‚¨ãƒ©ãƒ¼</span>`;
         }
         tdStatus.innerHTML = badgeHtml;
         tr.appendChild(tdStatus);
 
-        // B. ’Šoˆ¶æ
+        // B. æŠ½å‡ºå®›å…ˆ
         const tdInput = document.createElement('td');
         tdInput.className = "px-4 py-3.5 align-middle w-[28%]";
         let displayNameHtml = item.parsedName 
@@ -1559,37 +1562,37 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
         tdInput.innerHTML = `
           <div class="text-sm font-medium text-slate-900 flex flex-col xl:flex-row xl:items-center gap-1 mb-1">
             ${displayNameHtml}
-            <span class="text-slate-500 font-mono text-xs select-all bg-slate-50 border border-slate-100 px-1.5 py-0.5 rounded inline-block">${escapeHtml(item.email || 'ƒAƒhƒŒƒX‚È‚µ')}</span>
+            <span class="text-slate-500 font-mono text-xs select-all bg-slate-50 border border-slate-100 px-1.5 py-0.5 rounded inline-block">${escapeHtml(item.email || 'ã‚¢ãƒ‰ãƒ¬ã‚¹ãªã—')}</span>
           </div>
-          <div class="text-[10px] text-slate-400 truncate" title="“ü—Í: ${item.raw}">“ü—Í: ${escapeHtml(item.raw)}</div>
+          <div class="text-[10px] text-slate-400 truncate" title="å…¥åŠ›: ${item.raw}">å…¥åŠ›: ${escapeHtml(item.raw)}</div>
         `;
         tr.appendChild(tdInput);
 
-        // C. ƒ}ƒXƒ^“o˜^ØÕiƒGƒrƒfƒ“ƒX•\¦j
+        // C. ãƒã‚¹ã‚¿ç™»éŒ²è¨¼è·¡ï¼ˆã‚¨ãƒ“ãƒ‡ãƒ³ã‚¹è¡¨ç¤ºï¼‰
         const tdEvidence = document.createElement('td');
         tdEvidence.className = "px-4 py-3.5 align-middle text-xs w-[35%]";
-        if (item.status === 'safe' || item.details.includes('ˆÙ‚È‚é') || item.details.includes('Š‘®') || item.details.includes('•s®‡')) {
+        if (item.status === 'safe' || item.details.includes('ç•°ãªã‚‹') || item.details.includes('æ‰€å±') || item.details.includes('ä¸æ•´åˆ')) {
           if (item.isDocomo) {
             tdEvidence.innerHTML = `<span class="text-emerald-700 bg-emerald-50 px-2 py-1.5 rounded border border-emerald-150 block font-semibold text-center">${escapeHtml(item.evidence)}</span>`;
           } else {
             tdEvidence.innerHTML = `
               <div class="p-2 bg-slate-100/80 border border-slate-200 rounded text-slate-800 font-medium">
                 <span class="text-[10px] font-bold text-indigo-700 block uppercase mb-1 flex items-center gap-1">
-                  <i data-lucide="database" class="w-3 h-3"></i>ƒ}ƒXƒ^(XLS)Æ‡ƒGƒrƒfƒ“ƒX
+                  <i data-lucide="database" class="w-3 h-3"></i>ãƒã‚¹ã‚¿(XLS)ç…§åˆã‚¨ãƒ“ãƒ‡ãƒ³ã‚¹
                 </span>
                 <span class="font-mono text-xs text-slate-900 block bg-white px-1.5 py-1 rounded border border-slate-150">${escapeHtml(item.evidence)}</span>
               </div>
             `;
           }
         } else {
-          tdEvidence.innerHTML = `<span class="text-slate-400 italic">ØÕ‚È‚µiƒ}ƒXƒ^–¢ŒŸoj</span>`;
+          tdEvidence.innerHTML = `<span class="text-slate-400 italic">è¨¼è·¡ãªã—ï¼ˆãƒã‚¹ã‚¿æœªæ¤œå‡ºï¼‰</span>`;
         }
         tr.appendChild(tdEvidence);
 
-        // D. “Ë‡Ú×à–¾
+        // D. çªåˆè©³ç´°èª¬æ˜
         const tdDetails = document.createElement('td');
         tdDetails.className = "px-4 py-3.5 text-xs font-medium align-middle w-[25%] leading-normal";
-        if (item.details.includes('ŒxF') || item.details.includes('•s®‡')) {
+        if (item.details.includes('è­¦å‘Šï¼š') || item.details.includes('ä¸æ•´åˆ')) {
           tdDetails.className += " text-rose-600 font-bold";
         } else if (item.status === 'safe') {
           tdDetails.className += " text-emerald-600";
@@ -1610,15 +1613,15 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
       if (checkResults.length === 0) return;
 
       let csvContent = "\uFEFF";
-      csvContent += "”»’è,ˆ¶æ–¼,ƒ[ƒ‹ƒAƒhƒŒƒX,ƒ}ƒXƒ^“o˜^ØÕ,”»’èÚ×\r\n";
+      csvContent += "åˆ¤å®š,å®›å…ˆå,ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹,ãƒã‚¹ã‚¿ç™»éŒ²è¨¼è·¡,åˆ¤å®šè©³ç´°\r\n";
 
       checkResults.forEach(item => {
-        let statusText = 'ƒGƒ‰[';
+        let statusText = 'ã‚¨ãƒ©ãƒ¼';
         if (item.status === 'safe') {
-          statusText = item.isDocomo ? 'Ğ“à(OK)' : '‡’vŠm”F(OK)';
+          statusText = item.isDocomo ? 'ç¤¾å†…(OK)' : 'åˆè‡´ç¢ºèª(OK)';
         }
         if (item.status === 'warning') {
-          statusText = item.details.includes('ˆÙ‚È‚é') || item.details.includes('Š‘®') ? '“X•Ü•sˆê’v' : 'Œx(•sİ)';
+          statusText = item.details.includes('ç•°ãªã‚‹') || item.details.includes('æ‰€å±') ? 'åº—èˆ—ä¸ä¸€è‡´' : 'è­¦å‘Š(ä¸åœ¨)';
         }
 
         const row = [
@@ -1638,7 +1641,7 @@ Cc: satou-member@nttdocomo.com, "ŠO•” ˜A—Ò" <random-external@unknown.com>
       link.setAttribute("href", url);
       
       const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-      link.setAttribute("download", `“X•ÜŠ‘®“Ë‡”»’èŒ‹‰Ê_${dateStr}.csv`);
+      link.setAttribute("download", `åº—èˆ—æ‰€å±çªåˆåˆ¤å®šçµæœ_${dateStr}.csv`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
